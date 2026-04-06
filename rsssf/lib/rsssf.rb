@@ -25,7 +25,9 @@ require_relative 'rsssf/utils'      # include Utils - goes first
 
 require_relative 'rsssf/download'
 
-require_relative 'rsssf/convert'
+require_relative 'rsssf/convert/convert'
+require_relative 'rsssf/convert/html_entities'
+
 require_relative 'rsssf/page'
 require_relative 'rsssf/schedule'
 
