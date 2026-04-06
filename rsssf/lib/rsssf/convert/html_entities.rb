@@ -112,7 +112,7 @@ class PageConverter
                      [$1.to_i].pack("U")          
                     end 
          
-              puts "   converting numeric html entity #{match} to unicode char #{uni}"
+              ##puts "   converting numeric html entity #{match} to unicode char #{uni}"
 
              uni
           end
