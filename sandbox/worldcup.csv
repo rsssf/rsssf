@@ -1,0 +1,48 @@
+
+page, encoding
+
+
+tables/34q.html,     windows-1252
+tables/38q.html,     windows-1252
+tables/50q.html,     windows-1252
+tables/54q.html,     windows-1252
+tables/58q.html,      windows-1252
+tables/62q.html,     windows-1252
+tables/66q.html,     windows-1252
+tables/70q.html,     windows-1252
+tables/74q.html,     windows-1252
+tables/78q.html,     windows-1252
+tables/82q.html,    windows-1252
+tables/86q.html,   windows-1252
+tables/90q.html,   windows-1252
+tables/94q.html,   windows-1252
+tables/98q.html,   windows-1252
+tables/2002q.html,  windows-1252
+tables/2006q.html,  windows-1252
+tables/2010q.html,  windows-1252
+tables/2014q.html,   windows-1252
+tables/2018q.html,  windows-1252
+tables/2022q.html,  windows-1252
+
+
+tables/34qual.html,   windows-1252
+tables/38qual.html,    windows-1252
+tables/50qual.html,    iso-8859-2
+tables/54qual.html,   iso-8859-2
+tables/58qual.html,   iso-8859-2
+tables/62qual.html,   iso-8859-2
+tables/66qual.html,   iso-8859-2
+tables/70qual.html,   iso-8859-2
+tables/74qual.html,   iso-8859-2
+tables/78qual.html,  iso-8859-2
+tables/82qual.html,  iso-8859-2
+tables/86qual.html,  iso-8859-2
+tables/90qual.html,  iso-8859-2
+tables/94qual.html,  iso-8859-2
+tables/98qual.html,  iso-8859-2
+
+tables/50q-det.html,   utf-16le
+tables/54q-det.html,  utf-16le
+
+tables/2006q-det.html,  windows-1252
+tables/2010q-det.html,  windows-1252

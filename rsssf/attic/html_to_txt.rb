@@ -1,4 +1,38 @@
 
+HEADING2_RE = %r{ \s*
+                     <H2>
+                       (?<title>.+?)
+                     </H2>
+                     \s*
+                   }imx
+                   
+  HEADING4_RE = %r{ \s*
+                   <H4>
+                     (?<title>.+?)
+                   </H4>
+                   \s*
+                 }imx
+
+  def replace_h2( html )
+     html.gsub( HEADING2_RE ) do |_|
+        m = Regexp.last_match
+        puts " replace heading 2 (h2) >#{m[:title]}<"
+        "\n\n== #{m[:title]}\n\n"    ## note: make sure to always add two newlines
+     end
+  end
+
+
+  def replace_h4( html )
+    html.gsub( HEADING4_RE ) do |_|
+       m = Regexp.last_match
+       puts " replace heading 4 (h4) >#{m[:title]}<"
+       "\n\n==== #{m[:title]}\n\n"    ## note: make sure to always add two newlines
+    end
+ end
+
+
+
+
 def patch_about( html )
   # <A name=about>
   #  <H2>About this document</H2></A> 

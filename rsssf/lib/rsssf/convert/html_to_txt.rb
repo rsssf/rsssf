@@ -37,6 +37,15 @@ def html_to_txt( html, url: )
   html = html.sub( /<\/BODY>.*/im, '' )
 
   
+  ## quick fix
+  ## <title>World Cup 1950 qualifications</title>
+  ## <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
+  
+  ## remove title and meta
+  html = html.sub( /<TITLE>.*?<\/TITLE>/i, '' )
+  html = html.sub( /<META .*?>/i, '' )
+
+
 
 
   ## remove cite
@@ -75,24 +84,22 @@ def html_to_txt( html, url: )
   end
   html = html.gsub( /<\/P>/i, '' )  ## replace paragraph (p) closing w/ nothing for now
 
-  ## remove i
-  html = html.gsub( /<I>([^<]+)<\/I>/im ) do |_|
-    puts " remove italic (i) >#{$1}<"
-    "#{$1}"
-  end
 
 
   ## quick fix
   ##   <H1>Quarterfinals</H2>
   html = html.gsub( '<H1>Quarterfinals</H2>', '<H2>Quarterfinals</H2>' ) 
 
+  html = replace_heading( html )
 
 
-  html = replace_h1( html )
-  html = replace_h2( html )
-  html = replace_h4( html )
-
-
+  ## remove i(talics)
+  ##    use non-greedy match as default? e.g. .*? - why? why not?
+ 
+  html = html.gsub( /<I>([^<]+)<\/I>/im ) do |_|
+    puts " remove italic (i) >#{$1}<"
+    "#{$1}"
+  end
 
   ## quick fix
   ## <M>MEX</B>,  <N>CZE</B>
@@ -102,11 +109,14 @@ def html_to_txt( html, url: )
 
 
   ## remove b   - note: might include anchors (thus, call after anchors)
+  ###   use non-greedy match as default? e.g. .*? - why? why not?
   html = html.gsub( /<B>([^<]+)<\/B>/im ) do |_|
     puts " remove bold (b) >#{$1}<"
     ## "**#{$1}**"
     "#{$1}"  
   end
+
+
 
   ## replace preformatted (pre)
   html = html.gsub( /<PRE>|<\/PRE>/i ) do |match|
