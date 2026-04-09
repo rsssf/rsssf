@@ -10,56 +10,58 @@
 #    in tableso/oost2017.html   it should be João (windows-1252) and 
 #                                         NOT Joăo (iso-8859-2) 
 
-page, encoding
-tableso/oost75.html,  windows-1252
-tableso/oost76.html,  windows-1252
-tableso/oost77.html,  windows-1252
-tableso/oost78.html,  windows-1252
-tableso/oost79.html,  windows-1252
-tableso/oost80.html,  windows-1252
-tableso/oost81.html,  windows-1252
-tableso/oost82.html,  windows-1252
-tableso/oost83.html,  windows-1252
-tableso/oost84.html,  windows-1252
-tableso/oost85.html,  windows-1252
-tableso/oost86.html,  windows-1252
-tableso/oost87.html,  windows-1252
-tableso/oost88.html,  windows-1252
-tableso/oost89.html,  windows-1252
-tableso/oost90.html,  windows-1252
-tableso/oost91.html,  windows-1252
-tableso/oost92.html,  windows-1252
-tableso/oost93.html,  windows-1252
-tableso/oost94.html,  windows-1252
-tableso/oost95.html,  windows-1252
-tableso/oost96.html,  windows-1252
-tableso/oost97.html,  windows-1252
-tableso/oost98.html,  windows-1252
-tableso/oost99.html,  windows-1252
-tableso/oost00.html,  windows-1252
-tableso/oost01.html,  windows-1252
-tableso/oost02.html,  windows-1252
-tableso/oost03.html,  windows-1252
-tableso/oost04.html,  windows-1252
-tableso/oost05.html,  windows-1252
-tableso/oost06.html,  windows-1252
-tableso/oost07.html,  windows-1252
-tableso/oost08.html,  windows-1252
-tableso/oost09.html,  windows-1252
-tableso/oost2010.html,  windows-1252
-tableso/oost2011.html,  windows-1252
-tableso/oost2012.html,  windows-1252
-tableso/oost2013.html,  windows-1252
-tableso/oost2014.html,  windows-1252
-tableso/oost2015.html,  windows-1252
-tableso/oost2016.html,  windows-1252
-tableso/oost2017.html,  windows-1252
-tableso/oost2018.html,  windows-1252
-tableso/oost2019.html,  windows-1252
-tableso/oost2020.html,  windows-1252
-tableso/oost2021.html,  windows-1252
-tableso/oost2022.html,  windows-1252
-tableso/oost2023.html,  windows-1252
-tableso/oost2024.html,  windows-1252
-tableso/oost2025.html,  windows-1252
-tableso/oost2026.html,  windows-1252
+season,page,encoding
+1974/75,tableso/oost75.html,windows-1252
+1975/76,tableso/oost76.html,windows-1252
+1976/77,tableso/oost77.html,windows-1252
+1977/78,tableso/oost78.html,windows-1252
+1978/79,tableso/oost79.html,windows-1252
+1979/80,tableso/oost80.html,windows-1252
+1980/81,tableso/oost81.html,windows-1252
+1981/82,tableso/oost82.html,windows-1252
+1982/83,tableso/oost83.html,windows-1252
+1983/84,tableso/oost84.html,windows-1252
+1984/85,tableso/oost85.html,windows-1252
+1985/86,tableso/oost86.html,windows-1252
+1986/87,tableso/oost87.html,windows-1252
+1987/88,tableso/oost88.html,windows-1252
+1988/89,tableso/oost89.html,windows-1252
+1989/90,tableso/oost90.html,windows-1252
+1990/91,tableso/oost91.html,windows-1252
+1991/92,tableso/oost92.html,windows-1252
+1992/93,tableso/oost93.html,windows-1252
+1993/94,tableso/oost94.html,windows-1252
+1994/95,tableso/oost95.html,windows-1252
+1995/96,tableso/oost96.html,windows-1252
+1996/97,tableso/oost97.html,windows-1252
+1997/98,tableso/oost98.html,windows-1252
+1998/99,tableso/oost99.html,windows-1252
+1999/00,tableso/oost00.html,windows-1252
+2000/01,tableso/oost01.html,windows-1252
+2001/02,tableso/oost02.html,windows-1252
+2002/03,tableso/oost03.html,windows-1252
+2003/04,tableso/oost04.html,windows-1252
+2004/05,tableso/oost05.html,windows-1252
+2005/06,tableso/oost06.html,windows-1252
+2006/07,tableso/oost07.html,windows-1252
+2007/08,tableso/oost08.html,windows-1252
+2008/09,tableso/oost09.html,windows-1252
+2009/10,tableso/oost2010.html,windows-1252
+2010/11,tableso/oost2011.html,windows-1252
+2011/12,tableso/oost2012.html,windows-1252
+2012/13,tableso/oost2013.html,windows-1252
+2013/14,tableso/oost2014.html,windows-1252
+2014/15,tableso/oost2015.html,windows-1252
+2015/16,tableso/oost2016.html,windows-1252
+2016/17,tableso/oost2017.html,windows-1252
+2017/18,tableso/oost2018.html,windows-1252
+2018/19,tableso/oost2019.html,windows-1252
+2019/20,tableso/oost2020.html,windows-1252
+2020/21,tableso/oost2021.html,windows-1252
+2021/22,tableso/oost2022.html,windows-1252
+2022/23,tableso/oost2023.html,windows-1252
+2023/24,tableso/oost2024.html,windows-1252
+2024/25,tableso/oost2025.html,windows-1252
+2025/26,tableso/oost2026.html,windows-1252
+
+

@@ -22,7 +22,11 @@ opts = {
 
 code = args.shift  ## get first argument
 
-outdir = "./tmp2"
+outdir = "./tmp3"
+
+## outdir = "../england/tables"
+## outdir = "../europe/germany/tables"
+## outdir = "../europe/spain/tables"
 ## outdir = "../europe/austria/tables"
 ## outdir = "../worldcup/pages"
 

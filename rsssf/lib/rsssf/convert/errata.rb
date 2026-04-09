@@ -23,6 +23,11 @@ def errata_html( html )
   ##   tables/58full.html 
   html = html.gsub( '<N>CZE</B>', '<B>CZE</B>' ) 
 
+  ## quick fix - rm </ADDRESS>
+  ##   tablesb/braz94.html
+  html = html.gsub( '</ADDRESS>', ''  )
+
+  
   html
 end
 

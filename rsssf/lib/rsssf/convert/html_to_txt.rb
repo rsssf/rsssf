@@ -32,11 +32,28 @@ def html_to_txt( html, url: )
                    /xim, 
                    '' )
 
+  ## special case
+  ## cut off everything before <head/>
+  ##   used in braz93.html, braz98.html
+  html = html.sub( /.+?
+                     <HEAD\/>
+                       \s*
+                   /xim, '' )    
+
+
+
 
   ## cut off everything after body (closing)
   html = html.sub( /<\/BODY>.*/im, '' )
-
   
+  ## special case
+  ## cut off everything after </html> (closing)
+  ##   used in braz93.html, braz98.html
+  html = html.sub( /<\/HTML>.*/im, '' )
+
+
+
+
   ## quick fix
   ## <title>World Cup 1950 qualifications</title>
   ## <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
@@ -112,6 +129,12 @@ def html_to_txt( html, url: )
   ## was - "**#{$1}**"
   html = html.gsub( /<B>(.*?)<\/B>/im ) do |_|
     puts " remove bold (b) >#{$1}<"
+    "#{$1}"  
+  end
+
+  ## <strong></strong>
+  html = html.gsub( /<STRONG>(.*?)<\/STRONG>/im ) do |_|
+    puts " remove strong (strong) >#{$1}<"
     "#{$1}"  
   end
 
