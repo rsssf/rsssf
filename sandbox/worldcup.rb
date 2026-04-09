@@ -7,7 +7,10 @@ require_relative 'helper'
 
 
 
-pages = read_csv( "./sandbox/worldcup.csv" )
+pages = []
+pages += read_csv( "./sandbox/worldcup.csv" )
+pages += read_csv( "./sandbox/worldcup_quali.csv" )
+
 
 
 pages.each do |config|

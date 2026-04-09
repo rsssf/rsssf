@@ -46,6 +46,10 @@ def html_to_txt( html, url: )
   html = html.sub( /<META .*?>/i, '' )
 
 
+  ## (auto-)fix known types / errors
+  ##  todo - pass in/along filename/url too - why? why not?
+  html = errata_html( html )
+
 
 
   ## remove cite
@@ -86,10 +90,7 @@ def html_to_txt( html, url: )
 
 
 
-  ## quick fix
-  ##   <H1>Quarterfinals</H2>
-  html = html.gsub( '<H1>Quarterfinals</H2>', '<H2>Quarterfinals</H2>' ) 
-
+ 
   html = replace_heading( html )
 
 
@@ -100,12 +101,6 @@ def html_to_txt( html, url: )
     puts " remove italic (i) >#{$1}<"
     "#{$1}"
   end
-
-  ## quick fix
-  ## <M>MEX</B>,  <N>CZE</B>
-  ##  change <M>,<N> to <B>
-  html = html.gsub( '<M>MEX</B>', '<B>MEX</B>' ) 
-  html = html.gsub( '<N>CZE</B>', '<B>CZE</B>' ) 
 
 
   ## remove b   - note: might include anchors (thus, call after anchors)
@@ -148,91 +143,7 @@ def html_to_txt( html, url: )
   html = remove_emails( html )
 
 
-## beautify 
-##  ‹§2fin›
-##
-## == Semifinals
-##
-##  merge anchor (a name) with heading into one line e.g.
-##       => 
-##  == Semifinals  ‹§2fin›
-
-   html = html.gsub( /\s*
-                          (?<name>‹§
-                                    [^›]+?
-                                 ›)
-                      \s*
-                          (?<heading>={2,}
-                              [^=\n]+? 
-                          )
-                       \n
-                       \s*/ixm ) do |match|
-   
-           m = Regexp.last_match
- 
-           match = match.gsub( "\n", '$$' )  ## make newlines visible for debugging
-           puts "   mergeing anchor (a name) with heading into one line - >#{match}<" 
-
-           "\n\n#{m[:heading]}  #{m[:name]}\n\n"
-    end
-
-###
-## 
-## beautify 
-##  ‹§argsquad›Argentine Squad Full Info
-##  ‹§eng›ENGLAND
-##
-##
-##  reformat anchor (a name) start line with text  e.g.
-##       => 
-##  Argentine Squad Full Info  ‹§argsquad›
-##  ENGLAND  ‹§eng›
-
-   html = html.gsub( /\n
-                          (?<name>‹§
-                                    [^›]+?
-                                 ›)
-                      [ ]*
-                          (?<text>[^\n]+? 
-                          )
-                       \n
-                       /ixm ) do |match|
-   
-           m = Regexp.last_match
- 
-           match = match.gsub( "\n", '$$' )  ## make newlines visible for debugging
-           puts "   move anchor (a name) starting line with text to end - >#{match}<"
-
-           "\n#{m[:text]}  #{m[:name]}\n"
-    end
-
-###
-## beautify heading
-##   ==== ‹§gra›Group A
-##     =>
-##   ==== Group A  ‹§gra›
-
-   html = html.gsub( /\n
-                          (?<heading_marker>
-                               ={2,})
-                               [ ]*
-                          (?<name>‹§
-                                    [^›]+?
-                                 ›)
-                             [ ]*
-                          (?<heading_text>[^\n]+? 
-                          )
-                       \n
-                       /ixm ) do |match|
-   
-           m = Regexp.last_match
- 
-           match = match.gsub( "\n", '$$' )  ## make newlines visible for debugging
-           puts "   move anchor (a name) in heading to end - >#{match}<"
-
-           "\n#{m[:heading_marker]} #{m[:heading_text]}  #{m[:name]}\n"
-    end
-
+  html = beautify_anchors( html )
 
 
   ## check for html tags
@@ -256,6 +167,9 @@ def html_to_txt( html, url: )
     end
 
 
+  ##
+  ## todo/fix
+  ##    move up-front - kind of preprocessing (not post) - why? why not?
 
   ## cleanup whitespaces
   ##   todo/fix:  convert newline in space first
@@ -268,6 +182,8 @@ def html_to_txt( html, url: )
      txt << line
      txt << "\n"
   end
+
+  txt = errata_txt( txt )
 
   txt
 end # method html_to_text

@@ -28,11 +28,13 @@ require_relative 'rsssf/download'
 require_relative 'rsssf/convert/convert'
 require_relative 'rsssf/convert/html_entities'
 require_relative 'rsssf/convert/html_to_txt'
+require_relative 'rsssf/convert/errata'
 require_relative 'rsssf/convert/html_to_txt/replace_heading'
 require_relative 'rsssf/convert/html_to_txt/replace_a_name'
 require_relative 'rsssf/convert/html_to_txt/replace_a_href'
 require_relative 'rsssf/convert/html_to_txt/replace_hr'
 require_relative 'rsssf/convert/html_to_txt/remove_emails'
+require_relative 'rsssf/convert/html_to_txt/beautify_anchors'
 
 
 

@@ -85,13 +85,9 @@ class PageConverter
     html = html.gsub( "&Uuml;", 'Ü' )
     html = html.gsub( "&szlig;", 'ß' )
   
-    ## typos / autofix - keep - why? why not?
-    html = html.gsub( "&oulm;", 'ö' )    ## support typo in entity (&ouml;)
-    html = html.gsub( "&uml;",  'ü' )    ## support typo in entity (&uuml;) - why? why not?
-    html = html.gsub( "&slig;", "ß" )    ## support typo in entity (&szlig;)
-    html = html.gsub( "&aaacute;", "á" )  ## typo for &aacute; 
-    html = html.gsub( "&nitlde;", "ñ" )  ## typ for &ntilde;   
-   
+
+    html = errata_html_entities( html )
+
 
     ENTITIES.each_slice(2) do |str, entity|
        html = html.gsub( entity, str )

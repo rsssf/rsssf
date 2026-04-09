@@ -38,15 +38,12 @@ HEADING_RE = %r{\A
 ## allow optional winner or qualified team in bracket
 ##   e.g. [West Germany]
 ##     
-###  fix-fix-fix!!!         
-##  note - allow  [Brazil   -- better fix in 70q.txt!! 
-##
 ## note - uses single-quote ('') string - backslash is backslash
 
 OPT_GROUP_NOTES = %q{
                   (?: 
                         [ ]*
-                     \[  [^\]]+  (?: \]|$)                     
+                     \[  [^\]]+  \]                     
                   )?
                  }
 
