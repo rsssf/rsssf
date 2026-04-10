@@ -1,0 +1,48 @@
+##   Current International Tournaments  
+## see https://www.rsssf.org/curtour.html
+
+##  note - if no encoding listed defaulting to windows-1252
+
+
+##
+## fix  - (auto-)check for bom  for  utf-16le encoding!!!  ÿþ
+###  "ÿþ<\u0000!\u0000D\u0000O\u0000C\u0000T\u0000Y
+##   \u0000P\u0000E\u0000 \u0000H\u0000T\u0000M\u0000L\u0000 \u0000P\u0000U\u0000B\u0000L\u0000I\u0000C\u0000 \u0000\"\u0000-\u0000/\u0000/\u0000W\u00003\u0000C\u0000/\u0000/\u0000D\u0000T\u0000D\u0000 \u0000H\u0000T\u0000M\u0000L\u0000 \u00003\u0000.\u00002\u0000 \u0000F\u0000i\u0000n\u0000a\u0000l\u0000/\u0000/\u0000E\u0000N\u0000\"\u0000>\u0000\r\u0000\n" +
+
+
+page, country, encoding
+
+#####
+# Tournaments for Countries
+
+tables/2022f.html, World Cup 2022
+tables/2022q.html, World Cup 2022 Qualifying
+tablesi/intconcup.html, FIFA/Confederations Cup 2017
+
+tablesw/wwc2023f.html, Women World Cup 2023
+tables/2024e.html, European Championship 2024
+tables/2025uefanl.html, UEFA Nations League 2024/25
+tablese/eur-women2025.html, European Women Championship 2025,  utf-16le
+tables/2025wuefanl.html, UEFA Women Nations League 2025
+
+tables/2024sa.html, Copa América 2024
+tables/2025gc.html, Gold Cup 2025
+tables/2025concanl.html, CONCACAF Nations League 2024/25
+
+tables/2025a.html, African Nations Cup 2026
+tables/2024anch.html, African Nations Championship 2024/25
+
+tables/2023asch.html, Asian Nations Cup 2024,  utf-16le
+
+tables/2024oc.html, Oceanian Nations Cup 2024
+
+
+###
+## Tournaments for Clubs
+
+tablesf/fifa-icc2025.html, FIFA Intercontinental Cup 2025
+tablesf/fifa-wcc2025.html, FIFA Club World Cup 2025
+
+tablesc/cacups2026.html,  CONCACAF Champions Cup 2026
+tablesa/afcup2023.html, African Cups 2022/23
+tablesa/ascup2022.html, Asian Cups 2022/23

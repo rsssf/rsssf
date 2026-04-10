@@ -1,9 +1,10 @@
 ##   Current Domestic Results
 ## see https://www.rsssf.org/curdom.html
 
-##  note - for the encoding windows-1252 is assumed
 
-page, country, encoding
+##  note - if no encoding listed defaulting to windows-1252
+
+page, title, encoding
 
 
 #######

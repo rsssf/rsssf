@@ -22,8 +22,8 @@ opts = {
 
 code = args.shift  ## get first argument
 
-outdir = "./tmp-curdom"
-## outdir = "../tables"
+## outdir = "./tmp-curtour"
+outdir = "../tables"
 
 ## outdir = "../brazil/tables"
 ## outdir = "../england/tables"
@@ -56,13 +56,12 @@ tablesk/kyrg2026.html
 tablest/taji2026.html
 tablest/turkm2025.html
 ].include?( page )
-  ## if encoding != 'windows-1252'  ## quick fix - always (force) download
-      puts "==> [#{i+1}/#{pages.size}] download #{config.pretty_inspect}..."
-      Rsssf.download_page( url, encoding: encoding )
 =end
 
-
-  if Webcache.cached?( url ) && opts[:force] == false 
+   if encoding != 'windows-1252'  ## quick fix - always (force) download
+      puts "==> [#{i+1}/#{pages.size}] download #{config.pretty_inspect}..."
+      Rsssf.download_page( url, encoding: encoding )  
+  elsif Webcache.cached?( url ) && opts[:force] == false 
       puts "   CACHE HIT - #{url}"
   else
       puts "==> [#{i+1}/#{pages.size}] download #{config.pretty_inspect}..."

@@ -17,7 +17,8 @@ pages += read_csv( "./config/worldcup.csv" )
 pages += read_csv( "./config/worldcup_quali.csv" )
 =end
 
-pages += read_csv( "./config/curdom.csv" )
+## pages += read_csv( "./config/curdom.csv" )
+pages += read_csv( "./config/curtour.csv" )
 pp pages
 
 
@@ -91,7 +92,7 @@ pages.each do |config|
 end
 
 
-write_csv( "./config/curdom-pages.csv", rows, headers: ['page', 'title', 'updated', 'pre_count'] )
+write_csv( "./config/curtour-pages.csv", rows, headers: ['page', 'title', 'updated', 'pre_count'] )
 
 
 
