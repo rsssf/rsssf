@@ -52,5 +52,14 @@ ROUND_PAT = %q{
              ## standalone replay
              | Replay
 
+             ## groups
+             | Group [ ] (?:   [a-z]             ## e.g  group a, group b,
+                          | \d{1,2}            ##      group 1, group 2,
+                          | i | ii | iii | iv  ##      group i, group ii, etc.
+                         )
+
+             ## standalone playoff
+             | Playoff                
+
 }        
 

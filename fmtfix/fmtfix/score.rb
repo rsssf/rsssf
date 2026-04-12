@@ -11,6 +11,8 @@ def handle_score( txt )
 
    ###  [aet]  => (aet)
     txt = txt.gsub( '[aet]', '(aet)' )
+   ##   [asdet] => (asdet)
+    txt = txt.gsub( '[asdet]', '(asdet)' )
 
   
    ## [aet, 2-3 pen] => (aet, 2-3 pen)

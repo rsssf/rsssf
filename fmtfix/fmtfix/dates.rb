@@ -52,13 +52,22 @@ DATE_LIST_PAT = %Q{
 ## Oct 23 1999
 ## Nov 20 1999
 ## Apr 1 2000
+##
+##  note - allow - optional comma
+##   Aug 18, 2004
+##   Sep 4, 2004
+##   Sep 8, 2004
+##   Nov 19, 2003
+##   Oct 15, 2008
 
 ## note - big Q ("") requires double backslash escapes!!
 DATE_YYYY_PAT = %Q{
                             #{DATE_PAT}
-                             [ ]
+                               ,?
+                               [ ]
                             \\d{4}                           
                            } 
+
 
 ###
 ## 

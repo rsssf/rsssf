@@ -66,7 +66,7 @@ end
 
 def main( args,
              path: ['.'], 
-             outdir: './tmp' 
+             update: false
               )
  
    args.each_with_index do |name,i|
@@ -76,6 +76,7 @@ def main( args,
 
         filename = find_file( name, path: path )
 
+        outdir = './tmp-fmtfix' 
         fmtfix( filename, outdir: outdir )
       else
         ## use config
@@ -97,6 +98,32 @@ def main( args,
             inname = "#{dirname}/#{basename}.txt"
             filename = find_file( inname, path: path )
 
+            
+            outdir = if update
+                          ## check for dedicated repos
+                          ##  otherwise use ../world/pages
+                         if name == 'de'
+                            '../clubs/germany/pages'
+                         elsif name == 'eng'
+                            '../clubs/england/pages'
+                         elsif name == 'es'
+                            '../clubs/spain/pages'
+                         elsif name == 'at'
+                            '../clubs/austria/pages'
+                         elsif name == 'br'
+                            '../clubs/brazil/pages'
+                         elsif name == 'worldcup' || 
+                               name == 'worldcup_full' ||
+                               name == 'worldcup_quali'
+                            '../worldcup/pages'
+                         else
+                            '../world/pages'
+                         end                            
+                     else
+                        ## e.g. ./tmp-eng, ./temp-worldcup etc.
+                        "./tmp-#{name}" 
+                     end
+
             fmtfix( filename, outdir: outdir )
          end
       end
@@ -116,15 +143,28 @@ PATH = [
 
 args = ARGV
 
-## outdir = '../clubs/germany/pages'
-## outdir = '../clubs/england/pages'
-## outdir = '../clubs/spain/pages'
-## outdir = '../clubs/austria/pages'
-outdir = './tmp-fmtfix'
+
+opts = {  update:  false,
+       }
+
+parser = OptionParser.new do |parser|
+  parser.banner = "Usage: #{$PROGRAM_NAME} [options] <.txt files> or <config slugs>"
+
+   parser.on( "-u", "--update",
+               "turn on update; write to production repo (default: #{opts[:update]})" ) do |update|
+     opts[:update] = true
+   end
+end
+
+
+parser.parse!( args )
+
+
 
 main( args, 
-        path: PATH,
-        outdir: outdir )
+        path:   PATH,
+        update: opts[:update] )
+
 
 puts "bye" 
 

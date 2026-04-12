@@ -8,9 +8,15 @@ OPT_REF = %q{
 
 
 
+###
+### note - allow optional colon e.g.
+##     Playoff:
+##     Round 21:
+
 HEADER_ROUND_RE = %r{\A
         [ ]*
          (?<round> #{ROUND_PAT})
+              :?   ## note - allow optional colon (:)  e.g. Playoff:
             #{OPT_REF}
          [ ]*
 \z}ix
@@ -36,6 +42,22 @@ HEADER_DATE_RE = %r{\A
       [ ]*
 \z}ix
 
+#### alternate daher header with year (brackets)
+## [Aug 18, 2004]
+## [Sep 4, 2004]
+## [Sep 8, 2004]
+## [Nov 19, 2003]
+## [Oct 15, 2008]
+## [Mar 26, 2004]
+
+HEADER_DATE_IIA_RE = %r{\A
+      [ ]*
+      \[
+          (?<date> #{DATE_YYYY_PAT}) 
+      \]
+      [ ]*
+\z}ix
+
 ## alternate date header (no brackets incl. year)
 ##     Aug 7 1999
 ##     Sep 4 1999
@@ -43,11 +65,14 @@ HEADER_DATE_RE = %r{\A
 ##    Nov 20 1999
 ##    Apr 1 2000
 
-HEADER_DATE_II_RE = %r{\A
+HEADER_DATE_IIB_RE = %r{\A
       [ ]*
        (?<date> #{DATE_YYYY_PAT}) 
       [ ]*
 \z}ix
+
+
+
 
 
 ## alternate date header (weekkday day mon)
@@ -94,6 +119,7 @@ HEADER_DATE_ALT_RE = %r{\A
 ## Round 2 [Aug 4-6]
 ## Round 1 [Aug 13-16]
 ## Round 2 [Aug 20-23]
+
 
 HEADER_ROUND_N_DATE_RE = %r{\A
         [ ]*

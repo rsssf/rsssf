@@ -61,9 +61,13 @@ def autofix( txt )
                    ## e.g. [Nov 20]
                    ## e.g. [April 1]
                    "_ #{m[:date]} _\n" 
-                 elsif m = HEADER_DATE_II_RE.match(line.rstrip)
-                    ## e.g. Nov 20 1999
-                    ##      Apr 1 2000
+                 elsif m = HEADER_DATE_IIA_RE.match(line.rstrip)
+                    ## e.g  [Aug 18, 2004]  or [Aug 18 2004]
+                    ##      [Sep 4, 2004]   or [Sep 4 2004]
+                   "_ #{m[:date]} _\n" 
+                 elsif m = HEADER_DATE_IIB_RE.match(line.rstrip)
+                    ## e.g. Nov 20 1999  or Nov 20, 1999
+                    ##      Apr 1 2000   or Apr 1, 2000
                    "_ #{m[:date]} _\n" 
                  elsif m = HEADER_DATE_III_RE.match(line.rstrip)
                     ## e.g. [Wed 6 Feb]
