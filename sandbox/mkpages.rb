@@ -6,20 +6,30 @@
 require_relative 'helper'
 
 
-pages = []
-=begin
-pages += read_csv( "./config/eng.csv" )
-pages += read_csv( "./config/es.csv" )
-pages += read_csv( "./config/de.csv" )
-pages += read_csv( "./config/at.csv" )
-pages += read_csv( "./config/br.csv" )
-pages += read_csv( "./config/worldcup.csv" )
-pages += read_csv( "./config/worldcup_quali.csv" )
-=end
 
-## pages += read_csv( "./config/curdom.csv" )
-pages += read_csv( "./config/curtour.csv" )
-pp pages
+##
+## note - use File.file? instead of File.exist? 
+##            (checks if file exists AND file is a file NOT a directory)
+
+
+def find_file( name, path: )
+    return name    if File.file?( name )
+
+    path.each do |dir|
+        filepath = File.join( dir, name )
+        return filepath   if File.file?(  filepath )
+    end
+
+    puts "!! ERROR - file <#{name}> not found; looking in path: #{path.inspect}"
+    exit 1
+end
+
+
+
+
+
+
+
 
 
 TITLE_RE = %r{
@@ -65,39 +75,171 @@ def find_last_updated( html )
 end
 
 
-rows = []
-
-pages.each do |config|
-  encoding = config['encoding']
-  page     = config['page']
-  url      = "https://rsssf.org/#{page}"
-
-  html = Webcache.read( url )
-  ##  note - quick-fix known html errors
-  ##   e.g  ##  <</TITLE> in tablesb/braz88.html 
-  html = Rsssf::PageConverter.errata_html( html )
 
 
-  title        = find_title( html )
-  last_updated = find_last_updated( html )
+def mkpages( filename )
+
+  pages = read_csv( filename )
+
+  rows = []
+
+  pages.each do |config|
+    encoding = config['encoding']
+    page     = config['page']
+    url      = "https://rsssf.org/#{page}"
+
+    html = Webcache.read( url )
+
+    ##  note - quick-fix known html errors
+    ##   e.g  ##  <</TITLE> in tablesb/braz88.html 
+    html = Rsssf::PageConverter.errata_html( html )
 
 
-   ## check for number of pre(formatted) blocks
-   pres =  html.scan( /<PRE>/i )
-   pre_count = pres.size.to_s
+    title        = find_title( html )
+    last_updated = find_last_updated( html )
 
-   puts "#{page}  =>  #{title}    #{last_updated}  #{pre_count}"
 
-   rows << [page, title, last_updated, pre_count]
+     ## check for number of pre(formatted) blocks
+     pres =  html.scan( /<PRE>/i )
+     pre_count = pres.size.to_s
+
+     puts
+     puts "==> #{page}  -  #{title}    #{last_updated}"
+
+     ## load .txt 
+     tables_dir = '../tables'
+
+     dirname  = File.dirname( page )
+     basename = File.basename( page, File.extname( page) ) 
+     txt = read_text( "#{tables_dir}/#{dirname}/#{basename}.txt" )
+
+     hr =  txt.scan( /^[ ]* 
+                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-= 
+                       [ ]* $/x )
+
+     hr_count = hr.size.to_s 
+
+     ##
+     ## note - ascii hr replacement is
+     ##            =-=-= !!!!!!
+
+     h1 =  txt.scan( /^[ ]* =    (?! [=-]) .+? $/x )
+     h2 =  txt.scan( /^[ ]* ={2} (?! [=-]) .+? $/x )
+     h3 =  txt.scan( /^[ ]* ={3} (?! [=-]) .+? $/x )
+     h4 =  txt.scan( /^[ ]* ={4} (?! [=-]) .+? $/x )
+     h5 =  txt.scan( /^[ ]* ={5} (?! [=-]) .+? $/x )
+     h6 =  txt.scan( /^[ ]* ={6} (?! [=-]) .+? $/x )
+  
+     hx =  txt.scan( /^[ ]* 
+                          (?<marker>={1,6})  (?! [=-]) 
+                           [ ]*
+                          (?<text>.+?)
+                       [ ]*
+                     $/x )
+   
+     h_count = "#{h1.size==0 ? '-' : h1.size}/" +
+               "#{h2.size==0 ? '-' : h2.size}/" +
+               "#{h3.size==0 ? '-' : h3.size}/" +
+               "#{h4.size==0 ? '-' : h4.size}/" +
+               "#{h5.size==0 ? '-' : h5.size}/" +
+               "#{h6.size==0 ? '-' : h6.size}"
+
+
+     puts "pre    " +
+          "#{h1.size==0 ? '-' : 'h1'}/" +
+          "#{h2.size==0 ? '-' : 'h2'}/" +
+          "#{h3.size==0 ? '-' : 'h3'}/" +
+          "#{h4.size==0 ? '-' : 'h4'}/" +
+          "#{h5.size==0 ? '-' : 'h5'}/" +
+          "#{h6.size==0 ? '-' : 'h6'}" +
+          "   hr"
+     
+          puts "#{pre_count}    #{h_count}    #{hr_count}:"
+     hx.each do |marker,text|
+        print "  (%d) %-6s" % [marker.size, marker]
+        print "  "
+        print text
+        print "\n"
+     end
+=begin     
+     puts "h1: #{h1.pretty_inspect}"  if h1.size > 0
+     puts "h2: #{h2.pretty_inspect}"  if h2.size > 0
+     puts "h3: #{h3.pretty_inspect}"  if h3.size > 0
+     puts "h4: #{h4.pretty_inspect}"  if h4.size > 0
+     puts "h5: #{h5.pretty_inspect}"   if h5.size > 0
+     puts "h5: #{h6.pretty_inspect}"   if h6.size > 0
+=end   
+ 
+   ## count anchors (aka a name)
+   ##  e.g 
+      aname = txt.scan( /‹§  [^›]+  ›/x )
+     aname_count = aname.size.to_s
+     puts "aname #{aname_count}:"
+     puts aname.join( ',' )
+
+     rows << [page, title, last_updated, pre_count, h_count, hr_count, aname_count]
+  end
+   rows
 end
 
 
-write_csv( "./config/curtour-pages.csv", rows, headers: ['page', 'title', 'updated', 'pre_count'] )
 
+
+PATH = [
+   './config',
+]
+
+args = ARGV
+
+outdir = './config'
+
+
+
+rows = []
+
+args.each do |arg|
+   filename = find_file( "#{arg}.csv", path: PATH )
+   rows += mkpages( filename )
+end
+
+
+outname = if args.size > 1 
+              'pages.csv'   # generic pages
+          else
+              arg = args[0]
+              ## basename = File.basename( arg, File.extname( arg))
+              "#{arg}-pages.csv"
+          end
+
+headers = ['page', 
+           'title', 
+           'updated', 
+           'pre_count',
+           'h_count',
+           'hr_count',
+           'aname_count']
+
+write_csv( "#{outdir}/#{outname}", rows, headers: headers )
 
 
 puts "bye"
 
+
+
+__END__
+
+pages = []
+pages += read_csv( "./config/eng.csv" )
+pages += read_csv( "./config/es.csv" )
+pages += read_csv( "./config/de.csv" )
+pages += read_csv( "./config/at.csv" )
+pages += read_csv( "./config/br.csv" )
+pages += read_csv( "./config/worldcup.csv" )
+pages += read_csv( "./config/worldcup_quali.csv" )
+
+## pages += read_csv( "./config/curdom.csv" )
+## pages += read_csv( "./config/curtour.csv" )
+pp pages
 
 
 

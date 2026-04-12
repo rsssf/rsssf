@@ -2,3 +2,90 @@
 
 
 
+## command line tools
+
+
+**prepare**
+
+use `prepare` to download (if not cached or forced) 
+and convert tables (in .html to .txt) 
+
+pass in a pages config (e.g. 
+[eng](config/eng.csv), 
+[de](config/de.csv), 
+[worldcup](config/worldcup.csv), etc.)  with a list of table files
+in a comma-separated values (csv) file. 
+
+
+
+```
+$ ruby sandbox/prepare.rb eng
+$ ruby sandbox/prepare.rb --force eng       ## (force) redownload all
+```
+
+note - the web pages get (by default) cached in `./cache`
+and the converted tables (in .txt ) get written
+to the default outdir  `../tables`
+
+tip: see <https://github.com/rsssf/tables> for a public online copy / mirror of converted 
+tables in .txt (preserving the original format).
+
+
+
+
+**mkpages**
+
+use `mkpages` for statistics and document structure for tables 
+
+pass in a pages config (e.g. 
+[eng](config/eng.csv), 
+[de](config/de.csv), 
+[worldcup](config/worldcup.csv), etc.) with a list of table files
+in a comma-separated values (csv) file. 
+
+
+
+
+```
+$ ruby sandbox/mkpages.rb eng
+```
+
+note - default search path for pages config is `./config`
+and the default outdir for the page stats is `./config` the same.
+the outname defaults to `<slug>-pages.csv`, that is, `eng`  becomes `eng-pages.csv`.
+
+
+
+**fmtfix**
+
+use `fmtfix` to convert .txt tables (original format only in .txt) 
+to .txt pages (applied "autofixes" for football.txt parsing)
+
+pass in (i) individual table files e.g  
+[eng2010.txt](https://github.com/rsssf/tables/blob/master/tablese/eng2010.txt) or 
+[34f.txt](https://github.com/rsssf/tables/blob/master/tables/30f.txt)   
+or (ii) a pages config (e.g. 
+[eng](config/eng.csv), 
+[de](config/de.csv), 
+[worldcup](config/worldcup.csv), etc.)
+with a list of table files
+in a comma-separated values (csv) file. 
+
+
+```
+$ ruby fmtfix/fmtfix.rb eng2010.txt eng2011.txt
+$ ruby fmtfix/fmtfix.rb eng 
+```
+
+
+note - the outdir for pages config default to `./tmp-<slug>` e.g. `eng` becomes `./tmp-eng` and so on;  for individual table files the outdir defaults to `./tmp-fmtfix` 
+
+
+tip: see <https://github.com/rsssf/clubs>,
+<https://github.com/rsssf/world>,
+<https://github.com/rsssf/worldcup>,
+for public online copies / mirrors for .txt pages with applied "autofixes" 
+for football.txt parsing  (look inside the /pages directories).
+
+
+
