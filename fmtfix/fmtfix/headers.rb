@@ -79,13 +79,25 @@ HEADER_DATE_IIB_RE = %r{\A
 ## [Wed 6 Feb]
 ## [Sat 16 Feb]
 ## [Tue 26 Feb]
-HEADER_DATE_III_RE = %r{\A
+HEADER_DATE_IIIA_RE = %r{\A
       [ ]*
        \[
        (?<date> #{DATE_WDAY_DAY_MON_PAT}) 
         \]
       [ ]*
 \z}ix
+
+## [Wed Feb 6]
+## [Sat Feb 16]
+## [Tue Feb 26]
+HEADER_DATE_IIIB_RE = %r{\A
+      [ ]*
+       \[
+       (?<date> #{DATE_WDAY_MON_DAY_PAT}) 
+        \]
+      [ ]*
+\z}ix
+
 
 
 ###

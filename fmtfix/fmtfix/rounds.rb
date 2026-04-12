@@ -29,7 +29,8 @@ ROUND_PAT = %q{
              | Match [ ] for [ ] third [ ] place 
 
              | Final 
-               (?: [ ] group | pool | replay)? 
+                 (?: [ ] (?: group | pool | replay))? 
+             | Finals 
              
              | Super [ ]? cup [ ] final
 
@@ -43,10 +44,12 @@ ROUND_PAT = %q{
              | Europa [ ] league [ ] playoff 
              | Conference [ ] league [ ] playoff
              | Promotion/relegation [ ] playoff
-             
+
+             | (?: First | Second | Third) [ ] stage
+
              ## standalone legs
-             | First [ ] legs? 
-             | Second [ ] legs?
+             | (?: First | Second) [ ] legs? 
+                     (?: [ ] replay)?      ## e.g.  Second leg replay 
 
              
              ## standalone replay

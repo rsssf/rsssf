@@ -1,10 +1,18 @@
 
 
+WDAY_NAMES_PAT = %q{
+                      (?:       Mon
+                              | Tue
+                              | Wed
+                              | Thur | Thu 
+                              | Fri
+                              | Sat
+                              | Sun
+                            )
+}
 
-
-## classic date pattern
-DATE_PAT = %q{
-                           (  Jan
+MONTH_NAMES_PAT   = %q{  
+                      (?:     Jan
                             | Feb
                             | March | Mar
                             | April | Apr 
@@ -15,9 +23,17 @@ DATE_PAT = %q{
                             | Sept | Sep
                             | Oct
                             | Nov
-                            | Dec )
-                             [ ]      
-                            \d{1,2}                           
+                            | Dec 
+                        )
+} 
+
+
+## classic date pattern
+###  e.g. Jan 1
+##        Dec 31
+
+DATE_PAT = %Q{
+              #{MONTH_NAMES_PAT} [ ] \\d{1,2}                           
 }
 
 
@@ -25,9 +41,20 @@ DATE_PAT = %q{
 ## Aug 4-6
 ## Aug 13-16
 ## Aug 20-23
+##   -or-
+## Jul 30-Aug 1
+## Sep 30-Oct 1
+## Sep 29-Oct 1
+## Mar 30-Apr 1
+
+
 DATE_RANGE_PAT = %Q{
                           #{DATE_PAT}
                               -
+                      (?:   ## optional month
+                            #{MONTH_NAMES_PAT} 
+                               [ ] 
+                      )?       
                             \\d{1,2}
 }
 
@@ -38,12 +65,31 @@ DATE_RANGE_PAT = %Q{
 ## Mar 4, 5
 ## Mar 11, 12
 ## Apr 1, 2
+##  -or-
+## Nov 24 and 27  - use in br
+## Nov 24 and 28
+## - or - 
+## Feb 27 and Mar 7
+## Feb 28 and Mar 7
+
+
+
+##  fix/fix/fix
+## change to 
+##  DATE_LEG_PAT !!!   (if only two dates possible)
 
 DATE_LIST_PAT = %Q{
                           #{DATE_PAT}
-                              ,[ ]?
+                              (?:        , [ ]?
+                                   | [ ] and [ ]
+                               )
+                            (?:   ## optional month
+                                #{MONTH_NAMES_PAT}
+                                  [ ] 
+                             )?       
                             \\d{1,2}
 }
+
 
 
 
@@ -74,28 +120,24 @@ DATE_YYYY_PAT = %Q{
 ## Wed 6 Feb
 ## Sat 16 Feb
 ## Tue 26 Feb
-DATE_WDAY_DAY_MON_PAT  = %q{
-                            (   Mon
-                              | Tue
-                              | Wed
-                              | Thu
-                              | Fri
-                              | Sat
-                              | Sun
-                            )
-                             [ ]      
-                            \d{1,2}
-                             [ ]      
-                           (  Jan
-                            | Feb
-                            | March | Mar
-                            | April | Apr 
-                            | May
-                            | June | Jun
-                            | July | Jul
-                            | Aug
-                            | Sept | Sep
-                            | Oct
-                            | Nov
-                            | Dec )                            
+DATE_WDAY_DAY_MON_PAT  = %Q{
+                             #{WDAY_NAMES_PAT}
+                                [ ]      
+                              \\d{1,2}
+                                 [ ]
+                            #{MONTH_NAMES_PAT}
 }
+
+###
+## 
+## Wed Feb 6
+## Sat Feb 16
+## Tue Feb 26
+DATE_WDAY_MON_DAY_PAT  = %Q{
+                             #{WDAY_NAMES_PAT}
+                                 [ ]
+                            #{MONTH_NAMES_PAT}     
+                                 [ ]      
+                              \\d{1,2}
+}
+

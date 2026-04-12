@@ -58,10 +58,10 @@ tablest/turkm2025.html
 ].include?( page )
 =end
 
-   if encoding != 'windows-1252'  ## quick fix - always (force) download
-      puts "==> [#{i+1}/#{pages.size}] download #{config.pretty_inspect}..."
-      Rsssf.download_page( url, encoding: encoding )  
-  elsif Webcache.cached?( url ) && opts[:force] == false 
+##   if encoding != 'windows-1252'  ## quick fix - always (force) download
+##      puts "==> [#{i+1}/#{pages.size}] download #{config.pretty_inspect}..."
+##      Rsssf.download_page( url, encoding: encoding )  
+  if Webcache.cached?( url ) && opts[:force] == false 
       puts "   CACHE HIT - #{url}"
   else
       puts "==> [#{i+1}/#{pages.size}] download #{config.pretty_inspect}..."

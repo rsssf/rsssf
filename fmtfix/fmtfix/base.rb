@@ -69,9 +69,13 @@ def autofix( txt )
                     ## e.g. Nov 20 1999  or Nov 20, 1999
                     ##      Apr 1 2000   or Apr 1, 2000
                    "_ #{m[:date]} _\n" 
-                 elsif m = HEADER_DATE_III_RE.match(line.rstrip)
+                 elsif m = HEADER_DATE_IIIA_RE.match(line.rstrip)
                     ## e.g. [Wed 6 Feb]
                     ##      [Sat 16 Feb]
+                   "_ #{m[:date]} _\n" 
+                 elsif m = HEADER_DATE_IIIB_RE.match(line.rstrip)
+                    ## e.g. [Wed Feb 6]
+                    ##      [Sat Feb 16]
                    "_ #{m[:date]} _\n" 
                  elsif m = HEADER_DATE_ALT_RE.match(line.rstrip)
                     ## e.g. [07-09]  
@@ -100,112 +104,7 @@ def autofix( txt )
 
  
 
-
-   ##   [15' Barisic, 80' Gilewicz; 10' (og) Barisic]
-   ##  try (simple) goal line
-   ##   note keep leading spaces / indent
-   txt = txt.gsub( %r{^
-                     ([ ]*)
-                       \[
-                        ( .*? 
-                           \b\d{1,3}'  ## incl. minute 
-                          .*?
-                        )
-                      \]
-                     [ ]*
-                    $}ix, 
-                    '\1(\2)' )
-
-  ##  try (simple double) goal line
-   ##   note keep leading spaces / indent
-  ## [21' Dospel, 42' and 64' Mayrleb, 51' Datoru, 72' Sobczak; 25' and
-  ## 90' B.Akwuegbu]
-   txt = txt.gsub( %r{^
-                     ([ ]*)
-                       \[
-                        ( .*? 
-                           \b\d{1,3}'  ## incl. minute 
-                          .*?
-                          \n
-                          .*?
-                           \b\d{1,3}'  ## incl. minute 
-                          .*?
-                        )
-                      \]
-                     [ ]*
-                    $}ix, 
-                    '\1(\2)' )
-
-###
-###    [Fernando Llorente 47]
-##   [Sebastián Fernández 44; Aritz Aduriz 9, Joaquín Sanchez 71, 75]
-   ##  try (simple) goal line with number only!!!
-   ##   note keep leading spaces / indent
-   txt = txt.gsub( %r{^
-                     ([ ]*)
-                       \[
-                        ( .*? 
-                           \b\d{1,3}  ## incl. minute 
-                          .*?
-                        )
-                      \]
-                     [ ]*
-                    $}ix, 
-                    '\1(\2)' )
-
-
-###  [Jose Manuel Jurado 12, Diego Forlán 40, 63,
-##   "Simao" Pedro Fonseca 90]
-##  [Rubén Suárez 10; Abdoulay Konko 12, 63, Alvaro Negredo 27,
-##   "Renato" Dirnei Florencio 87]
-
-   txt = txt.gsub( %r{^
-                     ([ ]*)
-                       \[
-                        ( .*? 
-                           \b\d{1,3}  ## incl. minute 
-                          .*?
-                          \n
-                          .*? 
-                           \b\d{1,3}  ## incl. minute 
-                          .*?     
-                        )
-                      \]
-                     [ ]*
-                    $}ix, 
-                    '\1(\2)' )
-
-
-##  ["Edmilson" Gomes de Moraes 40, Marco Perez 68,
-##   Ander Herrera 82; Fernando Fernandez 1, 27,
-##   Juan Miguel Jimenez "Juanmi" 6, 28, Quincy Owusu-abeyie 35]
-##  or
-##  [Jose Manuel Casado 16,Emiliano Armenteros 20,
-##   Jorge Andujar Moreno "Coke" 60; Jose Javier Barkero 14pen,
-##   Jose Antonio Culebras 90+].
-##    note - remove optional trailing dot!!
-txt = txt.gsub( %r{^
-                     ([ ]*)
-                       \[
-                        ( .*? 
-                           \b\d{1,3}  ## incl. minute 
-                          .*?
-                          \n
-                          .*? 
-                           \b\d{1,3}  ## incl. minute 
-                          .*?     
-                          \n
-                          .*? 
-                           \b\d{1,3}  ## incl. minute 
-                          .*?     
-                        )
-                      \]
-                      \.?  ## optional trailing dot
-                     [ ]*
-                    $}ix, 
-                    '\1(\2)' )
-
-
+   txt = handle_goals( txt )
 
 
   ###

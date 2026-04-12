@@ -38,6 +38,32 @@ def handle_score( txt )
                     }ix, 
                     '(\1)') 
 
+ ##   [5-4 pen]
+ ##   [3-4 pen]
+ ##   [1-3 pen]
+   txt = txt.gsub( %r{
+                         \[
+                           (\d{1,2}-\d{1,2} [ ]? pen)
+                         \]
+                    }ix, 
+                    '(\1)') 
+
+                    
+##   [Pen 4-1], [Pen 4-5], [Pen 1-3]
+   txt = txt.gsub( %r{
+                         \[
+                           (pen [ ] \d{1,2}-\d{1,2})
+                         \]
+                    }ix, 
+                    '(\1)') 
+                  
+
+
+ ##
+ ## check special case usage - uniques?
+ ##    [8-7 pen(no extra time)]
+ ##    [Pen 2-4 (1-3?)]
+
 
    txt                 
 end

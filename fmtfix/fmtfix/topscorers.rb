@@ -39,11 +39,30 @@ Topscorers: Timo KONIETZKA (TSV) - 26, Arnold SCHÜTZ
 Topscorers: Gerd MÜLLER (Bayern) - 40, Klaus FISCHER (Schalke) and
 Hans WALITZA (Bochum) - 22, Ferdinand KELLER (Hannover) - 20
 
+-or-  ### singular
+
+Topscorer: Danilo Pitbull (Guarany), 11 goals.
+
+Topscorer: Bruno Rangel (Paysandu), 8 goals.
+     Cascata (ABC) and Felipe Mamão (Águia), 5 goals.
+
+-or-    top scorer/top scorers
+
+Top scorers:
+Jurcevic        (Austria Salzburg)         14 (2p)
+Pfeifenberger   (Austria Salzburg)         14 (1p)
+
+Top scorer:
+
+Stumpf          (Linz)                     21
+
+
+
 =end
 
 
 
-TOPSCORERS_RE = %r{^     [ ]* Topscorers  
+TOPSCORERS_RE = %r{^     [ ]* Top [ ]? scorers?  
                            :?           ## note - optional colon
                          [ ]*
                           \n{0,2}       ## note - optional leading blank line!!

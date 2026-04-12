@@ -29,10 +29,35 @@ Fall Table
  3. TSV 1860 München             15  6  5  4  27- 19  17
  4. 1. FC Nürnberg               15  7  3  5  27- 22  17
 
+-or-
+
+Table
+ 1.São Paulo         25 16  4  5  57-35  52  Qualified
+ 2.São Caetano       25 14  5  6  42-28  47  Qualified
+ 3.Corinthians       25 12  7  6  37-35  43  Qualified
+
+Table:
+ 1.Fluminense        38 20 11  7  62-36  71  Champions; Libertadores 2011
+ 2.Cruzeiro          38 20  9  9  53-38  69  Libertadores 2011
+ 3.Corinthians       38 19 11  8  65-41  68  Libertadores 2011
+
+-or-
+
+Final standings:
+ 1.ABC     14  7  5  2  19- 8  26  Champions; promoted
+---------------------------------------
+ 2.Ituiutaba     14  4  8  2  12- 8  20  Promoted
+
+
 =end
 
 
-TABLE_RE = %r{^     [ ]* (?:Final|Fall|Halfway) [ ] table  
+TABLE_RE = %r{^     [ ]*   (?:   (?:   
+                                      (?: Final|Fall|Halfway) [ ] 
+                                  )?
+                                table 
+                             |  Final [ ] standings
+                            )
                            :?           ## note - optional colon
                          [ ]*
                           \n{1,2}       ## note - optional leading blank line!!
