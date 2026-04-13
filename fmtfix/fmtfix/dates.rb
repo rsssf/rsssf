@@ -218,6 +218,55 @@ DATE_LEGS_RE = %r{
 )}ix
 
 
+##
+##  merge date_list and date_legs ??
+##    or keep date_legs always with two dates by definition??
+##   and date_list starting w/ three or more dates?
+##
+##    May 2,3,4
+##    Feb 28, Mar 1,2
+
+DATE_LIST_RE = %r{
+(?<date_list>
+ \b
+     (?<month_name1>#{MONTH_NAMES})
+          [ ] 
+     (?<day1>\d{1,2})
+     (?:  [,;] [ ]{0,5}  )
+
+
+      (?:  ## note - make 2nd month_name optiona
+        (?<month_name2>#{MONTH_NAMES})
+          [ ] 
+      )?
+     (?<day2>\d{1,2})
+       (?: [,;] [ ]{0,5}  )
+
+
+      (?:     ## note - make 3rd month_name optiona
+        (?<month_name3>#{MONTH_NAMES})
+          [ ] 
+      )?
+     (?<day3>\d{1,2})
+     \b
+
+
+     ### optional fourth date
+     (?:
+         [,;] [ ]{0,5}
+         (?:   ## note - make 4th month_name optiona
+            (?<month_name4>#{MONTH_NAMES})
+            [ ] 
+         )?
+       (?<day4>\d{1,2})
+         \b
+     )?
+)}ix
+
+
+
+
+
 ###
 ## Aug 4-6
 ## Aug 13-16
@@ -290,6 +339,41 @@ def _build_date_legs( m )
 
             legs
 end 
+
+
+
+def _build_date_list( m )
+             ## quick fix for undefined group name reference
+             m = m.named_captures.transform_keys(&:to_sym)  if m.is_a?(MatchData)
+
+            list = {}
+            ## map month names
+            ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
+            date = {}
+            date[:m] = MONTH_MAP[ m[:month_name1].downcase ]
+            date[:d]  = m[:day1].to_i(10)   
+            list[:date1] = date
+     
+            date = {}
+            date[:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
+            date[:d]  = m[:day2].to_i(10)   
+            list[:date2] = date
+
+            date = {}
+            date[:m] = MONTH_MAP[ m[:month_name3].downcase ]   if m[:month_name3]
+            date[:d]  = m[:day3].to_i(10)   
+            list[:date3] = date
+
+            if m[:day4] 
+               date = {}
+               date[:m] = MONTH_MAP[ m[:month_name4].downcase ]   if m[:month_name4]
+               date[:d]  = m[:day4].to_i(10)   
+               list[:date4] = date
+            end
+
+            list
+end 
+
 
 def _build_date_range( m )
              ## quick fix for undefined group name reference
@@ -401,6 +485,41 @@ def _fmt_date_legs( legs, format: nil )   ### use format: 'numeric' for  23/7 or
    
     buf 
 end
+
+
+def _fmt_date_list( list, format: nil )   ### use format: 'numeric' for  23/7 or 23/7/2010 etc.
+    buf = String.new
+    
+    buf << "#{FMT_MONTH_NAMES[list[:date1][:m]]} "
+    buf << "#{list[:date1][:d]}"
+    
+    if list[:date2][:m]  ## add extra space if month present
+      buf << "; #{FMT_MONTH_NAMES[list[:date2][:m]]} "  
+    else    
+      buf << ","
+    end
+    buf << "#{list[:date2][:d]}"
+
+    if list[:date3][:m]   ## add extra space if month present
+      buf << "; #{FMT_MONTH_NAMES[list[:date3][:m]]} "
+    else
+      buf << ","
+    end    
+    buf << "#{list[:date3][:d]}"
+
+    if list[:date4]  
+      if list[:date4][:m]   ## add extra space if month present
+         buf << "; #{FMT_MONTH_NAMES[list[:date4][:m]]} "
+      else
+         buf << ","
+      end    
+      buf << "#{list[:date4][:d]}"
+    end
+
+
+    buf 
+end
+
 
 def _fmt_date_range( range, format: nil )   ### use format: 'numeric' for  23/7 or 23/7/2010 etc.
     buf = String.new

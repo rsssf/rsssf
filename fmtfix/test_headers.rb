@@ -233,6 +233,56 @@ Apr 1 2000
 [Jul 26, Sun]
 
 
+### check date lists (triplets for now only)
+
+[Mar 7,8,9]
+[Mar 14,15,16]
+[Apr 4,5,6]
+[Apr 11,12,13]
+[Apr 25,26,27]
+[May 2,3,4]
+
+[Feb 28, Mar 1,2]
+
+
+Round 16 [Mar 7,8,9]
+Round 17 [Mar 14,15,16]
+Round 19 [Apr 4,5,6]
+Round 20 [Apr 11,12,13]
+Round 23 [Apr 25,26,27]
+Round 24 [May 2,3,4]
+
+Round 16 [Feb 28, Mar 1,2]
+
+
+Round 7 [Aug 30,31; Sep 1]
+Semifinals [May 6,8; May 13,15]
+
+
+
+
+#########
+## test with "big" city text
+
+Final [June 10, 2004, Imst]
+
+Final [May 16, Happel-Stadion, Wien, att: 9,200]
+Final [May 27, Happel-Stadion, Wien; att: 7000]
+Super Cup Final [Jul 7, 2001, Innsbruck; att: 6700]
+Final [May 1, Wörthersee-Stadion, Klagenfurt; att: 30,000]
+Final [May 1, Wörthersee Stadion, Klagenfurt; att: 20,500]
+Final [Apr 30, 28 Black Arena, Klagenfurt; att: 30,000]
+Final [May 29, Wembley; att: 11,689]
+
+Final [May 9, Ernst-Happel-Stadion, Wien; att: 20100; ref: Hofmann]
+
+
+
+## more
+[Dec 10, replay]
+
+
+
 TXT
 
 

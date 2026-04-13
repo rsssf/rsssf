@@ -46,8 +46,9 @@ HEADER_DATE_RE = %r{\A
       [ ]*
       \[  #{date_(DATE_I_RE, DATE_IB_RE,
                   DATE_II_RE,
-                  DATE_LEGS_RE,
-                  DATE_RANGE_RE)}
+                  DATE_RANGE_RE,
+                  DATE_LIST_RE, DATE_LEGS_RE,
+                  )}
       \]
       [ ]*
 \z}ix
@@ -73,12 +74,46 @@ HEADER_DATE_II_RE = %r{\A
 \z}ix
 
 
+
+## 
+## [Sep 16, Berchtold 26, Glasner 54, Kuljic 60]
+## --- note - exclude  numbers in follow-up text!!!
+##
+##   use a shared pattern for city-like text !!
+##      maybe allow more and make more specific later
+#
+##   exclude comma (,) - why? why not?
+##    split in CITY_ and CITY_PLUS_ or such?
+##    or find a better name ??
+##
+## allow number if:
+##    Happel-Stadion, Wien, att: 9,200
+##    Happel-Stadion, Wien; att: 7000
+##    Innsbruck; att: 6700
+##    Wörthersee-Stadion, Klagenfurt; att: 30,000
+##    Wörthersee Stadion, Klagenfurt; att: 20,500
+##  
+## Apr 30, 28 Black Arena, Klagenfurt; att: 30,000
+###   Wörthersee Stadion, known as 28 Black Arena for sponsorship reasons
+##
+##   Ernst-Happel-Stadion, Wien; att: 20100; ref: Hofmann
+
+CITY_ = %q{   (?<city>  (?:   [^0-9:;\[\]]+? 
+                            | .+? 
+                                [ ] att: [ ] [0-9,]+
+                                (?: [;,] [ ] ref: [ ] .+?  ## w/ optional ref: 
+                                )?  
+                         )        
+               )    
+          }
+
+
 HEADER_DATE_N_CITY_RE = %r{\A
       [ ]*
       \[  #{date_(DATE_I_RE, 
                   DATE_II_RE)}
-           , [ ]* 
-           (?<city> .+?)
+           , [ ]*
+           #{CITY_} 
       \]
       [ ]*
 \z}ix
@@ -98,7 +133,7 @@ HEADER_DATE_ALT_RE = %r{\A
           )
           (?:
               , [ ]* 
-              (?<city> .+?)
+              #{CITY_}
           )? 
       \]
       [ ]*
@@ -124,7 +159,9 @@ HEADER_ROUND_N_DATE_RE = %r{\A
          (?<round> #{ROUND_PAT})
          [ ]+
         \[ 
-           #{date_(DATE_I_RE, DATE_IB_RE, DATE_II_RE, DATE_LEGS_RE, DATE_RANGE_RE)}   
+           #{date_(DATE_I_RE, DATE_IB_RE, DATE_II_RE, 
+                   DATE_RANGE_RE,
+                   DATE_LIST_RE, DATE_LEGS_RE)}   
         \]
         [ ]*
 \z}ix
@@ -137,7 +174,7 @@ HEADER_ROUND_N_DATE_N_CITY_RE = %r{\A
          [ ]+
         \[  #{date_(DATE_I_RE, DATE_II_RE)}
              , [ ]*
-           (?<city> .+?)    
+           #{CITY_}    
         \]
         [ ]*
 \z}ix
@@ -152,7 +189,7 @@ HEADER_ROUND_N_CITY_N_DATE_RE = %r{\A
         [ ]*
          (?<round> #{ROUND_PAT})
          [ ]+
-        \[ (?<city> .+?)
+        \[ #{CITY_}
              , [ ]*
             #{date_(DATE_I_RE, DATE_II_RE)}    
         \]
@@ -168,7 +205,9 @@ def _norm_date( m, format: nil )
    ## quick fix for undefined group name reference
    m = m.named_captures.transform_keys(&:to_sym)  if m.is_a?(MatchData)
 
-  if m[:date_legs]
+  if m[:date_list]
+    _fmt_date_list(_build_date_list( m ), format: format ) 
+  elsif m[:date_legs]
     _fmt_date_legs(_build_date_legs( m ), format: format ) 
   elsif m[:date_range]
     _fmt_date_range(_build_date_range( m ), format: format ) 

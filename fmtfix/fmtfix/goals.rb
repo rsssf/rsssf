@@ -18,13 +18,15 @@
 ##    will note match props such as  [red card: ...]
 ##                                   [ref: ...]
 ##    and others
+#
+##  note - [^] by default always excludes newline (\n)
 
 
 GOALS_ = %q{
-                 [^:\[\]]*? 
+                 [^:\[\]\n]*? 
                     \b 
                     \d{1,3}  '?  ## incl. minute 
-                 [^\[\]]*?
+                 [^\[\]\n]*?
            }              
 
 

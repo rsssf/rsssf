@@ -47,7 +47,10 @@ def autofix( txt )
     txt = handle_topscorers( txt )
 
 
+    txt = handle_errata_txt( txt )
  
+
+    
   #####
    ## line-by-line processing / matching
 

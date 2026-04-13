@@ -39,6 +39,7 @@ require_relative 'fmtfix/headers'
 
 
 require_relative 'fmtfix/base'
+require_relative 'fmtfix/errata'
 require_relative 'fmtfix/score'
 require_relative 'fmtfix/goals'
 require_relative 'fmtfix/topscorers'
