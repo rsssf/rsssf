@@ -1,15 +1,4 @@
 
-## use Sports (not SportDb) for module - why? why not?
-
-
-
-module SportDb
-
-## use module or class for Lang namespace??
-##   start with module for now
-
-
-module Lang
 
 ## Group A-Z
 ## Group 1-99
@@ -50,22 +39,9 @@ ROUND_RE = %r{^
      )
         |
 
-   # round  - note - requiers number e.g. round 1,2, etc.
-   #   note - use 1-9 regex (cannot start with 0) - why? why not?
-   #             make week 01 or round 01 or matchday 01 possible?
-      (?: (?: Round |
-              Matchday |
-              Week
-           )
-           [ ] [1-9][0-9]*
-          (?:    ## note - add optional   Matchday 1 of 2 or such
-               [ ] of [ ] [1-9][0-9]*
-          )?
-      )
-       |
-      (?:  Round [ ]  One
-       )
-       |
+
+
+
    ##  starting with qual(ification)
    ##   Qual. Round 1 / Qual. Round 2 / Qual. Round 3
    ##  or
@@ -122,68 +98,7 @@ ROUND_RE = %r{^
            Play[ -]?ins?
         )
         |
-   # round32
-        (?: Round[ ]of[ ]32 |
-            Last[ ]32 |
-            16th[ ]finals |
-            1/16[ ]finals  )
-          |
-   # round16
-        (?: Round[ ]of[ ]16 |
-            Last[ ]16 |
-            8th[ ]finals |
-            1/8[ ]finals  )
-           |
-   # round8 aka quarterfinals
-   #   note - allow quarter-finals/quarter finals/quarterfinals 
-         (?:  Round[ ]of[ ]8 |
-              Last[ ]8  |   
-              1/4[ ]finals  | 
-              Quarter[ -]?finals? |
-              Quarters  )
-          |
-   # fifthplace
-         (?:
-             (?: (Fifth|5th)[ -]place
-                  (?: [ ] (?: match|final|play[ -]?off ))?
-              ) |
-             (?: Match[ ]for[ ](?: fifth|5th )[ -]place )
-         )
-          |
-   # thirdplace
-          (?:
-              (?: (Third|3rd)[ -]place
-                     (?: [ ] (?: match|final|play[ -]?off ))?
-               ) |
-              (?: Match[ ]for[ ](?: third|3rd )[ -]place )
-           )
-           |
-   # round4 aka semifinals
-        (?:
-             Round[ ]of[ ]4 |
-             Last[ ]4 | 
-             Semi[ -]?finals? |
-             Semis )
-        |
-   # round2 aka final
-         Finals?
-        |
-    ## add replays
-    ##  e.g. Final Replay
-    ##       Quarter-finals replays
-    ##       First round replays
-     (?:
-        (?: (?: 1st | First |
-                2nd | Second | 
-                3rd | Third | 
-                4th | Fourth |
-                5th | Fifth ) [ ] Round |
-            Quarter[ -]?finals? |
-            Finals?
-         )
-        [ ] Replays?
-      )
-     |
+   
   ## more
      (?:
         Decider  |   # decider e.g. Entscheidungsspiel

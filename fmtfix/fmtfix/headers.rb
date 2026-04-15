@@ -108,11 +108,19 @@ CITY_ = %q{   (?<city>  (?:   [^0-9:;\[\]]+?
           }
 
 
+##  [Jun 3, Ferrol] 
+##  [Apr 2, Wembley]
+##  -or-
+##  [Sat May 17 - at Millennium Stadium, Cardiff]
+##  [Sun May 25 - at Millennium Stadium, Cardiff]
+
 HEADER_DATE_N_CITY_RE = %r{\A
       [ ]*
       \[  #{date_(DATE_I_RE, 
                   DATE_II_RE)}
-           , [ ]*
+           (?:       , [ ]*
+               | [ ] - [ ] at [ ]
+            )
            #{CITY_} 
       \]
       [ ]*
@@ -180,6 +188,19 @@ HEADER_ROUND_N_DATE_N_CITY_RE = %r{\A
 \z}ix
 
 
+###
+## Final [in Völs]
+## Final [in Kundl]
+HEADER_ROUND_N_CITY_RE = %r{\A
+        [ ]*
+         (?<round> #{ROUND_PAT})
+         [ ]+
+        \[in [ ]+ #{CITY_}    
+        \]
+        [ ]*
+\z}ix
+
+
 ##
 ## reverse
 ##  Final [Graz, May 12]
@@ -234,8 +255,10 @@ def handle_header( line )
       elsif m = HEADER_DATE_N_CITY_RE.match(line.rstrip)
                    ## e.g. [Jun 3, Ferrol] 
                    ## e.g. [Apr 2, Wembley]
+                   ##   [Sat May 17 - at Millennium Stadium, Cardiff]
+                   ##   [Sun May 25 - at Millennium Stadium, Cardiff]
                    date = _norm_date( m )
-                   "_ #{date} _, #{m[:city]}\n" 
+                   "_ #{date} _ @ #{m[:city]}\n" 
       elsif m = HEADER_DATE_II_RE.match(line.rstrip)
                     ##  note - no enclosing brackets []!!!
                     ## e.g. Nov 20 1999  or Nov 20, 1999
@@ -245,10 +268,11 @@ def handle_header( line )
       elsif m = HEADER_DATE_ALT_RE.match(line.rstrip)
                     ## e.g. [07-09]  
                     ##      [30-05, Thaur]
-                    date = _norm_date( m, format: 'numeric' )
+                    ## date = _norm_date( m, format: 'numeric' )
+                    date = _norm_date( m  )
                     buf = String.new
                     buf += "_ #{date} _"
-                    buf += ", #{m[:city]}"    if m[:city]
+                    buf += " @ #{m[:city]}"    if m[:city]
                     buf += "\n"
                     buf
       elsif m = HEADER_ROUND_N_DATE_RE.match(line.strip)
@@ -256,11 +280,13 @@ def handle_header( line )
                    "▪ #{m[:round]} ▪  #{date}\n"                   
       elsif m = HEADER_ROUND_N_DATE_N_CITY_RE.match(line.strip)
                      date = _norm_date( m )
-                   "▪ #{m[:round]} ▪  #{date}, #{m[:city]}\n"  
+                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"  
+      elsif m = HEADER_ROUND_N_CITY_RE.match(line.strip)
+                   "▪ #{m[:round]} ▪  @ #{m[:city]}\n"  
       elsif m = HEADER_ROUND_N_CITY_N_DATE_RE.match(line.strip)
                      date = _norm_date( m )
                     ## note - reverse (rotate) date & city
-                   "▪ #{m[:round]} ▪  #{date}, #{m[:city]}\n"  
+                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"  
        else
          nil 
        end

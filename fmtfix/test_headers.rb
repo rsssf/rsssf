@@ -10,20 +10,17 @@ require 'minitest/autorun'
 require_relative  'fmtfix'
 
 
+###
+##
+# todos:
+##   what about  OK _ Dec 10 _ @ replay
+##      check for replay or such?  expects a city/venue for now
+
 
 
 class TestHeaders< Minitest::Test
 
 TESTS = <<TXT
-
-###
-#  round headers
-
-Round 1
-
-### -- allow optional colon e.g.
-Playoff:
-Round 21:
 
 
 
@@ -157,6 +154,8 @@ Round 21:
 [Feb 16, 2020, Brasília]
 [Apr 11, 2021, Brasília]
 
+[Sat May 17 - at Millennium Stadium, Cardiff]
+[Sun May 25 - at Millennium Stadium, Cardiff]
 
 
 ##  HEADER_ROUND_N_DATE_RE 
@@ -277,9 +276,105 @@ Final [May 29, Wembley; att: 11,689]
 Final [May 9, Ernst-Happel-Stadion, Wien; att: 20100; ref: Hofmann]
 
 
+FINAL [in Völs]
+FINAL [in Kundl]
+
+
 
 ## more
 [Dec 10, replay]
+
+
+
+###
+#  round headers
+
+Round 1
+Round 1 of 38
+Matchday 1 of 2
+Matchday 1 of 38
+
+## keep week/matchweek too - why? why not?
+##   
+Week 1
+Matchweek 1 of 38
+
+
+### -- allow optional colon e.g.
+Playoff:
+Round 21:
+
+1/32 Finals
+1/16 Finals
+1/8 Finals
+1/4 Finals
+1/2 Finals
+
+PLAY-OFF ROUND [Jun 4, 8]
+PRIME ROUND
+
+Moved Match [Jan 14]
+Moved Match [Mar 12]
+
+
+Group stage
+Minor Semifinal
+Major Semifinal
+Preliminary Final
+Final Series         
+Grand Final          
+
+Regular Season
+Promotion/Relegation Matches
+Promotion Playoff
+Promotion Playoffs
+Promotion Matches
+Promotion/Relegation Playoffs
+Promotion/Relegation Playoff 2nd/3rd level
+
+Playoff 1        
+Playoff 2        
+Relegation Playoff   
+
+Playoffs (Liguilla)
+Play-In Round A
+Play-In Round B
+Play-In Round A-B 
+
+
+Round 1 (no extra time)    
+Round 2 (no extra time)
+Round 3 (no extra time)
+Quarterfinals (no extra time)
+
+Replayed matches
+Replayed match
+Moved Match
+Moved Match [Apr 25]
+
+Match from Round 26
+
+
+# in cz
+Play-off o umístění    
+Skupina o záchranu
+
+
+# in mls/usa
+Third Legs
+Conference Wild Card Round
+Eastern Conference Quarterfinals  
+Conference Semifinals
+Conference Finals
+MLS Cup    
+
+# in argentina
+Round of 16 - Octavos de Final:
+Semi finals - Semifinales:
+Quarter finals - Cuartos de final:
+Round of 64 - 32 avos de final:
+Round of 32 - 16 avos de final:
+Primera fase de zonas - Phase of groups
 
 
 

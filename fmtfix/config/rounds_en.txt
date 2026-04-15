@@ -31,21 +31,232 @@
 ##
 ##  note - always remove leading & trailing spaces
 ##              and squish inline spaces 
+##
+##  note -  group (...) gets changed to
+##                       non-capturing group (?: ...) 
+##
+##   use  \ for line-continuation!!!
+#
+#
+##  optional shortcut
+##     replace  Middle Dot (·)  Unicode: U+00B7 or
+##              Open Box (␣)    Unicode: U+2423 or
+##               with [ ]
 
 
-1/32 [ ] finals?
-1/16 [ ] finals?
-1/8  [ ] finals?  
-1/4  [ ] finals?
-1/2  [ ] finals?
+$ordinal    =  (    First | Second | Third | Fourth | Fifth     \
+                  | 1st   | 2nd    | 3rd   | 4th    | 5th   )   
 
-Eight   [ -]? finals? 
-Quarter [ -]? finals?
-Semi    [ -]? finals? 
+$opt_replay =  ( [ ] replays? )?
+
+
+## e.g. Playoff, Playoffs, Play-off, Play-offs 
+$playoff    =   play-?offs?
+
+## e.g. Match, Matches
+$match      =  match(es)?
+
+
+
+
+
+Preliminary·round
+
+## e.g. First round, Second round, ...
+$ordinal [ ] (   round   $opt_replay   \
+               | phase ) 
+
+
+Round·one
+
+
+
+## e.g. 1/8 finals, 8th finals...
+(   1/32            \
+  | 1/16 | 16th     \       
+  | 1/8  |  8th     \
+  | 1/4             \
+  | 1/2 ) [ ] finals?   $opt_replay
+
+
+## e.g. Eight-finals, Eight finals, Eightfinals, ...
+(   Eight    \
+  | Quarter  \
+  | Semi ) [ -]? finals?   $opt_replay
    
+## short-forms
+Semis 
+Quarters
+
+
+## e.g. Round of 16, Last 16, ...
+(Round·of | Last ) [ ] ( 4 | 8 | 16 | 32)  
+
+
+
+  
+## e.g. fifth place, fifth-place, 5th place
+$fifthplace  =  ( fifth | 5th ) [ -] place
+
+$fifthplace [ ]  ( match | final | play[ -]?off )
+Match·for [ ] $fifthplace 
+
+
+## e.g. third place, third-place, 3rd place
+$thirdplace   =   ( third | 3rd ) [ -] place 
+
+$thirdplace [ ]  ( match | final | play[ -]?off ) 
+Match·for [ ] $thirdplace 
+
+          
+Finals?  $opt_replay
+
+
+###
+# more
+
+Final [ ] (round | group | pool)
+ 
+
+
+
+
+## e.g. Minor Semifinals
+(Minor | Major) [ ] Semi [ -]? finals?
+
+Preliminary·final
+Final·series        
+Grand·final           
+
+
+Conference·wild·card·round
+
+(Eastern | Western) [ ] conference [ ] quarter [ -]? finals  
+
+Conference·semifinals
+Conference·finals
+
+MLS·cup            ## used in msl/usa for "grand final"
+
+
+
 Super [ ]? cup [ ] final
 
-Deciding [ ] match
+
+Deciding·match
+Decider
+
+
+
+## in jp
+$playoff [ ] round
+Prime [ ] round 
+
+
+## in it (cup)
+##    with (no extra time) flag/note 
+## e.g.  Round 1 (no extra time)
+
+Round [ ] (1|2|3)       [ ] \( no [ ] extra [ ] time \)  
+Quarter [ -]? finals?   [ ] \( no [ ] extra [ ] time \)
+
+
+
+
+
+###
+#  moved matches  - find a better name?
+#   nachtragspiele (de) in en ??
+
+## e.g. Moved matches, 
+##     Moved match, ..
+Moved·$match
+
+## e.g. Match from round 26,
+##      Matches from round 26
+$match·from   [ ] round [ ] \d{1,2}
+   
+
+## standalone replay
+Replays?
+
+## e.g. Replayed match, 
+##      Replayed matches
+Replayed·$match 
+
+
+
+
+
+
+
+#############
+## add stages
+
+## e.g. First stage, Second stage, ... 
+$ordinal [ ] stage       
+
+(   Regular       \
+  | Group         \ 
+  | League        \
+  | Playoff ) [ ] stage
+
+Regular·season
+
+
+
+#####
+## play-offs & play-ins
+
+Championship       [ ] $playoff
+Europa·league      [ ] $playoff 
+Conference·league  [ ] $playoff
+
+Promotion [ ]             ($playoff | $match)
+Relegation [ ]            ($playoff | $match)
+Promotion/relegation [ ]  ($playoff | $match)
+Promotion/relegation [ ]  ($playoff | $match) [ ]  \
+                                  (   1st/2nd      \
+                                    | 2nd/3rd      \
+                                    | 3rd/4th)  [ ] level
+
+
+## e.g. Play-in round A, Play-in round B, Play-in round A-B
+##  note - escape for literal () required!!
+
+Play-in·round  [ ] ( A | B | A-B )
+
+
+## standalone playoff
+## e.g Playoff, Playoff 1, Playoff 2
+
+$playoff
+$playoff [ ] (1 | 2)?
+
+
+
+
+#############     
+## standalone legs
+
+## e.g. First legs
+##      Second leg replay
+$ordinal  [ ] legs?     $opt_replay   
+
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

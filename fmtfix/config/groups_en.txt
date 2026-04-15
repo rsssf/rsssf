@@ -1,0 +1,43 @@
+##
+#  groups e.g.
+#  zones e.g.
+#  sections e.g.
+#  conferences e.g.
+##    
+
+## fix - move to groups.txt !!!
+## groups
+
+## e.g  group a, group b,
+##      group 1, group 2,
+##      group i, group ii, etc.
+##
+##  add a1,b1, etc too - why? why not?
+
+
+## make build-in - why? why not?
+
+Group [ ] (   [a-z]               \         
+            | \d{1,2}             \         
+            | i | ii | iii | iv   \ 
+          )
+
+## for groups and legs  
+##   use   ▪▪ (double) - why? why not? 
+  or zones (like groups)
+
+
+###
+## mls/usa
+Eastern·conference
+Western·conference
+
+
+######
+## sco(tland)
+
+North·section 
+South·section
+Western·Isles·section
+Shetland·Island·section
+Orkney·Isles·section
