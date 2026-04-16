@@ -377,6 +377,29 @@ Round of 32 - 16 avos de final:
 Primera fase de zonas - Phase of groups
 
 
+## more from us/mls
+
+Preliminary Round [Nov 20]
+Preliminary Round [Nov 20]  ‹§inplay›
+Third Leg Minigame [Oct 6]     
+Eastern Conference Final [Nov 14]
+Eastern Conference Final
+Western Conference Final [Nov 15]
+Western Conference Final
+Wild Card Games
+Eastern Semifinals
+Western Semifinals
+Super Semifinal [Sep 23]
+Championship Final
+Divisional Finals
+Conference Quarterfinals
+Final [Sep 26, Hayward, Calif.; att: 5.528]
+MLS Cup Final [Oct 21, Columbus, Ohio]  
+
+Knock-Out Stage
+Qualification MLS
+Tournament Proper
+
 
 TXT
 

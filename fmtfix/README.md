@@ -1,5 +1,24 @@
 # fmtfix notes
 
+
+open questions - how to handle these lines?
+```
+
+[not played]    # in msl/us  -   kind of a round header
+
+[???]   # in msl/us   - use for unkown goal line e.g. (???)
+
+
+rounds with status e.g.
+
+Round 27 [Sep 12 - cancelled after terrorist attacks Sep 11]
+Round 28 [cancelled after terrorist attacks Sep 11]
+```
+
+
+
+
+
 ```
 
 count hr like pre in doc stats!!!

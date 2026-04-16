@@ -59,7 +59,6 @@ $match      =  match(es)?
 
 
 
-
 Preliminary·round
 
 ## e.g. First round, Second round, ...
@@ -129,16 +128,32 @@ Final·series
 Grand·final           
 
 
+
+
 Conference·wild·card·round
+Wild·card·games
 
 (Eastern | Western) [ ] conference [ ] quarter [ -]? finals  
+(Eastern | Western) [ ] semi [ -]? finals
+(Eastern | Western) [ ] conference·final
 
+Conference·quarterfinals
 Conference·semifinals
 Conference·finals
 
-MLS·cup            ## used in msl/usa for "grand final"
+Divisional·finals
+Championship·final
+
+## used in msl/usa for "grand final"
+##  e.g. MLS cup, MLS cup final, MLS cup 2010, ...
+MLS·cup ([ ] final)? ([ ] \d{4})?           
+
+###   move to stage?  
+##     use/replace w/ generic Qualifaction <name> - why? why not?
+Qualification·MLS
 
 
+Super [ ] semi [ -]? final 
 
 Super [ ]? cup [ ] final
 
@@ -184,7 +199,7 @@ Replays?
 ##      Replayed matches
 Replayed·$match 
 
-
+Not·played
 
 
 
@@ -201,7 +216,11 @@ $ordinal [ ] stage
   | League        \
   | Playoff ) [ ] stage
 
+Knock-?out·stage
+
 Regular·season
+
+Tournament·proper
 
 
 
@@ -244,7 +263,7 @@ $playoff [ ] (1 | 2)?
 $ordinal  [ ] legs?     $opt_replay   
 
 
-          
+Third·leg·minigame            # in us          
 
 
 

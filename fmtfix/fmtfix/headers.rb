@@ -92,6 +92,8 @@ HEADER_DATE_II_RE = %r{\A
 ##    Innsbruck; att: 6700
 ##    Wörthersee-Stadion, Klagenfurt; att: 30,000
 ##    Wörthersee Stadion, Klagenfurt; att: 20,500
+##    Hayward, Calif.; att: 5.528   -- note: dot (.) NOT comma (,)
+##
 ##  
 ## Apr 30, 28 Black Arena, Klagenfurt; att: 30,000
 ###   Wörthersee Stadion, known as 28 Black Arena for sponsorship reasons
@@ -100,7 +102,7 @@ HEADER_DATE_II_RE = %r{\A
 
 CITY_ = %q{   (?<city>  (?:   [^0-9:;\[\]]+? 
                             | .+? 
-                                [ ] att: [ ] [0-9,]+
+                                [ ] att: [ ] [0-9,.]+
                                 (?: [;,] [ ] ref: [ ] .+?  ## w/ optional ref: 
                                 )?  
                          )        
@@ -160,6 +162,9 @@ HEADER_DATE_ALT_RE = %r{\A
 ## Round 2 [Aug 4-6]
 ## Round 1 [Aug 13-16]
 ## Round 2 [Aug 20-23]
+##
+###  note - with optional ref/anchor
+## Preliminary Round [Nov 20]  ‹§inplay›
 
 
 HEADER_ROUND_N_DATE_RE = %r{\A
@@ -171,6 +176,7 @@ HEADER_ROUND_N_DATE_RE = %r{\A
                    DATE_RANGE_RE,
                    DATE_LIST_RE, DATE_LEGS_RE)}   
         \]
+        #{OPT_REF}
         [ ]*
 \z}ix
 
@@ -257,8 +263,17 @@ def handle_header( line )
                    ## e.g. [Apr 2, Wembley]
                    ##   [Sat May 17 - at Millennium Stadium, Cardiff]
                    ##   [Sun May 25 - at Millennium Stadium, Cardiff]
+
                    date = _norm_date( m )
-                   "_ #{date} _ @ #{m[:city]}\n" 
+                   
+                   ##  note - check for special case
+                   ##     [Dec 10, replay]
+                   ##  change to  ▪ Replay ▪   _ Dec 10 _                   
+                   if m[:city] == 'replay'
+                      "▪ Replay ▪  _ #{date} _\n"
+                   else 
+                      "_ #{date} _ @ #{m[:city]}\n"
+                   end 
       elsif m = HEADER_DATE_II_RE.match(line.rstrip)
                     ##  note - no enclosing brackets []!!!
                     ## e.g. Nov 20 1999  or Nov 20, 1999
@@ -291,6 +306,5 @@ def handle_header( line )
          nil 
        end
 end
-
 
 
