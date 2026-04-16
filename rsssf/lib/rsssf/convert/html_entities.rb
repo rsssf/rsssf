@@ -120,7 +120,13 @@ class PageConverter
     html = html.gsub( /&[^; ]{1,10};/) do |match|
            ##   ignore weird edge case of &A;
            ##    e.g. [M&A; moved from pool B] - where M&A is name of club
-               if match == '&A;'
+           ##
+           ##  in ital03.html:
+           ###    [Eugenio Corini 22pen&36pen; Christian Vieri 69]
+           ##     Francesco Totti 31, Vincenzo Montella 49&68; Antonio Di Natale 11] 
+
+               if match == '&A;' ||
+                  match == '&36pen;' || match == '&68;'
                else
                   msg = "found unencoded html entity #{match}"
                   msg += " in >#{url}<"   if url

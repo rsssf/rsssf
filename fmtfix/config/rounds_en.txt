@@ -199,8 +199,6 @@ Replays?
 ##      Replayed matches
 Replayed·$match 
 
-Not·played
-
 
 
 
@@ -238,6 +236,10 @@ Promotion/relegation [ ]  ($playoff | $match) [ ]  \
                                   (   1st/2nd      \
                                     | 2nd/3rd      \
                                     | 3rd/4th)  [ ] level
+
+
+Relegation·playout
+Play-?out
 
 
 ## e.g. Play-in round A, Play-in round B, Play-in round A-B

@@ -1,0 +1,34 @@
+## Mexico
+##
+##  note - if no encoding listed defaulting to windows-1252
+
+page,encoding
+
+tablesm/mex00.html
+tablesm/mex01.html
+tablesm/mex02.html
+tablesm/mex03.html
+tablesm/mex04.html
+tablesm/mex05.html
+tablesm/mex06.html
+tablesm/mex07.html
+tablesm/mex08.html
+tablesm/mex09.html
+tablesm/mex2-2010.html
+tablesm/mex2011.html
+tablesm/mex2012.html
+tablesm/mex2013.html
+tablesm/mex2014.html
+tablesm/mex2015.html
+tablesm/mex2016.html
+tablesm/mex2017.html,  iso-8859-1  ## note - windows-1252 results in encoding errors!
+tablesm/mex2018.html,  iso-8859-1  ## note - windows-1252 results in encoding errors!
+tablesm/mex2019.html
+tablesm/mex2020.html
+tablesm/mex2021.html
+tablesm/mex2022.html
+tablesm/mex2023.html
+tablesm/mex2024.html
+tablesm/mex2025.html
+tablesm/mex2026.html
+

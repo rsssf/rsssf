@@ -17,7 +17,7 @@ end
 
 
 opts = {
-   force: false     ## true
+   force:  false ## true    ## false     ## true
 }
 
 code = args.shift  ## get first argument
@@ -42,7 +42,14 @@ TITLE_RE = %r{<TITLE>(?<text>.*?)</TITLE>}ixm
 
 ## pass 1 - download
 pages.each_with_index do |config,i|
-  encoding = config['encoding'] || 'windows-1252'
+
+## todo / double check fix read_csv upstream
+##    if   empty column has comment it is "" empty string otherwise
+##                it is nil!!!  ??
+
+  encoding = config['encoding'] 
+  encoding = 'windows-1252'   if encoding.nil? || encoding.empty?
+  
   page     = config['page']
   url      = "https://rsssf.org/#{page}"
 
@@ -58,9 +65,7 @@ tablest/turkm2025.html
 ].include?( page )
 =end
 
-##   if encoding != 'windows-1252'  ## quick fix - always (force) download
-##      puts "==> [#{i+1}/#{pages.size}] download #{config.pretty_inspect}..."
-##      Rsssf.download_page( url, encoding: encoding )  
+
   if Webcache.cached?( url ) && opts[:force] == false 
       puts "   CACHE HIT - #{url}"
   else
