@@ -1,88 +1,164 @@
 
+
+
+def table_heading_( line )
+  ## M   W  T  L  GF  GA  PTS  AVGE
+  ##  =>
+  ## (?:
+  ##   [ ]+ M  [ ]+  W [ ]+ T [ ]+ L [ ]+ GF [ ]+ GA [ ]+ PTS [ ]+ AVGE  [ ]*
+  ##  )
+
+   cols = line.strip.split( /[ ]+/ )
+
+   "(?: [ ]+ #{cols.join(' [ ]+ ')} [ ]*)"
+end
+
+
+
+
+
 ##
-## process Halfway/Final table: ... to first blank line (\n\n)
-
-=begin
-
-Final Table:
-
- 1.FC Barcelona                  38 30  6  2  95-21  96  Champions
- 2.Real Madrid CF                38 29  5  4 102-33  92
- 3.Valencia CF                   38 21  8  9  64-44  71
- 4.Villarreal CF                 38 18  8 12  54-44  62
-
--or-
-
-Halfway Table:
-
- 1.Atlético de Madrid            19  13  5  1  34-12  44
- 2.Real Madrid CF                19  13  4  2  43-19  43  [C]
- 3.FC Barcelona                  19  12  2  5  51-22  38
- 4.Athletic de Bilbao            19  10  6  3  29-17  36
-
--or-
-
-Fall Table
-
- 1. 1. FC Köln                   15  8  4  3  41- 27  20
- 2. Werder Bremen                15  8  4  3  28- 17  20
- 3. TSV 1860 München             15  6  5  4  27- 19  17
- 4. 1. FC Nürnberg               15  7  3  5  27- 22  17
-
--or-
-
-Table
- 1.São Paulo         25 16  4  5  57-35  52  Qualified
- 2.São Caetano       25 14  5  6  42-28  47  Qualified
- 3.Corinthians       25 12  7  6  37-35  43  Qualified
-
-Table:
- 1.Fluminense        38 20 11  7  62-36  71  Champions; Libertadores 2011
- 2.Cruzeiro          38 20  9  9  53-38  69  Libertadores 2011
- 3.Corinthians       38 19 11  8  65-41  68  Libertadores 2011
-
--or-
-
-Final standings:
- 1.ABC     14  7  5  2  19- 8  26  Champions; promoted
----------------------------------------
- 2.Ituiutaba     14  4  8  2  12- 8  20  Promoted
+###   note - may start with blank line OR
+##              header
+##             followed by optional heading (e.g. M   W  T  L  GF  GA  PTS)
+##        and table lines ( 1. rapid 38 17 ...)
 
 
-=end
+
+TABLE_RE = %r{
+      
+           ### optional table header 
+          (?:   
+             ## (i) table header
+             ##
+             ## fix - make header match more strict!!!
+             ##   e.g. do NOT match ---  or more than three spaces or such
+             ## exlcude in header
+             ##   NB:
+             ##    [*]
+             ##    [1]
+             ## exclude heading === e.g.
+             ##    ==== USL Premier Development
+                  ^
+                [ ]*
+                  
+             ### negative lookahead
+             ##    MUST NOT match  standing line e.g.  10  3  4
+             ##      or         table heading (see below)
+             ##      or   -----  (old style structured heading left overs)
+                    (?!    [^\n]+?  [ ]+ \d{1,3} [ ]+ \d{1,3} [ ]+ \d{1,3}
+                        |  (?: GP | M |Team ) [ ]
+                        |  -{3,}
+                     )            
+
+             (?<header>  [^=*:\[\]\n]+?)
+                  :?  ## optional colon (:) e.g. final table: 
+                  ## cut-off everything separated by more than three spaces
+                  ##   e.g. might be "inline" table heading (follow table header name)
+                  ##  e.g. Group 1                  M     W     T     L    GF    GA    DIF   PTS
+                  (?: [ ]{4,} [^\n]+? )?
+              [ ]*
+             ## note - allow optional blank line - why? why not?   
+             (?:  \n ^[ ]* )?
+             \n
+          )?
+      
+      
+      #### optional  table heading line
+      (?:  ^(?:  
+          #{table_heading_( 'GP  W   L   D  GF  GA  PTS?' )}   
+        | #{table_heading_( 'GP  W   L   T  GF  GA  PTS?' )}
+        | #{table_heading_( 'GP  W   T   L  GF  GA  PTS?' )}
+        | #{table_heading_( 'GP  W   D   L  GF  GA  PTS?' )}
+        ##  SW  sudden death win, SL sudden death lose       
+        | #{table_heading_( 'GP  W   L  SW  GF  GA  PTS?' )}
+        | #{table_heading_( 'GP  W SW  SL   L   GF  GA  PTS?' )}
+        | #{table_heading_( 'GP  W SOW SOL  L  GF  GA PTS?'   )}
+        ##  mx/spanish
+        | #{table_heading_( 'M   W   T   L  GF  GC  DIF  PTS' )}
+        | #{table_heading_( 'M   W   T   L  GF  GA PTS AVGE' )}  
+        | #{table_heading_( 'Team  M  W  T  L  GF-GA  PTS')}   
+        | #{table_heading_( 'Team   M  W  T  L  GF-GA  PTS EP  TP')}  
+        )
+       ## note - allow optional blank line - why? why not?   
+          (?: \n ^[ ]* )?
+            \n
+      )?
 
 
-TABLE_RE = %r{^     [ ]*   (?:   (?:   
-                                      (?: Final|Fall|Halfway) [ ] 
-                                  )?
-                                table 
-                             |  Final [ ] standings
-                            )
-                           :?           ## note - optional colon
-                         [ ]*
-                          \n{1,2}       ## note - optional leading blank line!!
+  ## MUST be followed by a table (standing) line
+  ## e.g.  1.FC Cincinnati    34  20  9  5  57-39  69  
+  ##
+  ##   note - allow "run-on" e.g. LB14 on first number
+  ## Hudson Valley Quickstrike LB14  12   0   2   40   9   38 
+  ## Hudson Valley Quickstrike LB12  11   1   0   26   9   33
+  ##
+  ##    17    11     5     1    40    16    +24    38
+  
+         ^
+         (?:  
+               [^\n]+?
+                 (?:
+                    (?:
 
-                        .*?             ## non-greedy - match everything until
-                      (?:   \n (?= \n)    ## blank line (\n\n) or end-of-string/file
+                      \d{1,3}
+                 [ ]+ \d{1,3}  ## win   
+                 [ ]+ \d{1,3}  ## draw   
+                 [ ]+ \d{1,3}  ## lose   
+                 [ ]+ \d{1,3}  (?:  [ ]* [:-] [ ]*  
+                                  | [ ]+ )  \d{1,3} 
+                 [ ]+ [+-]? \d{1,3} \b  # might be diff or point allow +/-!!
+                   )
+                   | (?:  ##  or compact/min form  -- 22  37-15  51
+                          ##     maybe allow spaces later inbetween 37-15 - why? why not?
+                         [ ]+ \d{1,3}                 ## played
+                          [ ]+ \d{1,3} [ ]? -[ ]? \d{1,3}      ##  gf-ga
+                          [ ]+  \d{1,3} \b            ##  pts
+                     )
+                 )
+               [^\n]*?
+          )
+         \n 
+          
+         ## eat-up the rest
+         .*?   ## non-greedy - match everything (incl. newline!) until 
+                 (?:   \n (?= \n)    ## break on blank line (\n\n) or end-of-string/file
                           | \z
-                      )
-                    }ixm
+                 )
 
-                    
+}ixm
+
+         
+
+
 def handle_tables( txt, tables: [] )
-   txt = txt.gsub( TABLE_RE ) do |match|
-                 puts "  proc table block:"
-                 puts match
+ 
 
+   txt = txt.gsub( TABLE_RE ) do |match|
+         
+                 m = Regexp.last_match
+
+                 puts "  proc table >#{m[:header]}< block:"
+                 puts ">>> (begin)"
+                 puts match
+                 puts "<<< (end)"
 
                     ## remove everyting
                     ##  or put in comment block later with command line option/switch!! 
                     ##    ''
                         
                      ## replace with "collapsed" marker
+         
+                      
+
                     tables << match
                     table_id = tables.size 
-                    "<!-- $table#{table_id}$ -->\n\n"   
+                    if m[:header]   ## note - header might be missing 
+                                    ##   table starting w/ blank line
+                       "<!-- $table#{table_id}$ - #{m[:header]} -->\n"
+                    else
+                       "<!-- $table#{table_id}$ -->\n"
+                    end   
                   end
    txt
 end

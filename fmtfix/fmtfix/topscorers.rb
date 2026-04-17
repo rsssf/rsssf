@@ -74,11 +74,13 @@ TOPSCORERS_RE = %r{^     [ ]* Top [ ]? scorers?
                     }ixm
 
                     
-def handle_topscorers( txt, topscorers: [] )
+def handle_topscorers( txt, topscorers: [], opts: {} )
    txt = txt.gsub( TOPSCORERS_RE ) do |match|
-                 puts "  proc topscorers block:"
-                 puts match
-
+                 if opts[:topscorers]
+                   puts "  proc topscorers block:"
+                   puts match
+                 end
+                 
                     ## remove everyting
                     ##  or put in comment block later with command line option/switch!! 
                     ##    ''

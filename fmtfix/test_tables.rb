@@ -1,0 +1,202 @@
+
+## not - split in sections  with §
+##   strips leading & trailing newlines
+##    auto-adds a trailing newline
+
+
+TESTS =<<TXT
+Group 1
+                  	 M  	 W  	 T  	 L  	GF  	GC  	DIF 	PTS
+  1. Cruz Azul          18  	 8  	 6  	 4  	33  	24  	 +9  	30 (playoffs) [Ciudad de México] 
+  2. Guadalajara        18  	 6  	 8  	 4  	20  	20  	  0  	26 (playoffs)
+----------------------------------------------------------------------------------
+  3. Atlas              18  	 6  	 3  	 9  	25  	29  	 -4  	21 [Guadalajara] 
+  4. Monterrey          18  	 4  	 8  	 6  	23  	31  	 -8  	20 
+  5. Atlético Celaya    18  	 5  	 4  	 9  	27  	33  	 -6  	19 
+
+     §
+
+Group 1
+                  	 M  	 W  	 T  	 L  	GF  	GC  	DIF 	PTS
+  1. Atlas              18  	 8  	 6  	 4  	30  	28  	 +2  	30 (playoffs) [Guadalajara]
+----------------------------------------------------------------------------------
+  2. Cruz Azul          18  	 7  	 6  	 5  	32  	29  	 +3  	27 (repechaje) [Ciudad de México]
+----------------------------------------------------------------------------------
+  3. Guadalajara        18  	 5  	 7  	 6  	22  	21  	 +1  	22
+  4. Monterrey          18  	 5  	 5  	 8  	21  	28  	 -7  	20
+  5. Atlético Celaya    18  	 5  	 5  	 8  	19  	29  	-10  	20
+
+     §
+
+Final Table:
+
+ 1.FC Barcelona                  38 30  6  2  95-21  96  Champions
+ 2.Real Madrid CF                38 29  5  4 102-33  92
+ 3.Valencia CF                   38 21  8  9  64-44  71
+ 4.Villarreal CF                 38 18  8 12  54-44  62
+
+    §
+    
+Halfway Table:
+
+ 1.Atlético de Madrid            19  13  5  1  34-12  44
+ 2.Real Madrid CF                19  13  4  2  43-19  43  [C]
+ 3.FC Barcelona                  19  12  2  5  51-22  38
+ 4.Athletic de Bilbao            19  10  6  3  29-17  36
+
+    §
+    
+Fall Table
+
+ 1. 1. FC Köln                   15  8  4  3  41- 27  20
+ 2. Werder Bremen                15  8  4  3  28- 17  20
+ 3. TSV 1860 München             15  6  5  4  27- 19  17
+ 4. 1. FC Nürnberg               15  7  3  5  27- 22  17
+
+   §
+
+Table
+ 1.São Paulo         25 16  4  5  57-35  52  Qualified
+ 2.São Caetano       25 14  5  6  42-28  47  Qualified
+ 3.Corinthians       25 12  7  6  37-35  43  Qualified
+
+   §
+
+Table:
+ 1.Fluminense        38 20 11  7  62-36  71  Champions; Libertadores 2011
+ 2.Cruzeiro          38 20  9  9  53-38  69  Libertadores 2011
+ 3.Corinthians       38 19 11  8  65-41  68  Libertadores 2011
+
+   §
+
+Final standings:
+ 1.ABC     14  7  5  2  19- 8  26  Champions; promoted
+---------------------------------------
+ 2.Ituiutaba     14  4  8  2  12- 8  20  Promoted
+
+   §
+
+   Team                                M    W  T  L  GF-GA  PTS EP  TP
+ 1.Alebrijes                           16   9  4  3  21-13   31  3  34 (quarterfinals)
+ 2.Leones Negros                       16   8  5  3  21-16   29  4  33 (quarterfinals)
+ 3.Club Celaya                         16   7  6  3  23-15   27  3  30 (quarterfinals)
+ 4.Atlético Morelia                    16   7  4  5  24-19   25  2  27 (quarterfinals)
+
+   §
+
+Group 1
+
+ 1.Morelia                              4   4  0  0   5- 0   12 (qualified)
+---------------------------------------------------------------
+ 2.Puebla                               4   0  2  2   1- 3    2
+ 3.Cimarrones                           4   0  2  2   1- 4    2
+
+   §
+
+Table at abandonment:
+
+ 1.Cruz Azul                           10   7  1  2  24-14  22
+ 2.León                                10   7  0  3  23-14  21
+ 3.Santos Laguna                       10   5  2  3  14-14  17
+ 4.América                             10   5  2  3  11-11  17
+ 5.Guadalajara                         10   4  4  2  13-11  16
+ 6.Pumas                               10   4  3  3  20-19  15
+ 7.Tigres                              10   4  2  4  13-10  14
+ 8.FC Juárez                           10   4  2  4  20-18  14
+
+   §
+
+ 1.Tijuana                             17  10  3  4  25-13  33 [Copa Libertadores Group Phase]
+ 2.Pachuca                             17   9  4  4  36-21  31 [CONCACAF Champions League 2016/17 Quarterfinals]
+ 3.Tigres                              17   8  6  3  22-13  30 [CONCACAF Champions League 2016/17 Quarterfinals]
+ 4.Guadalajara                         17   8  4  5  21-17  28 [Copa Libertadores Preliminary Round]
+ 5.América                             17   7  7  3  29-26  28 [Copa Libertadores Group Phase]
+
+   §
+
+ 1.Toluca                              17  10  4  3  28-17  34 [Copa Libertadores Group Phase]
+ 2.Tijuana                             17   9  7  1  23-15  34 [Copa Libertadores Group Phase]
+ 3.León                                17  10  3  4  34-17  33 [Copa Libertadores Prel. Round]
+ 4.América                             17   8  7  2  28-15  31
+ 5.Morelia                             17   6  9  2  25-16  27
+ 6.Cruz Azul                           17   6  8  3  22-15  26
+ 7.Monterrey                           17   5  8  4  23-23  23 [QF CONCACAF Ch. League]
+ 8.Guadalajara                         17   6  5  6  17-17  23
+
+  §
+
+                           GP   W   L   D   GF  GA  Pts
+FC Gold Pride              24  16   3   5   46  19   53
+Boston Breakers            24  10   8   6   36  28   36
+Philadelphia Independence  24  10  10   4   37  36   34
+Washington Freedom         24   8   9   7   33  33   31
+Sky Blue F. C.             24   7  10   7   20  31   28
+Chicago Red Stars          24   7  11   6   21  27   27
+Atlanta Beat               24   5  13   6   20  40   21
+St. Louis Athletica         6   2   1   3    9   8    9
+
+  §
+
+                            GP   W   L   D   GF  GA  Pts
+
+Montreal Impact             28  18   3   7   37  15   61
+Rochester Raging Rhinos     28  15   7   6   45  27   51
+Vancouver Whitecaps         28  12   7   9   37  21   45
+Seattle Sounders            28  11   6  11   33  25   44
+Portland Timbers            28  10   9   9   40  42   39
+Richmond Kickers            28  10   9   9   28  30   39
+
+  §
+
+                            GP   W   D   L   GF  GA  PTS
+
+Atlanta Beat                21  10   7   4   31  21   37
+Bay Area Cyberrays          21  11   4   6   27  23   37
+New York Power              21   9   5   7   30  25   32
+Philadelphia Charge         21   9   4   8   35  28   31
+San Diego Spirit            21   7   7   7   29  28   28
+Boston Breakers             21   8  10   3   29  35   27
+Washington Freedom          21   6  12   3   28  40   21
+Carolina Courage            21   6   3  12   28  40   21
+
+
+  §
+
+2. Klasse Südwest
+
+ 1.Neukirchen/E.    22  50-18  51
+---------------------------------
+ 2.Pfaffstätt       22  37-15  51
+ 3.Schwand          22  55-37  41
+ 4.Schneegattern    22  56-26  40
+ 5.Laab             22  36-33  35
+ 6.Hochburg         22  38-40  34
+ 7.Schalchen        22  44-43  33
+ 8.St.Radegund      22  41-47  31
+ 9.Tarsdorf         22  28-37  20
+10.Jeging           22  26-40  18
+11.Kirchberg/M.     22  36-61  11
+12.St.Johann/W.     22  18-65   7
+
+  §
+
+Unterliga Süd:
+
+ 1. Radkersburg    22 14  5  3  55:26 47
+----------------------------------------
+ 2. Riegersburg    22 10 10  2  38:18 40
+ 3. Mühldorf       22 10  8  4  44:29 38
+ 4. Siebing        22 11  5  6  50:36 38
+ 5. Loipersdorf    22  9  9  4  32:23 36
+ 6. Straden        22  7 11  4  45:37 32
+ 7. St. Stefan/R.  22  7  6  9  48:52 27
+ 8. Laafeld        22  6  6 10  47:50 24
+ 9. Ottendorf      22  4  8 10  33:41 20
+10. Mureck         22  5  5 12  38:49 20
+11. St. Peter/O.   22  5  4 13  27:61 19
+----------------------------------------
+12. Auersbach      22  4  3 15  27:62 15
+
+
+TXT
+

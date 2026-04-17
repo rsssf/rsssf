@@ -31,7 +31,7 @@ GOALS_ = %q{
 
 
 
-def handle_goals( txt )
+def handle_goals( txt, opts: {} )
 
 
 ##
@@ -147,8 +147,12 @@ def handle_goals( txt )
                      [ ]*
                 )?
                     $}ix ) do |match|
-                      puts "  match:"
-                      puts match                    
+
+                     if opts[:goals]
+                        puts "  match:"
+                        puts match
+                     end                    
+                   
                       m = Regexp.last_match
                       buf = String.new
                       buf += "#{m[:match]}\n"

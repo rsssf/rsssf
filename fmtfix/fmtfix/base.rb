@@ -43,6 +43,10 @@ def autofix( txt )
  
     txt = handle_about( txt )  ## e.g. about this document
 
+    txt = handle_headings( txt )
+
+
+
     txt = handle_tables( txt )     ## e.g. final/halfway table (aka standings)
     txt = handle_topscorers( txt )
 
