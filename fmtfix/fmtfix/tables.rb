@@ -48,13 +48,21 @@ end
 =end
 
 
-##
-##   GP   W   L   D   GF  GA  Pts
 
 TABLE_RE = %r{
       
-           ### optional table header 
+         ### optional table header 
           (?:   
+             ### negative lookahead
+             ##    MUST NOT match  standing line e.g.  10  3  4
+             ##      or         table heading (see below)
+             ##      or   -----  (old style structured heading left overs)
+                    (?! ^[ ]* (?:   [^\n]+?  [ ]+ \d{1,3} [ ]+ \d{1,3} [ ]+ \d{1,3}
+                                |   (?: GP | M | Team ) [ ]
+                                |  -{3,}
+                              )
+                     )            
+
              ## (i) table header
              ##
              ## fix - make header match more strict!!!
@@ -65,18 +73,9 @@ TABLE_RE = %r{
              ##    [1]
              ## exclude heading === e.g.
              ##    ==== USL Premier Development
-                  ^
+                 ^
                 [ ]*
                   
-             ### negative lookahead
-             ##    MUST NOT match  standing line e.g.  10  3  4
-             ##      or         table heading (see below)
-             ##      or   -----  (old style structured heading left overs)
-                    (?!  (?:   [^\n]+?  [ ]+ \d{1,3} [ ]+ \d{1,3} [ ]+ \d{1,3}
-                           |  [ ]* (?: GP | M | Team ) [ ]
-                           |  -{3,}
-                        )
-                     )            
 
               ## exclude comma (,) - why? why not?
               ##   and numbers  - unless group 1
