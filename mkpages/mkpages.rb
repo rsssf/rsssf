@@ -26,9 +26,10 @@ require_relative 'mkpages/index'
  args = ARGV
 
  opts = {
-   outdir:     './site', 
+   outdir:     './_site', 
    rootdir:    '../tables',
    index:      false,
+   sample:     false,
 }
 
 
@@ -47,6 +48,11 @@ require_relative 'mkpages/index'
      parser.on( "--index",
                  "turn on index page generation (default: #{opts[:index]})" ) do |index|
        opts[:index] = true
+     end
+
+     parser.on( "--sample",
+                 "for (quick) testing only sample pages (do NOT generate all) (default: #{opts[:sample]})" ) do |sample|
+       opts[:sample] = true
      end
   end
 
@@ -72,14 +78,13 @@ outdir  = opts[:outdir]
 ### note - auto-excludes .edits.txt
 ##           e.g. braz2024.edits.txt.
 files = collect_datafiles( *globs, dir: rootdir )
-puts "    #{files.size} found source .txt file(s)"
+puts "    #{files.size} source .txt file(s) found"
 
 
 
 ###
 ### for testing only sample pages (do NOT generate all)
-sample = true
-files = [files[0], files[100], files[200], files[300]]   if sample
+files = [files[0], files[100], files[200], files[300]]   if opts[:sample]
 
 
 

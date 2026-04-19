@@ -12,6 +12,7 @@ o/
 
 ## ignore generated pages
 site/
+_site/
 
 
 #########
