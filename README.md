@@ -19,8 +19,8 @@ in a comma-separated values (csv) file.
 
 
 ```
-$ ruby sandbox/prepare.rb eng
-$ ruby sandbox/prepare.rb --force eng       ## (force) redownload all
+$ ruby prepare/prepare.rb eng
+$ ruby prepare/prepare.rb --force eng       ## (force) redownload all
 ```
 
 note - the web pages get (by default) cached in `./cache`
@@ -33,9 +33,9 @@ tables in .txt (preserving the original format).
 
 
 
-**mkpages**
+**mkstats**
 
-use `mkpages` for statistics and document structure for tables 
+use `mkstats` for statistics and document structure for tables 
 
 pass in a pages config (e.g. 
 [eng](config/eng.csv), 
@@ -47,12 +47,12 @@ in a comma-separated values (csv) file.
 
 
 ```
-$ ruby sandbox/mkpages.rb eng
+$ ruby sandbox/mkstats.rb eng
 ```
 
 note - default search path for pages config is `./config`
 and the default outdir for the page stats is `./config` the same.
-the outname defaults to `<slug>-pages.csv`, that is, `eng`  becomes `eng-pages.csv`.
+the outname defaults to `<slug>-stats.csv`, that is, `eng`  becomes `eng-stats.csv`.
 
 
 
