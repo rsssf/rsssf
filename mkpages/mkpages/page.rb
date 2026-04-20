@@ -5,13 +5,15 @@
 ANAME_RE = %r{‹§ (?<ref> [^›]+?) ›}ix
 
 ## (ii)   replace ref
-##          see §pbengo›
-SEE_ANAME_RE = %r{\bsee [ ] § (?<ref> [^›]+?) ›}ix
+##          see §pbengo
+##  note - use positive lookahead for › (do NOT incl.) 
+SEE_ANAME_RE = %r{\bsee [ ] § (?<ref> [^›]+?) ?=›}ix
 
 ## (iii)  replace page links
-##          see page 2006f›
+##          see page 2006f
 ##   see page ../tablesw/worldcup›
-SEE_APAGE_RE = %r{\bsee [ ] page [ ] (?<page> [^›]+?) ›}ix
+##  note - use positive lookahead for › (do NOT incl.) 
+SEE_APAGE_RE = %r{\bsee [ ] page [ ] (?<page> [^›]+?) ?=›}ix
 
 
 

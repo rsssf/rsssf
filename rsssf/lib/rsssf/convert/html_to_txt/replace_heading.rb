@@ -11,15 +11,28 @@ class PageConverter
   ##              match of tags inside content too
   HEADING_RE = %r{ \s*
                      <H(?<level>[1-6])>
-                       (?<title>.+?)
+                       (?<title> .+?)
                      </H\k<level>>
                      \s*
                    }imx
 
+
+
+  ###
+  ##  note - MUST be a one a single line (see make heading for more)   
+  ##           e.g.    "<h#{tag}>#{text}</h#{tag}>"              
+  BOLD_OR_UNDERLINE_LINE_HEADING_RE = %r{^
+                          [ ]*
+                     <H (?<tag> [BU]) >
+                       (?<title> .+?)
+                     </H \k<tag> >
+                         [ ]*
+                          $
+                   }ix
   
                  
   def replace_heading( html )
-     html.gsub( HEADING_RE ) do |_|
+     html = html.gsub( HEADING_RE ) do |_|
         m = Regexp.last_match
 
         level = m[:level].to_i(10) 
@@ -31,9 +44,32 @@ class PageConverter
         "\n\n#{'='*level} #{title}\n\n"    
         
      end
+
+     html = html.gsub( BOLD_OR_UNDERLINE_LINE_HEADING_RE ) do |_|
+        m = Regexp.last_match
+
+        tag = m[:tag].downcase 
+        title = m[:title]
+
+        ## use heading 5 for b and heading 6 for underline for now
+        ##   maybe later change to custom  ==_ or ==* or such
+        ##     to mark the heading (sourced via bold/underscore) ???
+        level =  if tag == 'b'
+                      5
+                 elsif tag == 'u'
+                      6 
+                 else
+                     raise ArgumentError, "b(old)|u(underscore) tag expected; got #{tag}"
+                 end
+
+        puts " replace #{tag}-heading #{level} (h#{level}) >#{title}<"
+
+        ## note: do NOT add any newlines before and after
+        "#{'='*level} #{title}"    
+     end
+   
+    html
   end
-
-
 
 
 end # module PageConverter

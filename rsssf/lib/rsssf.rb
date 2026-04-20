@@ -35,6 +35,7 @@ require_relative 'rsssf/convert/html_to_txt/replace_a_href'
 require_relative 'rsssf/convert/html_to_txt/replace_hr'
 require_relative 'rsssf/convert/html_to_txt/remove_emails'
 require_relative 'rsssf/convert/html_to_txt/beautify_anchors'
+require_relative 'rsssf/convert/html_to_txt/make_heading'
 
 
 

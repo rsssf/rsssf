@@ -25,6 +25,9 @@ def html_to_txt( html, url: )
   ## note - might incl. attributes e.g.
   ## <body bgcolor="yellow">
 
+  ## record / track (important) edits - sub(stitutions) etc.
+  edits = []
+
 
   html = html.sub( /.+?
                       <BODY [^>]*? >
@@ -77,6 +80,17 @@ def html_to_txt( html, url: )
 
 
 
+  ##
+  ##   change ^<b><a name ...></a></b>$  or    <hb>  - heading "bold" - might be h5
+  ##          ^<u><a name ...></a></u>$    to  <hu>  - heading "underscore" - might be h6
+  html, more_edits = make_heading( html )
+  edits += more_edits 
+
+
+
+
+
+
   ## remove cite
   html = html.gsub( /<CITE>([^<]+)<\/CITE>/im ) do |_|
     puts " remove cite >#{$1}<"
@@ -85,6 +99,8 @@ def html_to_txt( html, url: )
 
 
   html = replace_hr( html )
+
+
 
 
   ## replace break (br)
@@ -96,6 +112,8 @@ def html_to_txt( html, url: )
   end
 
 
+
+  
   html = replace_a_name( html )
 
   html = replace_a_href( html )
@@ -220,7 +238,7 @@ def html_to_txt( html, url: )
 
   txt = errata_txt( txt )
 
-  txt
+  [txt, edits]
 end # method html_to_text
 
 

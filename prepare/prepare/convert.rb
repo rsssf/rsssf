@@ -121,6 +121,15 @@ START_W_ABOUT_RE = %r{  \A
                    .*?
               }ix
 
+
+##
+## todo - fix
+##
+##   remove all menu, ul,li, tags etc.
+##    before nav check
+##    see https://rsssf.github.io/tables/2014q.html
+##       as an example!!!
+
 START_W_NAV_RE = %r{  \A
                 [ \n]*    ## trailing spaces or blank lines 
                 ‹.+?›    ##  link  (exlude named anchor - why? why not? §)
@@ -191,9 +200,8 @@ def do_edits( txt )
 
    ## note - return (new) txt AND recorded edits (& erratas)
    ##        return edits as array or joined (single) string - why? why not?
-   [txt, 
-    edits.empty? ? nil : edits.join("\n"),
-    about]
+   ##   note - return empty array if no edits!!
+   [txt, edits, about]
 end
 
 
@@ -209,13 +217,13 @@ def convert_pages( pages, outdir: )
     html     = Webcache.read( url )
   
 
+    edits = []
 
+    txt, more_edits = Rsssf::PageConverter.convert( html, url: url )
+    edits += more_edits
 
-    txt = Rsssf::PageConverter.convert( html, url: url )
-
-
-    txt, edits, about = do_edits( txt )
-
+    txt, more_edits, about = do_edits( txt )
+    edits += more_edits
 
     basename = File.basename( page, File.extname( page ))
     dirname  = File.dirname( page )
@@ -257,8 +265,8 @@ EOS
      write_text( "#{outdir}/#{dirname}/#{basename}.txt", header+txt )
 
      ## todo/check - delete edits file if no edits - why? why not?
-     if edits
-        write_text( "#{outdir}/#{dirname}/#{basename}.edits.txt", edits )
+     if edits.size > 0
+        write_text( "#{outdir}/#{dirname}/#{basename}.edits.txt", edits.join("\n") )
      end
 
      ## todo/check - delete about file if no about - why? why not?

@@ -88,7 +88,8 @@ def build_index( files, dir:, outdir: )
 
    master.each do |first, idx|
       if idx.size > 0
-         header =     first == '_' ? '0-9' : first.upcase
+         ## use first.update e.g. a => A for index - why? why not?
+         header =     first == '_' ? '0-9' : first
          buf << "<p><b>#{header}</b> (#{idx.size}) - \n"
 
          idx.each do |key, h|
