@@ -17,7 +17,10 @@ require_relative 'mkpages/collect_datafiles'
 require_relative 'mkpages/build_page'
 require_relative 'mkpages/build_index'
 require_relative 'mkpages/build_codes'
+require_relative 'mkpages/build_updates'
+require_relative 'mkpages/build_links'
 require_relative 'mkpages/build_site'
+require_relative 'mkpages/meta'      ## parse_meta  --in html-style comment header
 
 
 require_relative 'mkpages/page_toc'     ## table of contents (toc)
@@ -34,10 +37,11 @@ require_relative 'mkpages/page_layout'   ## aka master page layout/template
  opts = {
    outdir:     './_site', 
    rootdir:    '../tables',
-   index:      false,
+   index:      true,
+   codes:      true,
+   updates:    true,
    sample:     false,
-   codes:      false,
-}
+ }
 
 
 
@@ -59,6 +63,10 @@ require_relative 'mkpages/page_layout'   ## aka master page layout/template
      parser.on( "--codes",
                  "turn on codes (index) page generation (default: #{opts[:codes]})" ) do |codes|
        opts[:codes] = true
+     end
+     parser.on( "--updates", "--latest",
+                 "turn on (lastest) updates (index) page generation (default: #{opts[:updates]})" ) do |updates|
+       opts[:updates] = true
      end
 
      parser.on( "--sample",
@@ -106,9 +114,8 @@ site = SiteIndex.build( files, dir: rootdir )
 
 
 def build_pages( site, outdir: )
-    i=0
-    ## add each_page_with_index  (check why each_page.with_index is not working??)
-    site.each_page do |page|
+    ## todo/check - why each_page.with_index is not working??)
+    site.each_page_with_index do |page,i|
     
       outpath = "#{outdir}/#{page.basename}.html"
       puts "==> [#{i+1}/#{site.size}] building page #{outpath} (#{page.dirname}/#{page.basename}.txt)..."
@@ -116,7 +123,6 @@ def build_pages( site, outdir: )
       html = build_page( page )
 
       write_text( outpath, html )
-      i+=1
     end
 end
 
@@ -182,12 +188,17 @@ end
 
 
 
+build_links( site, outdir: outdir )
+
 
 build_pages( site, outdir: outdir )
 
 build_index( site, outdir: outdir )   if opts[:index]
 
 build_codes( site, outdir: outdir )   if opts[:codes]
+
+build_updates( site, outdir: outdir )  if opts[:updates]
+
 
 ## write out sitewide stylesheet (style.css)                    
 build_style( outdir: outdir )                    

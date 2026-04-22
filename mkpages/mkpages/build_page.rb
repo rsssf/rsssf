@@ -49,35 +49,6 @@ HX_RE = %r{          ## negative lookahead
 
 
 
-HTML_COMMENT_RE = %r{<!-- 
-                          [ \n]* 
-                        (?<text> .+?) 
-                         [ \n]* 
-                   -->}imx
-
-## note - allow no (empty) title? why? why not?                        
-TITLE_PROP_RE = %r{ ^ [ ]* 
-                        (?<key> title) 
-                          [ ]*  :  [ ]* 
-                        (?<value> .*?) 
-                      [ ]*
-                   $}ix
-
-
-def find_title_in_comment( txt )
-     comments = txt.scan( HTML_COMMENT_RE )
-    
-     ## assume first comment is "header" comments
-     ##   note - match is an array of captures (even if only one capture) 
-     comment = comments[0][0]
-     if m = TITLE_PROP_RE.match( comment )
-        m[:value]
-     else
-       nil
-     end
-end
-
-
 
 def build_page( page )
 

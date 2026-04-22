@@ -58,7 +58,7 @@ def build_index( site, outdir: )
          buf << "<p><b>#{header}</b> (#{idx.size}) - \n"
 
          idx.each do |page|
-            buf << "<code>#{page.basename}</code> <a href=\"#{page.html_path}\">#{page.title}</a>\n"
+            buf << "<code>#{page.basename}</code> <a href=\"#{page.basename}.html\">#{page.title}</a>\n"
          end
        
          buf << "</p>\n\n"

@@ -39,8 +39,22 @@ CODES_RE = %r{ \A
 
 
 def _build_code_titles( idx, sep: ' · ' )
-    idx[:titles].map do |title, count|
+
+    titles_counter = idx[:titles]
+    ## note - sort by count
+    sorted = titles_counter.sort do |l,r|
+                              ## note [0] is key   (title)
+                              ##      [1] is value (count)
+                              r[1] <=> l[1]
+                        end
+
+    sorted.map do |title, count|
+                      ## note - only incl. count if greater than one (1)!!
+                      if count > 1
                           "#{title} (#{count})"
+                      else
+                          "#{title}"
+                      end
                    end.join( sep )
 end  
 
@@ -100,6 +114,9 @@ def build_codes( site, outdir: )
 
         ### for (re)use move to Page class - why? why not?
         ## XXXX/11
+        ##
+        ## note special case title with two seasons (years)
+        ##  Puerto Rico XXXX/XX (Clausura XXXX)
         title_masked = page.title.sub( %r{\b
                                        [12]\d{3} 
                                          [/-] 
@@ -142,6 +159,10 @@ def build_codes( site, outdir: )
 
 
    buf << "<table>\n"
+   buf << %Q{<table style="width:100%">\n}
+   buf << %Q{<tr><th style="width:150px"></th><th>Title(s)</th><th>Season(s)</th></tr>\n}
+   
+
    codes.each do |code|
       idx = master[code]
  
@@ -163,7 +184,7 @@ def build_codes( site, outdir: )
       buf << "</td>\n"
       buf << "<td>"
       buf <<   years.keys.sort.reverse.map do |year|
-                           "<a href=\"#{years[year].html_path}\" title=\"#{years[year].title}\">#{year}</a>"
+                           "<a href=\"#{years[year].basename}.html\" title=\"#{years[year].title}\">#{year}</a>"
                          end.join( ', ' )
       buf << "</td>\n"
       buf << "</tr>\n\n"

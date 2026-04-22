@@ -20,45 +20,58 @@ end
 ## use basedir - why? why not?
 attr_reader :dir
 
+attr_reader :mirror    ## make (org site map mirror) public for now - why? why not? 
+
+
+
 def initialize( dir: )
     @dir = dir
-    @pages = {}  ## indexed by basename/slug (as key)
+    @pages  = {}  ## indexed by basename/slug (as key)
+    
+    @mirror = {}  ## mirror / map of org site (keeps org path/names)
 end
 
 
 
 class Page
     ## maybe later -  read meta (title) on demand only
-    attr_reader :dirname, :basename, :title
+    attr_reader :dirname, :basename
 
     def initialize( site:, dirname:, basename: )
         @site = site    # link to (parent) site
         
         @dirname  = dirname
         @basename = basename
-        @title    = nil
-
-        _read_meta()
+        
+        ## get meta data block via html-style comment header (in .txt)
+        ##    incl.   title, autor(s), source,  updated
+        ##  e.g.
+        ##    <!--
+        ##       title:   Austria 2024/25
+        ##       source:  https://rsssf.org/tableso/oost2025.html
+        ##       author:  Hans Schöggl
+        ##       updated: 7 Jul 2025    
+        ##      -->
+        ##  -or-
+        ##      authors: Hans Schöggl and Karel Stokkermans 
+        @meta   =   parse_meta( _read_text() ) 
     end
 
-    ## relative path 
-    ##   note - will NOT include dirname!!!!
-    ##    make add an option later - why? why not?
-    ## - keep - why? why not?
-    def txt_path()   "#{basename}.txt"; end
-    def html_path()  "#{basename}.html"; end    
 
 
     def _read_text
         txt = read_text( "#{@site.dir}/#{dirname}/#{basename}.txt" )
+        
         ## check windows files on unix  -- remove \r - carriage return (cr)
         ##  clean-up windows-style newlines - why? why not?
         txt = txt.gsub( "\r\n", "\n" )
         txt
     end
-    
-    def txt()  _read_text(); end
-    alias_method :text, :txt
+
+    ## note - maybe memorize (cache) txt later - why? why not?
+    ##    do NOT reread - and freeze text (to make read-only)??
+    alias_method :txt,  :_read_text
+    alias_method :text, :_read_text
 
 
     def first  ## or use letter - used for building an a-z index
@@ -69,25 +82,25 @@ class Page
     end
 
 
+    def source()   @meta[:source]; end   ## (original) rsssf source url
+    def title()    @meta[:title] || 'n/a' ; end   ## (original) html page title <title></title>
+    
+    ## note - author incl. authors!!
+    def author()   @meta[:author] || @meta[:authors]; end
+    
+    def updated
+        ## auto-convert to date type - why? why not?
+        ##  fix/fix   maybe already upstream (always use iso-style 2026-04-22) - why? why not?
+        ##
+        ##   7 Jul 2025
+        str = @meta[:updated]
 
-    def _read_meta
-
-      ##
-      ## todo/fix:
-      ##   get more meta data from page comment header
-      ##    use a  \A [ \n]* rule
-      ## 
-      ##    from source file comment
-      ##  <!--  title:  -->
-      ##  for now get from page cache in html!!!
-      ##     
-
-       txt = _read_text()
-
-       ## note - title nil if not present (n/a)
-       @title  = find_title_in_comment( txt ) || 'n/a' 
+        ## note - return nil if no updated entry present
+        ##   %b: Abbreviated month name (Jan, Feb)
+        str ? Date.strptime( str, '%d %b %Y' ) : nil
     end
-end # (nested) class Page 
+ end # (nested) class Page 
+
 
 
 
@@ -109,20 +122,34 @@ def add( files )
       page = @pages[ basename ] = Page.new( site: self,
                                             dirname:   dirname,
                                             basename:  basename ) 
+
+      ## add to mirror too?
+      ##   fix/fix - check if dirname is ./ or such
+      ##      for now always assume a dirname is present!!!
+      @mirror[ "#{dirname}/#{basename}" ] = page
    end
    print "\n"
 end
 
 
-def size() @pages.size; end
-
 def each_page( &block )
-
-    ##  note - sort by basename/slug (as key)
+    ##  note - sort by basename/slug (as key) - why? why not?
     @pages.keys.sort.each do |key|
         block.call( @pages[key] )
     end
-end    
+end  
+
+def each_page_with_index( &block )
+
+    ##  note - sort by basename/slug (as key) - why? why not?
+    @pages.keys.sort.each_with_index do |key,i|
+        block.call( @pages[key], i )
+    end
+end  
+
+
+def pages()  @pages.values; end
+def size()   @pages.size; end
    
 
 end  # class SiteIndex

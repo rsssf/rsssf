@@ -11,8 +11,8 @@ def build_site_banner
   banner += " - "
   banner += %q{<a href="./codes.html">Codes Index A-Z</a>}
   banner += " - "
-  banner += %q{<span title="UPCOMING SOON!">Updates</span>}
-
+  banner += %q{<a href="./updates.html">Latest Updates</a>}
+ 
   banner += "\n"
   banner += "</pre>\n"
 
