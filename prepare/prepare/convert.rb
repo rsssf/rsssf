@@ -78,7 +78,7 @@ ABOUT_META_RE = %r{
     \b last [ ]+ updated [ ]*:
       \s*
       (?<date> \d{1,2} [ ]+              ## day
-                [a-z]{3,10} [ ]+         ## month  
+                [a-z]{3,10} [ ]+         ## month
                 \d{4} \b)                ## year
 }ixm
 
@@ -87,16 +87,16 @@ ABOUT_META_RE = %r{
 ## change name to authors_n_updated or such - why? why not?
 def find_author_n_date( txt )
   ##
-  ## fix/todo: move authors n last updated 
-  ##  whitespace cleanup  - why? why not?? 
+  ## fix/todo: move authors n last updated
+  ##  whitespace cleanup  - why? why not??
 
   if m=ABOUT_META_RE.match( txt )
-     
+
     authors = m[:author].strip.gsub(/\s+/, ' ' )  # cleanup whitespace; squish-style
     authors = authors.gsub( /[ ]*,[ ]*/, ', ' )    # prettify commas - always single space after comma (no space before)
 
-    updated = m[:date].strip.gsub(/\s+/, ' ' ) 
- 
+    updated = m[:date].strip.gsub(/\s+/, ' ' )
+
     [authors, updated]
   else
      ## report error or raise exception??
@@ -113,7 +113,7 @@ end
 ###
 ##  remove trailing about document meta backmatter
 ##  == About this document  ‹§about›
-## 
+##
 
 START_W_ABOUT_RE = %r{  \A
                   [ \n]*   ## trailing spaces or blank lines
@@ -131,11 +131,11 @@ START_W_ABOUT_RE = %r{  \A
 ##       as an example!!!
 
 START_W_NAV_RE = %r{  \A
-                [ \n]*    ## trailing spaces or blank lines 
+                [ \n]*    ## trailing spaces or blank lines
                 ‹.+?›    ##  link  (exlude named anchor - why? why not? §)
              }ix
-          
-             
+
+
 
 
 ###
@@ -146,39 +146,117 @@ START_W_NAV_RE = %r{  \A
 #       and only a last update: 22 Apr 1999   line (no author)
 
 
-def do_edits( txt )
 
-  ### record edits in its own txt file  
+##          see page 2006f
+##   see page ../tablesw/worldcup›
+##  e.g. ‹League C, see page 2023uefanl§lgc›
+##       ‹League A, see page 2023uefanl.html#lga›
+##   todo/fix - fix upstream ?? (e.g. remove. html and replace #=>§)
+LINK_APAGE_RE = %r{  ‹(?<title> [^›]+?)
+                       , [ ] see [ ] page [ ]
+                      (?<pageref> [^›]+?)
+                    ›
+                }ix
+
+=begin
+["1973/74", "oost74"],
+ ["1975/76", "oost76"],
+ ["list of final tables", "oosthist"],
+ ["list of champions", "oostchamp"],
+ ["list of cup finals", "oostcuphist"],
+ ["list of super cup finals", "oostsupcuphist"],
+ ["list of foundation dates", "oostfound"]]
+=end
+
+def expand_pageref( pageref, dirname: )
+
+                  ##
+                  ##  note - pre-proces
+                  ##   2023uefanl.html#lga
+                  ##     stkitts2025.html#pres
+                  ##
+                  ##   remove .html
+                  ##    and optional anchor
+                  ##
+                  ##   fix - upstream - why? why not?
+
+                   pageref = pageref.sub(  %r{ \.html\b }ix, '' )
+                   ## check - only really one # allowed in url path???
+                   pageref = pageref.sub(  '#', '§' )
+
+
+                 if /^[a-z0-9][a-z0-9-§]*$/.match?( pageref )
+                    ## assume relative page in "local" dir
+                    "#{dirname}/#{pageref}"
+                 elsif pageref.start_with?( '../')
+                    ## ../tablesw/worldcup
+                     pageref.sub( "../", '' )
+                 elsif pageref.start_with?( './' )
+                     raise ArgumentError, "found (unsupported) ./ pageref >#{pageref}<"
+                 elsif pageref.start_with?( '/' )
+                     raise ArgumentError, "found (unsupported) / pageref >#{pageref}<"
+                 elsif pageref.start_with?( %r{^https?:}i )
+                     raise ArgumentError, "found (unsupported) https?: pageref >#{pageref}<"
+                 else
+                     raise ArgumentError, "found (unsupported) pageref >#{pageref}<"
+                 end
+end
+
+
+def collect_links( txt, basename:, dirname: )
+
+  links = txt.scan( LINK_APAGE_RE )
+
+  links.map do |link|
+                   link[1] = expand_pageref( link[1], dirname: dirname )
+                   link
+               end
+
+  links
+end
+
+def postproc_page( txt, basename:, dirname: )
+
+  ### record edits in its own txt file
   edits = []
+  links = []
   about = nil
+
 
 ###
 ##  step 1
 ##   split by horizontal rules (hrs)
 ##       and remove navigations sections
-##             starting with links e.g.   
+##             starting with links e.g.
 ## ‹Bundesliga, see §bund›
 
    sects = txt.split( /^=-=-=-=-=-=-=-=-=-=-=-=-=-=-=$/ )
 
-   
+
    sects = sects.select do |sect|
              if START_W_NAV_RE.match?( sect )
-               edit = String.new 
+                links += collect_links( sect, basename: basename,
+                                              dirname: dirname )
+
+              edit = String.new
                edit += "-- removing nav(igation) section:"
                edit += sect
 
                puts edit
 
                edits << edit   ## record edit
-         
-               false           ## remove (nav) section 
+
+               false           ## remove (nav) section
              elsif START_W_ABOUT_RE.match?( sect )
+                ## note - do NOT collect links in about section!!!
+
                about = sect
                false           ## remove (about) section
              else
-               true            ## keep section 
-             end     
+                links += collect_links( sect, basename: basename,
+                                              dirname: dirname )
+               true            ## keep section
+             end
            end
 
    ## sects.each_with_index do |sect,i|
@@ -186,8 +264,8 @@ def do_edits( txt )
    ##  pp sect
    ## end
    ##  puts "  #{sects.size} sect(s)"
- 
-   
+
+
    ## note - replace hr with blank line
    txt = sects.join( "\n\n" )
 
@@ -201,7 +279,7 @@ def do_edits( txt )
    ## note - return (new) txt AND recorded edits (& erratas)
    ##        return edits as array or joined (single) string - why? why not?
    ##   note - return empty array if no edits!!
-   [txt, edits, about]
+   [txt, edits, links, about]
 end
 
 
@@ -215,18 +293,25 @@ def convert_pages( pages, outdir: )
     url      = "https://rsssf.org/#{page}"
 
     html     = Webcache.read( url )
-  
+
 
     edits = []
 
     txt, more_edits = Rsssf::PageConverter.convert( html, url: url )
     edits += more_edits
 
-    txt, more_edits, about = do_edits( txt )
-    edits += more_edits
 
     basename = File.basename( page, File.extname( page ))
     dirname  = File.dirname( page )
+
+
+    ##
+    ##  post-process .txt page
+
+    txt, more_edits, links, about = postproc_page( txt, basename: basename,
+                                                        dirname: dirname )
+    edits += more_edits
+
 
 
 
@@ -238,13 +323,13 @@ def convert_pages( pages, outdir: )
 
     authors, updated = about ? find_author_n_date( about ) : [nil,nil]
 
- header_props = <<EOS 
+ header_props = <<EOS
      title:   #{title}
      source:  #{url}
 EOS
 
    if authors && updated
-      ##  assume plural if and or command (,) 
+      ##  assume plural if and or command (,)
       header_props +=  if /\band\b|,/i.match( authors )
                          "     authors: #{authors}\n"
                        else
@@ -254,9 +339,9 @@ EOS
    end
 
 
-  header = <<EOS 
+  header = <<EOS
   <!--
-#{header_props}    
+#{header_props}
     -->
 EOS
 
@@ -267,6 +352,17 @@ EOS
      ## todo/check - delete edits file if no edits - why? why not?
      if edits.size > 0
         write_text( "#{outdir}/#{dirname}/#{basename}.edits.txt", edits.join("\n") )
+     end
+
+     ## todo/check - delete links file if no links - why? why not?
+     if links.size > 0
+         buf = links.map do |link|
+                              title   = link[0]
+                              pageref = link[1]
+                             "#{'%-30s' % pageref}  :  #{title}"
+                        end.join( "\n")
+
+         write_text( "#{outdir}/#{dirname}/#{basename}.links.txt", buf )
      end
 
      ## todo/check - delete about file if no about - why? why not?

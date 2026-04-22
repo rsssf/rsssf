@@ -1,6 +1,6 @@
 ############
 #  to run use:
-#   $ ruby mkpages/mkpages.rb 
+#   $ ruby mkpages/mkpages.rb
 
 ##
 ###  generate web site
@@ -35,7 +35,7 @@ require_relative 'mkpages/page_layout'   ## aka master page layout/template
  args = ARGV
 
  opts = {
-   outdir:     './_site', 
+   outdir:     './_site',
    rootdir:    '../tables',
    index:      true,
    codes:      true,
@@ -48,7 +48,7 @@ require_relative 'mkpages/page_layout'   ## aka master page layout/template
   parser = OptionParser.new do |parser|
     parser.banner = "Usage: #{$PROGRAM_NAME} [options] <dir globs>"
 
-     parser.on( "--outdir DIR", 
+     parser.on( "--outdir DIR",
                  "output dir(ectory) for generated html pages (default: #{opts[:outdir]})" ) do |outdir|
        opts[:outdir] = outdir
      end
@@ -86,7 +86,7 @@ pp opts
 ## default (glob) args - dirs to include (in rootdir)
 
 globs = args.size == 0 ? ['tables', 'tables[a-z]'] : args
-           
+
 
 
 
@@ -103,7 +103,7 @@ puts "    #{files.size} source .txt file(s) found"
 ###
 ### for testing only sample pages (do NOT generate all)
 files = [files[0], files[20],
-         files[100], files[101], 
+         files[100], files[101],
          files[200], files[201], files[230],
           files[300]]      if opts[:sample]
 
@@ -116,7 +116,7 @@ site = SiteIndex.build( files, dir: rootdir )
 def build_pages( site, outdir: )
     ## todo/check - why each_page.with_index is not working??)
     site.each_page_with_index do |page,i|
-    
+
       outpath = "#{outdir}/#{page.basename}.html"
       puts "==> [#{i+1}/#{site.size}] building page #{outpath} (#{page.dirname}/#{page.basename}.txt)..."
 
@@ -142,23 +142,23 @@ a:hover {
 
 
 /*********
-  reset h1,h2,h3,h4,h5,h6 formatting inside pre blocks 
+  reset h1,h2,h3,h4,h5,h6 formatting inside pre blocks
   ****/
- 
+
   pre h1,
   pre h2,
   pre h3,
   pre h4,
   pre h5,
-  pre h6 { /* color: red;  */ 
+  pre h6 { /* color: red;  */
             font-size: 100%;
             margin: 0;
              }
 
 
 
-   pre h1, 
-   pre h2, 
+   pre h1,
+   pre h2,
    pre h3 {
       font-size: 150%;
    }
@@ -173,13 +173,13 @@ a:hover {
 
   pre h5 {
             /* bold by default keep */
-         }           
+         }
 
  pre h6 {
-            font-weight: normal; 
+            font-weight: normal;
             /* use underline */
             text-decoration: underline;
-         }           
+         }
 
 CSS
 
@@ -188,7 +188,6 @@ end
 
 
 
-build_links( site, outdir: outdir )
 
 
 build_pages( site, outdir: outdir )
@@ -200,13 +199,11 @@ build_codes( site, outdir: outdir )   if opts[:codes]
 build_updates( site, outdir: outdir )  if opts[:updates]
 
 
-## write out sitewide stylesheet (style.css)                    
-build_style( outdir: outdir )                    
+build_links( site, outdir: outdir )
+
+
+## write out sitewide stylesheet (style.css)
+build_style( outdir: outdir )
 
 
 puts "bye"
-
-
-
-
-
