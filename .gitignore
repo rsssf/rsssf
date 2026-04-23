@@ -19,9 +19,10 @@ _site/
 ### ignore logs and errors
 logs.txt
 logs.2.txt
+logs.3.txt
+logs.4.txt
+logs.5.txt
 logs.old.txt
 logs.html
 error.txt
 error.html
-
-
