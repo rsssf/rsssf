@@ -14,6 +14,9 @@ o/
 site/
 _site/
 
+###
+## ignore sqlite dbs
+*.db
 
 #########
 ### ignore logs and errors
