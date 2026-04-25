@@ -66,14 +66,16 @@ def mirror_pages( force: false,
          if PAGES_404.include?( page_rec.path )
             ## set cached to true to avoid infinite loop!!
             ##   keep in 404s in db - why? why not?
-            page_rec.update!( cached: true )   if page_rec.not_cached?
+            page_rec.update!( http_status: 404,
+                              cached:       true )
             next
          end
+
 
          ### special case for non .html pages (e.g. .pdf others too??)
          ##    do NOT download / mirror / cache for now
          if File.extname( page_rec.path ) != '.html'
-            page_rec.update!( cached: true )   if page_rec.not_cached?
+            page_rec.update!( cached: true )
             next
          end
 
@@ -94,6 +96,17 @@ def mirror_pages( force: false,
          if response_meta
              downloaded += 1
              puts " ---  " + fmt_time_diff( time_start,  count: downloaded )
+
+             ###
+             ## special case
+             ##  check for 404 NOT FOUND
+             if response_meta[:status] == 404
+                      page_rec.update!( http_status: 404,
+                                        cached:      true )
+
+               next   ### note - skip further processing on 404 (no links etc.)!!
+             end
+
          end
 
 

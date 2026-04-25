@@ -23,28 +23,45 @@ def _download_page( url, encoding:,
     response = Webget.page( url, encoding: encoding )  ## fetch (and cache) html page (via HTTP GET)
 
     ## note: exit on get / fetch error - do NOT continue for now - why? why not?
-    exit 1   if response.status.nok?    ## e.g.  HTTP status code != 200
+    ## note -    allow 404 not found to pass through
 
-    puts "html:"
-    html =  response.text( encoding: encoding )
-    pp html[0..200]
 
-     ## note - use "hacky" undocument internal response._text_encoding
-     ##                   to get "upstream" encoding used from convert to utf-8
-     ##                         unicode boms may override user supplied encoding!!!
-     ##  or change upstream
-     ##   and    use/add response.text_with_encoding( ) - why? why not?
+    ## note - status.code is an integer number (not a string!!)
+    if response.status.code == 404
+
+        meta = {
+           status:          response.status.code,
+        }
+
+        ["404 NOT FOUND",meta]
+
+    elsif response.status.code == 200
+      puts "html:"
+      html =  response.text( encoding: encoding )
+      pp html[0..200]
+
+      ## note - use "hacky" undocument internal response._text_encoding
+      ##                   to get "upstream" encoding used from convert to utf-8
+      ##                         unicode boms may override user supplied encoding!!!
+      ##  or change upstream
+      ##   and    use/add response.text_with_encoding( ) - why? why not?
 
       meta = {
           encoding:        response._text_encoding,
           content_length:  response.content_length,
           content_type:    response.content_type,
+          status:          response.status.code,
       }
 
         [html,meta]
-    end
 
+    else
+       puts "unexpected http status code - #{response.status.code}"
+       exit 1
+    end
+  end
 end
+
 
 
 __END__

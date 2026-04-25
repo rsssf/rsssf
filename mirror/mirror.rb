@@ -59,6 +59,7 @@ PAGES_404 = [
   '/tablesk/can08.html',
   '/tablesk/can07.html',
   '/tablesg/greenl07.html',
+  '/tabless/syria05.html',
 ]
 
 
