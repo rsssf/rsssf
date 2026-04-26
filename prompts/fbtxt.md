@@ -2,7 +2,7 @@ via chatgpt
 
 a follow-up from <mirror2.md>
 
-## q: can you design a human (but parseable) football plain text format from scratch learning from the rsssf quirks and best and worst practicies?
+## q: can you design a human (but parseable) football plain text format from scratch learning from the rsssf quirks and best and worst practices?
 
 This is a great challenge—and honestly, RSSSF is the perfect “what not to do / what to preserve” case study.
 

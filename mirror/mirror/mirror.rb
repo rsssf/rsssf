@@ -68,6 +68,10 @@ def mirror_pages( force: false,
                                                         '/intland.html']
                                                ).limit( batch )
 
+       ## note - sql (like) wildcard rules/syntax:
+       ##      %: Matches zero or more characters
+       ##      _: Matches exactly one character
+
       if page_recs.size == 0
         page_recs =  MirrorDb::Model::Page.where( cached: false ).
                                            where( 'path LIKE ?', '/table%' ).limit( batch )
