@@ -1,0 +1,45 @@
+
+Spring 1995 Final Table
+2.Division
+2.Landesliga Ost
+1.Klasse Mitte
+1.K
+1.Klasse Mitte-West
+1.K M-W
+2.Landesliga West
+2.L
+1. Klasse Palten
+6th level (1.Landesklasse)
+K.-H.
+Karl-Heinz
+
+
+## trailing colon
+1. Klasse West A:
+
+## quirks
+1.2.3a
+1.2.3a.
+1. 2. 3a.
+1. 2. A3.
+1. B2. C3
+
+1.1. Köln
+1.1.Köln
+1 2 3
+
+
+
+### fix - will match match fixture ?
+##   add  a no match check  starting with !! or ! or use second section w/ § - why? why not?
+###  fix - must exclude numbers on numbers
+Rapid 4-2 Austria
+Rapid - Austria
+
+##  note - only v/vs/vs./VS  are reserved - V and V. are NOT reserved
+Rapid v Austria
+Rapid vs Austria
+Rapid vs. Austria
+Rapid V Austria
+Rapid V. Austria
+Rapid VS Austria

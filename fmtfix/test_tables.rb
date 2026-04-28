@@ -13,7 +13,7 @@ require_relative  'fmtfix'
 
 class TestTables< Minitest::Test
 
-def test_headers
+def test_tables
 
   ## norm text
    txt = read_text( "./fmtfix/test_tables.txt" )
@@ -32,7 +32,7 @@ def test_headers
 
 
     tables.each do |table|
-      
+
         m = TABLE_RE.match( table )
         if m && m.offset(0)[0] == 0
 
@@ -48,13 +48,13 @@ def test_headers
               pp table
               assert false
             end
-        elsif m 
-            puts "!! ERROR - match NOT anchored to begin-of-line; starting at #{m.offset(0)[0]}" 
+        elsif m
+            puts "!! ERROR - match NOT anchored to begin-of-line; starting at #{m.offset(0)[0]}"
             pp table
             assert false
-        else 
+        else
             puts "!! ERROR - no match"
-            pp table               
+            pp table
             assert false
         end
   end
@@ -64,4 +64,3 @@ end  # class TestTables
 
 
 puts "bye"
-

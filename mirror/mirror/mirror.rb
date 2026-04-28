@@ -11,7 +11,9 @@ def fmt_time_diff( time_start, time_end=Time.now, count:, step: nil )
    time_diff  = time_end - time_start
    buf = String.new
 
-    if step
+     if count == 0 || step == 0
+       buf +=  "  %d:%02d mins" % [time_diff/60, time_diff%60]
+     elsif step
        buf +=  "  [#{step}/#{count} - %5.2f%%]" % [step*100/count]
 
        buf +=  "  %d:%02d mins" % [time_diff/60, time_diff%60]
@@ -89,16 +91,6 @@ def mirror_pages( force: false,
 
        page_recs.each_with_index do |page_rec,i|
 
-         ##  note - ignore known pages (404 not found)!!
-         if PAGES_404.include?( page_rec.path )
-            ## set cached to true to avoid infinite loop!!
-            ##   keep in 404s in db - why? why not?
-            page_rec.update!( http_status: 404,
-                              cached:       true )
-            next
-         end
-
-
          ### special case for non .html pages (e.g. .pdf others too??)
          ##    do NOT download / mirror / cache for now
          if File.extname( page_rec.path ) != '.html'
@@ -106,12 +98,30 @@ def mirror_pages( force: false,
             next
          end
 
-
-
          ## note - on download (not if cached)
          ##        encoding
          ##           might be get changed
          ##        ALWAYS use updated encoding!!
+
+         ## todo/fix - move for resuse into
+         ##          assert_page_path or such!!!
+         ## assert - double check
+          ## make sure url.path does NOT start with // or
+          ##                              /// !!
+         ##  and does NOT end_with /
+         ##
+         ##                page_rec.path.include?( %r{/{2,}} ) ||
+         ##   fix  http.//  typos!!!
+         ##      page_rec.path.match?( %r{\.{2,}} )
+         ##   fix ..sources typos ...
+         ##    pages
+           if  page_rec.path.start_with?( '//' ) ||
+               page_rec.path.end_with?( '/' )
+            puts "!! normalized page.path expected - got:"
+            pp page_rec.path
+            pp page_rec
+            exit 1
+           end
 
          html, response_meta  = _download_page( page_rec.url,
                                              encoding: page_rec.encoding,

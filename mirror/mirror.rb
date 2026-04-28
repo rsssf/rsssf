@@ -46,7 +46,9 @@ def log( msg )
 end
 
 
-
+=begin
+## note - no longer used; mirror now records 404 (status) in mirror.db
+##
 ## or use PAGES_NOT_FOUND ??
 ## GET https://rsssf.org/tablesm/mayotte2010.html...
 ## !! HTTP ERROR - 404 Not Found:
@@ -62,6 +64,7 @@ PAGES_404 = [
   '/tablesg/greenl07.html',
   '/tabless/syria05.html',
 ]
+=end
 
 
 ##

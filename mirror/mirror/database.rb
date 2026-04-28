@@ -9,7 +9,8 @@ module Model
 
 class Page <  ActiveRecord::Base
    has_many  :outgoing_links,  class_name: 'Link',
-                               foreign_key: 'from_page_id'
+                               foreign_key: 'from_page_id',
+                               :dependent  => :delete_all  ## :destroy
 
    ## use outgoing_pages or linked_pages?
    has_many  :linked_pages,  :through => :outgoing_links,
@@ -17,7 +18,9 @@ class Page <  ActiveRecord::Base
 
    ## backlink (incoming)
    has_many  :incoming_links, class_name: 'Link',
-                              foreign_key: 'to_page_id'
+                              foreign_key: 'to_page_id',
+                               :dependent  => :delete_all  ## :destroy
+
    ##  use incoming_pages or backlink_pages?
    has_many  :backlink_pages, :through => :incoming_links,
                               :source  => :from_page

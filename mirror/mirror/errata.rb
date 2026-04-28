@@ -17,6 +17,25 @@ def errata( html, url: )
 
      base_url = URI( url )
 
+       if base_url.path = '/tablesp/poland-satrip77.html'
+           html = html.sub( %q{<a href="..//nersssf.html">},
+                            %q{<a href="../nersssf.html">}  )
+       end
+
+       if base_url.path = '/miscellaneous/torre-madrid.html'
+           html = html.sub( %q{<a href="..m/tablesm/madridtops.html">},
+                            %q{<a href="../tablesm/madridtops.html">}  )
+       end
+
+       if base_url.path = '/tablesa/arg2017.html'
+           html = html.sub( %q{<a href="../tablesc/%20chevserena2017.html">},
+                            %q{<a href="../tablesc/chevserena2017.html">}  )
+       end
+
+
+
+
+
        if base_url.path == '/results-afr.html'
             ## add missing closing quote
            html = html.sub( %q{<A HREF="tablesm/mauri2023.html#aga>},
