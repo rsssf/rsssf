@@ -91,7 +91,10 @@ configs = parse_csv( <<TXT )
 
 page, encoding
 
-/index.html
+##  /index.html
+##  not really use all pages link to  /nersssf.html  (basically the same page)
+##
+
 /archive.html
 /guide.html
 
