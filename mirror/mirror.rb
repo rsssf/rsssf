@@ -46,26 +46,6 @@ def log( msg )
 end
 
 
-=begin
-## note - no longer used; mirror now records 404 (status) in mirror.db
-##
-## or use PAGES_NOT_FOUND ??
-## GET https://rsssf.org/tablesm/mayotte2010.html...
-## !! HTTP ERROR - 404 Not Found:
-
-PAGES_404 = [
-  '/tablesn/nedantcup09.html',
-  '/tablesz/zimb2022.html',
-  '/tablesm/mayotte2010.html',
-  '/tablesj/jord2010.html',
-  '/tablesv/vanuatu.html',
-  '/tablesk/can08.html',
-  '/tablesk/can07.html',
-  '/tablesg/greenl07.html',
-  '/tabless/syria05.html',
-]
-=end
-
 
 ##
 ##
@@ -73,6 +53,29 @@ PAGES_404 = [
 ###  lookup by path e.g. /curtour.html
 
 PAGES_ENCODING = Hash.new { |h,key| h[key] = 'windows-1252'  }
+
+
+
+
+
+HTML_CHARSET_RE = %r{
+   <meta [ ]+
+       [^<>]*?        ## note - use non-greedy (shortest) match
+  \bcharset
+        [ ]*=[ ]*
+          ['"]?       ## optional opening quote
+        (?<charset>[a-z0-9-]+)
+}ix
+
+
+HTML_DOCTYPE_RE = %r{
+   <!DOCTYPE [ ]+
+        (?<doctype> [^<>]+?)  ## note - use non-greedy (shortest) match
+                               ## do NOT allow opening/closing brackets for now
+                               ##  ever possible? double check
+            [ ]*
+   >
+}ix
 
 
 
@@ -88,14 +91,22 @@ configs = parse_csv( <<TXT )
 
 page, encoding
 
-/curdom.html
+/index.html
+/archive.html
+/guide.html
+
 /curtour.html
+/curdom.html
 /histdom.html
 /intclub.html
 /intland.html
 
-/tableso/oost2026.html
-/tablesi/ital2015.html
+/misc.html
+/recent.html
+
+
+# /tableso/oost2026.html
+# /tablesi/ital2015.html
 
 TXT
 
@@ -103,6 +114,10 @@ pp configs
 
 
 
+
+##
+## to be done - add knownencodings
+=begin
 def add_encodings( configs )
   configs.each do |config|
 ## todo / double check fix read_csv upstream
@@ -115,15 +130,11 @@ def add_encodings( configs )
         end
   end
 end
-
-
-
-
-
-
 ##
 ##  add/populate (known) encodings
 ## add_encodings( configs )
+=end
+
 
 
 ## MirrorDb.open( './mirror-test.db'  )
@@ -155,20 +166,3 @@ mirror_pages()
 puts "bye"
 
 end     ## if __FILE__ == $0
-
-
-
-
-__END__
-
-url = "https://user:pass@example.com:8080/path/page.html?foo=1&bar=2#section-3"
-uri = URI.parse(url)
-
-puts uri.scheme    # "https"
-puts uri.user      # "user"
-puts uri.password  # "pass"
-puts uri.host      # "example.com"
-puts uri.port      # 8080
-puts uri.path      # "/path/page.html"
-puts uri.query     # "foo=1&bar=2"
-puts uri.fragment  # "section-3"

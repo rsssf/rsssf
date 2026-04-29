@@ -189,3 +189,21 @@ pp url.fragment
 
 
 puts "bye"
+
+
+
+
+
+__END__
+
+url = "https://user:pass@example.com:8080/path/page.html?foo=1&bar=2#section-3"
+uri = URI.parse(url)
+
+puts uri.scheme    # "https"
+puts uri.user      # "user"
+puts uri.password  # "pass"
+puts uri.host      # "example.com"
+puts uri.port      # 8080
+puts uri.path      # "/path/page.html"
+puts uri.query     # "foo=1&bar=2"
+puts uri.fragment  # "section-3"

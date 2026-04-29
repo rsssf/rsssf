@@ -8,11 +8,11 @@
 
 use `mirror` to mirror
 the complete rsssf.org website
-(about 40 000 .html pages - about 800MB)
+(about 40 000+ .html pages - about 800 MB)
 by following (and recording) all internal links.
 the command will download (and cache all .html pages
 converted to utf-8)
-and build-up a local (sqlite) `mirror.db` (about 20MB)
+and build-up a local (sqlite) `mirror.db` (about 20 MB)
 with the link structure (ingoing and outgoing) & titles
 using a `pages` and `links` table.
 
@@ -37,7 +37,7 @@ note - the web pages get (by default) cached in `./cache`
 >
 >      $ ruby mirror/report.rb
 >
->  resulting in `[mirror/SUMMARY.md](mirror/SUMMARY.md)`.
+>  resulting in [`mirror/SUMMARY.md`](mirror/SUMMARY.md).
 >
 >
 >  Or use the `export` command to export all pages to datasets

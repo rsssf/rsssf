@@ -77,9 +77,15 @@ create_table :pages do |t|
                                       ##          .html, .pdf, etc.
                                       ##   keep dot why? why not?
 
+   t.string :title          ##   html <title></title>
+   t.date   :updated        ## iso date e.g. (2026-04-29) via web page source
 
+   ### add (charset) encoding stuff
    t.string :encoding           ## "upstream" text encoding - all pages converted to utf-8 ALWAYS
-   t.string :title
+   t.boolean :ascii7bit    ## check if all chars are ascii 7bit (utf8-compatible) ??
+
+   t.string  :html_doctype
+   t.string  :html_charset
 
    t.string  :http_content_type     ## http content-type   header
    t.integer :http_content_length   ## http content-length header

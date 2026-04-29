@@ -8,8 +8,12 @@ def _download_page( url, encoding:,
   ## check if not in cache
   ##   note - use force == true  to always (force) download
 
+##
+## note - on windows cached will be CASE-INSENSITIVE
+##       e.g. usadave and USAdave will match
+##    make sure match is CASE-SENSITIVE!!!
 
-    if Webcache.cached?( url ) && force == false
+    if force == false && Webcache.cached?( url )
         puts "   CACHE HIT - #{url}"
         html = Webcache.read( url )
         [html, nil]

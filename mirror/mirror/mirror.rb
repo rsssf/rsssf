@@ -91,9 +91,9 @@ def mirror_pages( force: false,
 
        page_recs.each_with_index do |page_rec,i|
 
-         ### special case for non .html pages (e.g. .pdf others too??)
+         ### special case for non .html/.htm pages (e.g. .pdf others too??)
          ##    do NOT download / mirror / cache for now
-         if File.extname( page_rec.path ) != '.html'
+         if !['.html', '.htm'].include?( page_rec.extname )
             page_rec.update!( cached: true )
             next
          end
@@ -123,9 +123,27 @@ def mirror_pages( force: false,
             exit 1
            end
 
-         html, response_meta  = _download_page( page_rec.url,
+
+
+         ##
+         ## note - workaround for windows
+         ##     on windows File.exist? (and Webcache.cached?)
+         ##          is case-insensitive
+         ##    e.g. /USAdave/ is the same as /usadave/
+         ##
+         ##   as a workaround ALWAYS hardcode 404
+         ##    for /USAdave/    to get (and record) 404  (and not CACHE HITS!!)
+         ##   e.g. try https://rsssf.org/USAdave/cncc.html  => 404 (NOT FOUND)
+         ##            https://rsssf.org/usadave/cncc.html  => 200 (OK)
+
+
+         html, response_meta  =  if %r{/USAdave/}.match?(page_rec.path)
+                                         ['', {status: 404}]
+                                  else
+                                       _download_page( page_rec.url,
                                              encoding: page_rec.encoding,
                                             force: force )
+                                  end
 
          ##  if response meta data present than fresh download (not cached)
          cached  = response_meta ? false : true
@@ -167,6 +185,23 @@ def mirror_pages( force: false,
              title_el =  doc.at_css('title')
              title =  title_el ? title_el.text.strip :  nil
 
+             ##
+             ##  note - use "plain-old" regex
+             ##     to get "raw" doctype/charset  from html source
+             ##
+             ## record doctype
+             ##  e.g
+             ##  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+             ##  <!DOCTYPE HTML>
+             ## and html charset (inside meta)
+             ##  e.g.
+             ## <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+             ## <meta charset="Windows-1252">
+
+             html_doctype =  (m=HTML_DOCTYPE_RE.match( html )) ? m[:doctype] : nil
+             html_charset =  (m=HTML_CHARSET_RE.match( html )) ? m[:charset] : nil
+
+
 
            internals, _ = _find_links( doc,
                                        url: page_rec.url,
@@ -202,7 +237,9 @@ def mirror_pages( force: false,
                 cached: true
             }
             ## add (optional) title - might be missing in some pages
-            attribs[ :title]     = title               if title
+            attribs[ :title]         = title               if title
+            attribs[ :html_doctype]  = html_doctype        if html_doctype
+            attribs[ :html_charset]  = html_charset        if html_charset
 
             ## check for encoding when fresh download (via response meta data)
             if response_meta
