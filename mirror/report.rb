@@ -99,24 +99,6 @@ text =<<TXT
 ```
 
 
-> [!TIP]
->
->  Use the `report` command in the `mirror` tool to generate this summary.
->  Example:
->
->      $ ruby mirror/report.rb
->
->  resulting in `mirror/SUMMARY.md`.
->
->  Or use the `export` command to export all pages to datasets
->  in the comma-separated values (.csv) format. Example:
->
->  $ ruby mirror/export.rb
->
->  resulting in `pages_html.csv`, `pages_html_404.csv`, `pages_pdf.csv`,
->  `pages_other.csv` in the `tmp-mirror/` directory.
-
-
 TXT
 
 
