@@ -51,86 +51,58 @@ puts "  #{MirrorDb::Model::Link.count} links(s)"
 
 
 
-def build_html
-  rows = []
-  MirrorDb::Model::Page.order( 'path' ).each_with_index do |page,i|
-
-     ## skip 404 pages
-     next if page.http_status == 404
-
-     ## skip if not .html
-     next if page.extname != '.html'
+def build
+  rows_html     = []
+  rows_html_404 = []
+  rows_pdf      = []
+  rows_other    = []
 
 
-     rows << [page.path,
-              "#{page.linked_pages.count}/#{page.backlink_pages.count}",
-              page.title ? page.title : '-'
-             ]
+  ## note - use COLLATE NOCASE ASC - for case-insensitive ordering
+  MirrorDb::Model::Page.order( 'dirname COLLATE NOCASE ASC',
+                               'extname COLLATE NOCASE ASC',
+                               'basename COLLATE NOCASE ASC' ).each_with_index do |page,i|
 
-      print "." if i % 100 == 0
-  end
-  print "\n"
-
-  rows
-end
-
-def build_html_404
-  rows = []
-  MirrorDb::Model::Page.where( extname: '.html',
-                               http_status: 404 ).order( 'path' ).each do |page|
-
-     rows << [page.path,
-              "-/#{page.backlink_pages.count}",
-              ''
-             ]
-  end
-  rows
-end
-
-def build_pdf
-  rows = []
-  MirrorDb::Model::Page.where( extname: '.pdf' ).order( 'path' ).each do |page|
-
-     rows << [page.path,
-              "-/#{page.backlink_pages.count}",
-              ''
-             ]
-  end
-  rows
-end
-
-
-def build_other
-  rows = []
-  MirrorDb::Model::Page.order( 'extname', 'path' ).each_with_index do |page,i|
-
-     next if page.http_status == 404  ||
-             page.extname == '.html' ||
-             page.extname == '.pdf'
-
-     rows << [page.path,
-              "-/#{page.backlink_pages.count}",
-              ''
-             ]
+      ## note - for now only .html/.htm pages can be 404
+      if page.http_status == 404
+          rows_html_404 << [page.path,
+                             "-/#{page.backlink_pages.count}",
+                             '']
+      elsif page.extname == '.html' || page.extname == '.htm'
+          rows_html     << [page.path,
+                           "#{page.linked_pages.count}/#{page.backlink_pages.count}",
+                           page.title ? page.title : '-'
+                          ]
+      elsif page.extname == '.pdf'
+          rows_pdf << [page.path,
+                             "-/#{page.backlink_pages.count}",
+                             '']
+      else  ## add (rest) to other
+          rows_other << [page.path,
+                             "-/#{page.backlink_pages.count}",
+                             '']
+      end
 
       print "." if i % 100 == 0
   end
   print "\n"
 
-  rows
+  [rows_html, rows_html_404, rows_pdf, rows_other]
 end
 
+
+
+
+rows_html, rows_html_404, rows_pdf, rows_other = build()
 
 
 
 headers = ['path', 'links', 'title' ]
 
-
-## write_csv( "./tmp-mirror/pages_html.csv", build_html(), headers: headers )
-## write_csv( "./tmp-mirror/pages_html_404.csv", build_html_404(), headers: headers )
-## write_csv( "./tmp-mirror/pages_pdf.csv", build_pdf(), headers: headers )
-write_csv( "./tmp-mirror/pages_other.csv", build_other(), headers: headers )
-
+write_csv( "./tmp-mirror/pages_html.csv",     rows_html,     headers: headers )
+write_csv( "./tmp-mirror/pages_html_404.csv", rows_html_404, headers: headers )
+write_csv( "./tmp-mirror/pages_pdf.csv",      rows_pdf,      headers: headers )
+write_csv( "./tmp-mirror/pages_other.csv",    rows_other,    headers: headers )
 
 
 puts "bye"
