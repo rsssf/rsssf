@@ -26,8 +26,10 @@ def build( dirname )
    buf = String.new
 
    ## note - exclude 404 pages not found!!!
+   ##        exclude  .pdf and others !!! (only incl. .html/.html !!!)
    pages = MirrorDb::Model::Page.where( dirname: dirname,
-                                        http_status: nil )
+                                        http_status: nil,
+                                        extname: ['.html','.htm'] )
 
   buf  << "#{pages.count} .html/.htm page(s) found \n\n"
 

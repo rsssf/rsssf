@@ -1,6 +1,6 @@
 # Pages in `/tables`
 
-584 .html/.htm page(s) found 
+580 .html/.htm page(s) found 
 
 |    |   | Title |
 |----|---|-------|
@@ -79,14 +79,11 @@
 | [**`17sa-scor.html`**](https://rsssf.org//tables/17sa-scor.html) |   1/1 |   Copa América 1917 - Goal Scorers |
 | [**`17safull.html`**](https://rsssf.org//tables/17safull.html) |   2/2 |   Southamerican Championship 1917 |
 | [**`1923-china-tour-oz.html`**](https://rsssf.org//tables/1923-china-tour-oz.html) |   4/4 |   China National Team Tour of Australia 1923 |
-| [**`1923-china-tour-oz-squad.pdf`**](https://rsssf.org//tables/1923-china-tour-oz-squad.pdf) |   0/1 |  |
 | [**`1924-canada-tour-oz.html`**](https://rsssf.org//tables/1924-canada-tour-oz.html) |   1/2 |   Canada Tour of Australia 1924 |
 | [**`1924-china-tour-nz.html`**](https://rsssf.org//tables/1924-china-tour-nz.html) |   3/4 |   Chinese Universities Tour of New Zealand 1924 |
 | [**`1927-bohemians-tour-oz.html`**](https://rsssf.org//tables/1927-bohemians-tour-oz.html) |   1/3 |   Bohemians AFK Vršovice (Praha) Tour of Australia 1927 |
 | [**`1927-china-tour-oz.html`**](https://rsssf.org//tables/1927-china-tour-oz.html) |   7/4 |   China XI tour of Australia 1927 |
-| [**`1927-china-tour-oz-squad.pdf`**](https://rsssf.org//tables/1927-china-tour-oz-squad.pdf) |   0/1 |  |
 | [**`1933chile-perutour.html`**](https://rsssf.org//tables/1933chile-perutour.html) |   1/5 |   European Tour of the "Combinado del Pacífico" 1933-34 |
-| [**`1956_asia_squads.pdf`**](https://rsssf.org//tables/1956_asia_squads.pdf) |   0/2 |  |
 | [**`19sa.html`**](https://rsssf.org//tables/19sa.html) |   4/2 |   Copa America 1919 (Brazil, May 11-29) |
 | [**`19sa-scor.html`**](https://rsssf.org//tables/19sa-scor.html) |   1/1 |   Copa América 1919 - Goal Scorers |
 | [**`19safull.html`**](https://rsssf.org//tables/19safull.html) |   2/3 |   Southamerican Championship 1919 |
@@ -366,7 +363,6 @@
 | [**`60as-scor.html`**](https://rsssf.org//tables/60as-scor.html) |   3/1 |   Asian Cup 1960 (Final Tournament) - Goal Scorers |
 | [**`60asch.html`**](https://rsssf.org//tables/60asch.html) |   6/6 |   Asian Nations Cup 1960 |
 | [**`60asch-det.html`**](https://rsssf.org//tables/60asch-det.html) |   3/2 |   Asian Nations Cup 1960 - Final Tournament - Match Details |
-| [**`60asch-squads.pdf`**](https://rsssf.org//tables/60asch-squads.pdf) |   0/3 |  |
 | [**`60e.html`**](https://rsssf.org//tables/60e.html) |   6/7 |   European Championship 1960 |
 | [**`60e-det.html`**](https://rsssf.org//tables/60e-det.html) |   4/3 |   European Championship 1960 - Details Final Tournament |
 | [**`60e-full.html`**](https://rsssf.org//tables/60e-full.html) |   4/3 |   European Championship 1960 (Details) |
