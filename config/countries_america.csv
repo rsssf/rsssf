@@ -1,0 +1,96 @@
+####
+## list of countries with tables from rsssf
+##
+##  note - countries incl. sovereign countries, dependencies and territories, and more
+##
+##   see https://www.rsssf.org/results-ame.html
+##        The RSSSF Archive - Domestic Results (America)
+##             America (Central, North, and South)
+##
+
+
+code, slug, name
+
+, groenl,     Greenland
+, alaska,     Alaska
+, can,        Canada
+, mex,         Mexico
+, usa,    United States
+, p-rico,   Puerto Rico
+
+
+, guat,       Guatemala
+, hond,       Honduras
+, nica,       Nicaragua
+, panama,    Panama
+, belize,     Belize
+, cos,        Costa Rica
+, elsal,      El Salvador
+
+
+, arg,        Argentina
+, falk,       Falkland Islands
+, bol,        Bolivia
+, braz,       Brazil
+, chile,      Chile
+, col,        Colombia
+, ecua,       Ecuador
+, frguy,      French Guyana
+, guyana,     Guyana
+, galapagos, Galapagos Islands
+, para,     Paraguay
+, peru,     Peru
+, uru,   Uruguay
+, venez,   Venezuela
+
+
+, cuba,       Cuba
+, domi,       Dominica
+, domrep,     Dominican Republic
+, haiti,      Haiti
+, jam,        Jamaica
+
+
+
+
+, fernor,  Fernando de Noronha
+
+, anguilla,   Anguilla
+, antig,      Antigua and Barbuda
+, aruba,      Aruba
+, bahama,     Bahamas
+, barb,       Barbados
+, berm,       Bermuda
+, brmaagd,    British Virgin Islands
+, cayman,     Cayman Islands
+
+, montserrat,  Montserrat
+
+
+##  Dutch Antilles -- see Bonaire and Curaçao
+##  Netherlands Antilles -- see Bonaire and Curaçao
+, bonaire,    Bonaire
+, curacao,    Curaçao
+
+
+
+, grenada,    Grenada
+, frant,      Guadeloupe
+, frant,      Martinique          #  w/ #martreg1
+, frant,      Saint-Barthélemy    #  w/ #stmstbl
+##  Saint-Barthélemy -- see Saint-Martin
+, frant,      Saint-Martin        #  w/ #stmstml
+
+
+,  jfernandez, Juan Fernández Islands
+
+## Nevis -- see Saint Kitts and Nevis
+, stkitts,  Saint Kitts and Nevis
+, stlucia,  Saint Lucia
+, stpierre, Saint-Pierre et Miquelon
+, stvin,     Saint Vincent and the Grenadines
+, stmaarten,  Sint Maarten
+, suri,     Surinam
+, trin, Trinidad and Tobago
+, turkscaicos, Turks and Caicos Islands
+, usamaagd,  US Virgin Islands

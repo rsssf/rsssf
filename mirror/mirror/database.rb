@@ -7,7 +7,8 @@
 module MirrorDb
 module Model
 
-class Page <  ActiveRecord::Base
+
+class Page < ActiveRecord::Base
    has_many  :outgoing_links,  class_name: 'Link',
                                foreign_key: 'from_page_id',
                                :dependent  => :delete_all  ## :destroy
@@ -30,22 +31,33 @@ class Page <  ActiveRecord::Base
    def incoming_paths() backlink_pages.pluck(:path); end
 
 
-   def self.cached()      where( cached: true ); end
-   ## find a better name for not cached? why? why not?
-   def self.not_cached()  where( cached: false ); end
-   ## def self.missing()  where( cached: false ); end
+   scope  :cached, -> { where( cached: true ) }
+   ## find a better name for not cached (was missing)? why? why not?
+   scope  :not_cached, -> { where( cached: false ) }
+
+   ## 404 not_found
+   scope  :not_found,  -> { where( http_status: 404 ) }
 
 
+   ## for extname (file extensions)
+   ##   note - .html auto incl .htm !!
+   scope  :html,  -> { where( extname: ['.html', '.htm']) }
+   scope  :pdf,   -> { where( extname: 'pdf') }
 
-    def not_cached?()  !cached?(); end
+   def html?()  extname == '.html' || extname == '.htm';  end
+   def pdf?()   extname == '.pdf'; end
+
+   def not_cached?()  !cached?(); end
+   def not_found?()  http_status == 404; end
+
+
     ### note - path incl. leading slash e.g. /curtour.html
     def url()  "#{BASE_URL}#{path}"; end
 end # class Page
 
 
 
-class Link <  ActiveRecord::Base  # ApplicationRecord
-   ## self.table_name = 'links'
+class Link < ActiveRecord::Base
    belongs_to  :from_page, class_name: 'Page',
                            foreign_key: 'from_page_id'
    belongs_to  :to_page,   class_name: 'Page',
@@ -55,6 +67,8 @@ end # class Link
 
 end   # module Model
 end
+
+
 
 
 
@@ -83,6 +97,8 @@ create_table :pages do |t|
    ### add (charset) encoding stuff
    t.string :encoding           ## "upstream" text encoding - all pages converted to utf-8 ALWAYS
    t.boolean :ascii7bit    ## check if all chars are ascii 7bit (utf8-compatible) ??
+   t.integer :tabs         ## count tabs/tabstops in html source (use tab or tabs ??)
+
 
    t.string  :html_doctype
    t.string  :html_charset

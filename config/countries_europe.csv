@@ -1,0 +1,195 @@
+####
+## list of countries with tables from rsssf
+##
+##  note - countries incl. sovereign countries, dependencies and territories, and more
+##
+##   see https://www.rsssf.org/results-eur.html
+##        The RSSSF Archive - Domestic Results (Europe)
+##
+##  Please note that this overview contains several league competitions
+##   of football associations not belonging to UEFA
+##   but taking place in European countries or territories
+##  (or at least countries belonging to UEFA).
+##  This is not in any sense meant as political statement,
+## and neither is the used nomenclature for countries
+## (or other political or geographical entities),
+## which restricts to geographical notions as much as possible.
+
+
+#
+#  trying to organize by regions
+#    and countries (with fifa code) first
+#    and  'non-official' second
+
+#
+#  note - names listed are names from rsssf
+#
+#  note -   if code is empty use only rsssf slug/code
+#              (no alternative 'common' code for every territory/country available - sorry)
+
+
+## change countries.csv to directory or such?
+
+
+## - [ ]  add leading tags  for fifa,uefa,etc.
+##   [  ]   plus add fifa column for (official/unoffical fifa code)
+##   [  ]   rename code to iso or alpha2 or such
+#
+##    - add region structure from world.db
+##
+
+
+code, slug,  name
+
+################
+### europe
+##
+#   map all  55  uefa europe countries
+#
+# Union of European Football Associations (UEFA; 55 members) (c)
+#   (c) Teams representing the nations of
+#            Armenia, Azerbaijan, Cyprus, Georgia,
+#            Israel, Kazakhstan, Russia and Turkey
+#   are UEFA members, although the majority or entirety of their territory
+#       is outside of continental Europe.
+#     Monaco is not member of UEFA or FIFA
+
+##
+##  note - for 'non-official' use at least three letter code
+
+
+##  unofficial ISO code 'AB' or 'ABH'
+#   though ISO officially lists it under Georgia (GE-AB)
+
+
+abh, abchaz,  Abkhazia
+az,  azer,    Azerbaijan
+am, arme,    Armenia
+ge, geor,     Georgia
+kz, kaz,     Kazakhstan
+  , nagkar,  Nagorno-Karabakh
+  , zosse,  South Ossetia
+
+
+il, isra,     Israel
+
+
+lu, lux,      Luxembourg
+nl, ned,      Netherlands
+be, belg,     Belgium
+
+
+fr, fran,     France
+  , corsica,   Corsica
+
+mc, monaco,   Monaco
+
+
+##
+##  todo/check - how read_csv  handles   empty field with spaces vs ,, !!!
+##     is nil vs '' (empty string) or always empty string (if has follow-up fields)?
+
+
+es,      span,    Spain
+  ,   menorca,   Menorca
+  ,  madeira,  Madeira         ## use et-madeira ??
+pt,      port,    Portugal
+  ,  azores,  Azores           ## use pt-azores ??
+ad,      ando,    Andorra
+gi,      gib,     Gibraltar
+
+
+it, ital,     Italy
+sm, sanm,    San Marino
+va,  vatican, Vatican City
+    , scilly,  Scilly Islands      ## use it-scilly ??
+mt,   malt,     Malta
+    , gozo,     Gozo              ##  malta  - use mt-gozo ??
+
+
+
+
+de, duit,     Germany
+pl, pol,    Poland
+cz, tsje,    Czechia
+sk, slow,    Slovakia
+hu, hong,     Hungary
+at, oost,    Austria
+ch, zwit,    Switzerland
+si, slov,    Slovenia
+
+
+
+
+eng, eng,     England
+
+## note - same key used twice (note - do NOT split - keep org structure for pages)
+ ###   w / #guernsey & #jersey
+   , chisl, Channel Islands (Jersey)
+   , chisl, Channel Islands (Guernsey)
+
+  , manx,    Isle of Man
+   , engiow,  Isle of Wight
+wal, wal,     Wales
+sco, scot,    Scotland
+    , shetl,   Shetland Islands
+    , orkney,   Orkney Islands
+nir, nil,      Northern Ireland
+ie, ier,      Ireland
+fo, far,     Faroe Islands
+is, ijs,      Iceland
+
+
+no, noo,      Norway
+   , spitsbergen, Svalbard     ## Svalbard is a Norwegian archipelago between mainland Norway and the North Pole
+se, zwed,    Sweden
+fi, fin,     Finland
+   , aaland,  Aland Islands       ## Åland Islands|Åland autonomous region of Finland
+dk, den,     Denmark
+
+
+lv, let,      Latvia
+lt, lito,     Lithuania
+ee, est,     Estonia
+
+
+
+
+
+tr, tur,     Turkey
+gr, grk,      Greece
+cy, cyp,     Cyprus
+
+## TRNC -- see Northern Cyprus
+??, ncyp,     Northern Cyprus    ### add/use unofficial fifa/uefa code 4 letters
+
+
+
+hr, kroa,    Croatia
+ba, bih,     Bosnia-Hercegovina
+al, alba,    Albania
+
+## Macedonia -- see North Macedonia
+mk, nmkd,     North Macedonia     ## was Macedonia from ??? until ???
+
+kos, kosovo,   Kosovo
+me, monteg,   Montenegro
+bg, bulg,    Bulgaria
+rs, serv,    Serbia
+ro, roem,   Romania
+md, mold,     Moldova
+  , tnistru, Transnistria
+
+
+
+ua, oekr,    Ukraine
+
+### note - same code (and, thus, page) used for both
+##
+##   Donetsk PR -- see Southeastern Ukraine
+##   Lugansk PR -- see Southeastern Ukraine
+  , zooekr,   Southeastern Ukraine   #   w/ #bezetoekr
+  , zooekr,  Crimea                  #   w/ #krimpl
+
+by, witr,    Belarus
+ru, rus,     Russia
