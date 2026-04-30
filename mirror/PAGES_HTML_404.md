@@ -1,6 +1,6 @@
-# Pages (.html/.htm) 404 Not Found
+# Pages 404 Not Found
 
-172 page(s) - 404 not found
+172 page(s) .html/.htm - 404 not found
 
 **`/francescoli-intlg.html`** w/ 1 backlink(s): <br>
 - [1] [`/players/dbl-uruguaydata.html`](https://rsssf.org//players/dbl-uruguaydata.html)  5/1  Germany - Bundesliga - Data on Players from Uruguay
@@ -539,4 +539,3 @@
 
 **`/www.risc.uni-linz.ac.at/non-official/rsssf/nersssf.html`** w/ 1 backlink(s): <br>
 - [1] [`/sacups/copa67.html`](https://rsssf.org//sacups/copa67.html)  4/3  Copa Libertadores 1967
-

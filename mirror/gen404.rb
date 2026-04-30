@@ -22,7 +22,7 @@ def build
    buf = String.new
    pages = MirrorDb::Model::Page.not_found
 
-  buf  << "#{pages.count} page(s) - 404 not found\n\n"
+  buf  << "#{pages.count} page(s) .html/.htm - 404 not found\n\n"
 
     pages.order( 'dirname COLLATE NOCASE ASC',
                                'extname COLLATE NOCASE ASC',
@@ -50,7 +50,7 @@ buf = build()
 puts buf
 
 header =<<TXT
-# Pages (.html/.htm) 404 Not Found
+# Pages 404 Not Found
 
 TXT
 
