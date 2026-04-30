@@ -29,14 +29,20 @@ def build( dirname )
    pages = MirrorDb::Model::Page.where( dirname: dirname,
                                         http_status: nil )
 
-  buf  << "#{pages.count} page(s) .html/.htm found \n\n"
+  buf  << "#{pages.count} .html/.htm page(s) found \n\n"
+
+    buf << "|    |   | Title |\n"
+    buf << "|----|---|-------|\n"
 
     pages.order( 'basename COLLATE NOCASE ASC' ).each do |page|
 
-      buf << "[`#{page.basename}#{page.extname}`](https://rsssf.org/#{page.path})"
-      buf << "  %d/%-d"  % [page.linked_pages.count, page.backlink_pages.count]
+      buf << "| "
+      buf << "[**`#{page.basename}#{page.extname}`**](https://rsssf.org/#{page.path})"
+      buf << " | "
+      buf << "  %d/%d"  % [page.linked_pages.count, page.backlink_pages.count]
+      buf << " | "
       buf << "  %s" % page.title    if page.title
-      buf << " <BR>"
+      buf << " |"
       buf << "\n"
    end
 

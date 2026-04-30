@@ -22,7 +22,7 @@ def build
    buf = String.new
    pages = MirrorDb::Model::Page.not_found
 
-  buf  << "#{pages.count} page(s) .html/.htm - 404 not found\n\n"
+  buf  << "#{pages.count} .html/.htm page(s) found\n\n"
 
     pages.order( 'dirname COLLATE NOCASE ASC',
                                'extname COLLATE NOCASE ASC',
@@ -32,10 +32,11 @@ def build
   buf << " w/ #{page.backlink_pages.count} backlink(s): <br>"
   buf << "\n"
   page.backlink_pages.each_with_index do |backlink,i|
-     buf << "- \[#{i+1}\] "
+     buf << "\[#{i+1}\] "
      buf << "[`#{backlink.path}`](https://rsssf.org/#{backlink.path})"
      buf << "  %d/%-d"  % [backlink.linked_pages.count, backlink.backlink_pages.count]
      buf << "  %s" % backlink.title    if backlink.title
+     buf << "<br>"
      buf << "\n"
    end
   buf << "\n"
@@ -50,7 +51,7 @@ buf = build()
 puts buf
 
 header =<<TXT
-# Pages 404 Not Found
+# Pages - 404 Not Found
 
 TXT
 
