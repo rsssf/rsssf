@@ -90,6 +90,16 @@ def _find_links( doc,
                            exit 1
                         end
 
+                        ## quick fix for anchors with spaces
+                        ### ex:bad URI(is not URI?): "#Northern Ireland"
+                        if href.start_with?('#')
+                          ###   #Northern Ireland  =>  #Northern-Ireland
+                          ###   #Faroe Islands     =>  #Faroe-Islands
+                          href = href.gsub( ' ', '-' )
+                        end
+
+
+
                         ## check if href is absolute?
                         href_url = URI( href )
 
@@ -167,25 +177,3 @@ def _find_links( doc,
 
     [pages, externals]
 end
-
-
-
-__END__
-
- broken html in
-  https://rsssf.org/results-afr.html
-  bad URI(is not URI?):
-  "tablesm/mauri2023.html#aga>\n
-  Agalega Islands (2022)</a>\n       <LI><A HREF=" (URI::InvalidURIError)
-
-  missing closing quote
-  <LI><A HREF="tablesm/mauri2023.html#aga>
-       Agalega Islands (2022)</a>
-       =>
-<LI><A HREF="tablesm/mauri2023.html#aga">
-
-
-
-
-bad URI(is not URI?): " tablesr rodri2025.html#super"
-(URI::InvalidURIError)

@@ -33,7 +33,8 @@ def build
   buf << "\n"
   page.backlink_pages.each_with_index do |backlink,i|
      buf << "\[#{i+1}\] "
-     buf << "[`#{backlink.path}`](https://rsssf.org/#{backlink.path})"
+     ### note - path ALWAYS starts with slash (/) already e.g. /tables
+     buf << "[`#{backlink.path}`](https://rsssf.org#{backlink.path})"
      buf << "  %d/%-d"  % [backlink.linked_pages.count, backlink.backlink_pages.count]
      buf << "  %s" % backlink.title    if backlink.title
      buf << "<br>"

@@ -188,6 +188,34 @@ pp url.path
 pp url.fragment
 
 
+puts
+puts "==============="
+###  check    fragements without #
+
+pp url = URI( '42')
+pp url.to_s
+pp url.scheme     #=> nil
+pp url.host       #=> nil
+pp url.path       #=> "42"
+pp url.fragment   #=> nil
+
+
+pp url = URI( '#champ' )
+pp url.to_s
+pp url.scheme     #=> nil
+pp url.host       #=> nil
+pp url.path       #=> ""
+pp url.fragment   #=> "champ"
+
+
+pp url = URI( '42#champ' )
+pp url.to_s
+pp url.scheme    #=> nil
+pp url.host      #=> nil
+pp url.path      #=> "42"
+pp url.fragment  #=> "champ"
+
+
 puts "bye"
 
 

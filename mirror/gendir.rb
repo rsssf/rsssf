@@ -39,7 +39,8 @@ def build( dirname )
     pages.order( 'basename COLLATE NOCASE ASC' ).each do |page|
 
       buf << "| "
-      buf << "[**`#{page.basename}#{page.extname}`**](https://rsssf.org/#{page.path})"
+      ### note - path ALWAYS starts with slash (/) already e.g. /tables
+      buf << "[**`#{page.basename}#{page.extname}`**](https://rsssf.org#{page.path})"
       buf << " | "
       buf << "  %d/%d"  % [page.linked_pages.count, page.backlink_pages.count]
       buf << " | "
