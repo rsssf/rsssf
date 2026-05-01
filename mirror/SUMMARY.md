@@ -1,11 +1,11 @@
 # RSSSF Mirror Summary / Statistics
 
 ```
-41808 page(s) (41808 cached, 0 missing)
-  256006 links(s)
+41795 page(s) (41795 cached, 0 missing)
+  255992 links(s)
 
-41529 page(s) - .html/.htm
-      /                         67 pages(s)
+41528 page(s) - .html/.htm
+      /                         66 pages(s)
       /bvv                     221 pages(s)
       /colours                 220 pages(s)
       /ec                      230 pages(s)
@@ -47,7 +47,7 @@
       /usadave                  56 pages(s)
       /wk94                     14 pages(s)
 
-  172 page(s) - .html/.htm 404 (not found)
+  160 page(s) - .html/.htm 404 (not found)
    14 page(s) - .pdf
    93 page(s) - other
 
