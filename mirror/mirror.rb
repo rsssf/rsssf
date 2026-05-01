@@ -9,6 +9,8 @@ $LOAD_PATH.unshift( '/sports/rubycocos/webclient/webget/lib' )
 
 
 require 'cocos'
+require_relative 'mirror/_cocos_'    ## move (extenstions) upstream!!
+
 require 'webget'           ## incl. webget, webcache, webclient, etc.
 require 'nokogiri'
 
@@ -21,6 +23,7 @@ Webget.config.delay_in_s = 1
 ## Webcache.root = '/sports/cache'   ## use "global" (shared) cache
 
 BASE_URL = 'https://rsssf.org'
+
 
 
 require_relative 'mirror/database'

@@ -1,0 +1,113 @@
+##
+##  use errata_html - why? why not?
+##  or move to /config - why? why not?
+##
+##   use g/  for global sub
+##   and s/  or nothing for single sub - why? why not
+##   or    add option at the end    a => b
+##     for option use   !g or !!g or /g or ?g or ??
+
+
+##
+##  fix broken a hrefs
+
+/tablesp/poland-satrip77.html:
+   <a href="..//nersssf.html">  =>
+   <a href="../nersssf.html">
+
+/miscellaneous/torre-madrid.html:
+   <a href="..m/tablesm/madridtops.html">  =>
+   <a href="../tablesm/madridtops.html">
+
+/tablesa/arg2017.html:
+   <a href="../tablesc/%20chevserena2017.html">  =>
+   <a href="../tablesc/chevserena2017.html">
+
+
+/results-afr.html:
+  ## add missing closing quote
+  <A HREF="tablesm/mauri2023.html#aga>  =>
+  <A HREF="tablesm/mauri2023.html#aga">
+
+  <A HREF=" tablesr rodri2025.html#super"> =>
+  <A HREF="tablesr/rodri2025.html#super">
+
+
+/profiles.html:
+   <A HREF=http://www.daleucampeon.4t.com">  =>
+   <A HREF="http://www.daleucampeon.4t.com">
+
+
+## <a href="4#n">Norrland</a> |
+## <a href="4#ns">Norra Svealand</a> |
+## <a href="4#os">&Ouml;stra Svealand</a> |
+## <a href="4#mg">Mellersta G&ouml;taland</a> |
+## <a href="4#vg">V&auml;stra G&ouml;taland</a> <br>|
+## <a href="4#sg">S&ouml;dra G&ouml;taland</a> |
+## <a href="4#rp">Relegation playoff</a>
+/tablesz/zwed06.html:
+    <a href="4#n">  =>
+    <a href="#4n">
+    ## add six subs more here, see above !!!
+
+
+## <a href="2apercuad">Qualified</a>    10x!!
+## <a href="2claucuad">Qualified</a>
+
+## note - for now always use g/  (gsub) as default - why? why not?
+##                  use   s/ (sub) for sub only  - why? why not?
+/tablesc/col2012.html:
+        <a href="2apercuad">  =>
+        <a href="#2apercuad">
+        <a href="2claucuad">  =>
+        <a href="#2claucuad">
+
+
+/tablesk/kaz-wom2024.html:
+    <A HREF="kaz-wom20223html">  =>
+    <A HREF="kaz-wom2023.html">
+
+
+###
+##  autofix - missing mailto:  - why? why not??
+##   e.g.
+## Authors: Alan Morley
+## (<a href="manager@socceraust.co.uk">manager@socceraust.co.uk</a>),
+
+/tablesr/rwan06.html:
+    <a href="manager@socceraust.co.uk">  =>
+    <a href="mailto:manager@socceraust.co.uk">
+
+
+
+/tablesa/albanese.html:
+    <A href="h../nersssf.html">   =>
+    <A href="../nersssf.html">
+
+/tablesp/philcuptour91.html:
+    <a href="h../nersssf.html">   =>
+    <a href="../nersssf.html">
+
+/tablesp/para43.html:
+    <a href="..sources.html">   =>
+    <a href="../sources.html">
+
+
+
+/tablesm/marsh2021.html:
+    <A HREF="sources.html#xxws0">  =>
+    <A HREF="../sources.html#xxws0">
+/tablesm/marsh-wom2021.html:
+    <A HREF="sources.html">      =>
+    <A HREF="../sources.html">
+
+
+/tablest/tsje94.html:
+  <A HREF="nersssf.html">  =>
+  <A HREF="../nersssf.html">
+/tablest/tsjecup98.html:
+  <A HREF="nersssf.html">  =>
+  <A HREF="../nersssf.html">
+/tablest/tsjecup99.html:
+  <A HREF="nersssf.html">  =>
+  <A HREF="../nersssf.html">

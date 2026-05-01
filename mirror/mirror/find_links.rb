@@ -56,7 +56,10 @@ def _find_links( doc,
 ##
 ##   http.//  => http://
                  href = href.sub( %r{^http\.//}i, 'http://' )
-
+##   .html.html  => .html
+##   e.g.  /tablesf/francarib2010.html.html
+##         /tablest/tsje22.html.html
+                 href = href.sub( %r{\.html\.html}i, '.html' )
 
 
 

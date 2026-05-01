@@ -202,6 +202,11 @@ def mirror_pages( force: false,
              html_charset =  (m=HTML_CHARSET_RE.match( html )) ? m[:charset] : nil
 
 
+             ## check for tabs  - make it nil if no tabs found otherwise use count
+             tabs = html.scan( "\t" )
+             tabs =  tabs.size == 0 ? nil : tabs.size
+
+
 
            internals, _ = _find_links( doc,
                                        url: page_rec.url,
@@ -240,6 +245,8 @@ def mirror_pages( force: false,
             attribs[ :title]         = title               if title
             attribs[ :html_doctype]  = html_doctype        if html_doctype
             attribs[ :html_charset]  = html_charset        if html_charset
+            attribs[ :tabs]          = tabs                if tabs
+
 
             ## check for encoding when fresh download (via response meta data)
             if response_meta
