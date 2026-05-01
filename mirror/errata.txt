@@ -111,3 +111,47 @@
 /tablest/tsjecup99.html:
   <A HREF="nersssf.html">  =>
   <A HREF="../nersssf.html">
+
+
+
+/sacups/copa67.html:
+   <a href="../../www.risc.uni-linz.ac.at/non-official/rsssf/nersssf.html">  =>
+   <a href="../nersssf.html">
+
+/tabless/sa-u21-58det.html:
+   <a href="../RSSSF/www.rsssf.com/nersssf.html">  =>
+   <a href="../nersssf.html">
+
+
+/tablesu/usa-northwest-senior.html:
+   <a href="../USAdave/intro.html">  =>
+   <a href="../usadave/intro.html">
+
+ /tablesc/cyp71.html:
+    <A HREF="grk71.html">  =>
+    <A HREF="../tablesg/grk71.html">
+
+/tablesb/brunei00.html:
+     <a href="malay99.html">  =>
+     <a href="../tablesm/malay99.html">
+
+/intclub-friend.html:
+    <A HREF="tablesak/kronang-sri79.html">  =>
+    <A HREF="tablesk/kronang-sri79.html">
+
+/tablesa/arg-selection.html:
+    <a href="safa-satrip06.html">   =>
+    <a href="../tablesa/safa-satrip06.html">
+
+/tablesa/argcuphist.html:
+   <a href="qperon55.html">  =>
+   <a href="../tablesq/qperon55.html">
+
+/miscellaneous/reserves.html:
+   <a href="../tables/singhist.html#09">  =>
+   <a href="../tabless/singhist.html#09">
+
+
+/miscellaneous/century.html:
+   <a href="miscellaneous/nami-shalulile-intlg.html">  =>
+   <a href="nami-shalulile-intlg.html">
