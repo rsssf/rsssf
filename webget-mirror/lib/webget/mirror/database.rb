@@ -52,7 +52,7 @@ class Page < ActiveRecord::Base
 
 
     ### note - path incl. leading slash e.g. /curtour.html
-    def url()  "#{BASE_URL}#{path}"; end
+    ##  def url()  "#{Mirror.config.base_url}#{path}"; end
 end # class Page
 
 

@@ -4,11 +4,14 @@
 ## get all links
 ##   ignore anchor links and
 ##     split into internal and external
-def _find_links( doc,
+def _find_links( site:,
+                 doc:,
                  url:,
                  verbose: true )
 
 
+       ## note - base_url is  the doc(ument) url
+       ##                            e.g.  https://rsssf.org/curtour.html
        base_url = URI( url )
 
 
@@ -47,6 +50,10 @@ def _find_links( doc,
                     ##    is invalid uri!!!
 
                     href = href.strip
+
+###
+###
+##     fix - move into site config!!!!
 
 ##
 ## auto-fix ("site-wide") known quirks:
@@ -129,7 +136,7 @@ def _find_links( doc,
                       end
 
 
-                      if page_url.host == 'rsssf.org'
+                      if page_url.host == site.host    ## e.g. 'rsssf.org'
                           if page_url.path == base_url.path
                                  puts "   anchor  #{href}  =>  #{page_url.fragment}"     if verbose
                               anchors << page_url.fragment
@@ -141,7 +148,11 @@ def _find_links( doc,
                                ##    e.g. foo=1&bar=2
                                if page_url.query
                                    ## change to ValueError or such - why? why not?
-                                   raise ArgumentError, "query in internal page links not yet supported, sorry - got #{page_url}"
+                                   ## raise ArgumentError, "query in internal page links not yet supported, sorry - got #{page_url}"
+                                   msg = "query in internal page links not yet supported, sorry - got #{page_url}"
+                                   puts "!! WARN - #{msg}"
+                                   log( msg )
+                                   next
                                end
 
         if   page_url.path.start_with?( '//' ) ||

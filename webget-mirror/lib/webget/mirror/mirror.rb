@@ -34,8 +34,9 @@ end
 ##
 ##  use limit for batch - why? why not?
 ##     start of / try a batch of a hundred
-def mirror_pages( force: false,
-                  batch: 1000 )
+def _mirror_pages( site:,
+                   force: false,
+                   batch: 1000 )
 
     visited    = 0
     downloaded = 0
@@ -91,6 +92,10 @@ def mirror_pages( force: false,
 
        page_recs.each_with_index do |page_rec,i|
 
+        ##
+        ##  fix - change to mime type - why? why not?
+        ##           allow pages with no extensions!!!
+
          ### special case for non .html/.htm pages (e.g. .pdf others too??)
          ##    do NOT download / mirror / cache for now
          if !['.html', '.htm'].include?( page_rec.extname )
@@ -137,10 +142,12 @@ def mirror_pages( force: false,
          ##            https://rsssf.org/usadave/cncc.html  => 200 (OK)
 
 
+         url = site.base_url+page_rec.path
+
          html, response_meta  =  if %r{/USAdave/}.match?(page_rec.path)
                                          ['', {status: 404}]
                                   else
-                                       _download_page( page_rec.url,
+                                       _download_page( url,
                                              encoding: page_rec.encoding,
                                             force: force )
                                   end
@@ -170,7 +177,7 @@ def mirror_pages( force: false,
          ## verbose = true
 
 
-          html = errata( html, url: page_rec.url  )
+          html = site.errata( html, url: url )
 
          ## Standard HTML4-style parsing (default)
          ## doc = Nokogiri::HTML(malformed_html)
@@ -208,8 +215,9 @@ def mirror_pages( force: false,
 
 
 
-           internals, _ = _find_links( doc,
-                                       url: page_rec.url,
+           internals, _ = _find_links( site: site,
+                                       doc: doc,
+                                       url: url,
                                        verbose: verbose
                                      )
 
@@ -224,7 +232,7 @@ def mirror_pages( force: false,
                                     rec.extname  = File.extname( rec.path )
                                     rec.dirname  = File.dirname( rec.path )
 
-                                    rec.encoding = PAGES_ENCODING[ rec.path ]
+                                    rec.encoding = site.page_encoding( rec.path )
                                     rec.cached   = false
                                  end
 
