@@ -20,6 +20,7 @@ def year_from_name( name )
     if digits.size == 4   ## e.g. 1980 or 2011 etc.
       num
     elsif digits.size == 2  ## e.g. 00, 20 or 99 etc.
+      ### !!fix!! breaking point!!!  is <= 9 or such really
       if num <= 16  ## assume 20xx for now from 00..16
         2000+num
       else               ## assume 19xx for now
@@ -38,7 +39,7 @@ end  # method year_from_name
 def archive_dir_for_season( season )
   season = Season( season )
 
-  if season < Season('2010')   # e.g. season 2009-10 
+  if season < Season('2010')   # e.g. season 2009-10
     ## use archive folder (w/ 1980s etc)
     ## get decade folder
     decade  = season.start_year     ## 1999/2000 2000
@@ -53,4 +54,3 @@ end
 
 end  # module Utils
 end  # module Rsssf
-

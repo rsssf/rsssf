@@ -40,6 +40,8 @@ require_relative 'rsssf/convert/html_to_txt/make_heading'
 
 
 require_relative 'rsssf/page'
+require_relative 'rsssf/page-find_schedule.rb'
+
 require_relative 'rsssf/schedule'
 
 require_relative 'rsssf/reports/schedule'

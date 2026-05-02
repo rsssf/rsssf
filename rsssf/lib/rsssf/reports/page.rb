@@ -5,7 +5,7 @@ module Rsssf
 class PageReport
 
 
-def self.build( files, title:  )   
+def self.build( files, title:  )
   stats = []
   files.each do |file|
     page = Page.read_txt( file )
@@ -48,6 +48,42 @@ EOS
   txt = ''
   txt << header
 
+  txt << "| File   | Sections | Last Updated | Lines (Chars) |\n"
+  txt << "| :----- | :------- | :----------- | ------------: |\n"
+
+## note - removed season (no longer tracked here)
+
+  stats.each do |stat|
+    ## get basename from source url
+    url_path  = URI.parse( stat.source ).path
+    basename  = File.basename( url_path, File.extname( url_path ) )  ## e.g. duit92.txt or duit92.html => duit92
+
+    txt << "| [#{basename}.txt](#{basename}.txt) "
+    txt << "| **#{stat.title}** "
+    if stat.sections.size > 0
+       txt << "<br> "
+       txt <<  stat.sections.join( " <br> " )
+    end
+    txt << %Q{| <span title="by #{stat.authors}">#{stat.last_updated}</span> }
+    txt << "| #{stat.line_count} (#{stat.char_count}) "
+    txt << "|\n"
+  end
+
+  txt << "\n\n"
+  txt
+end  # method build_summary
+
+end  ## class PageReport
+end  ## module Rsssf
+
+
+
+__END__
+
+old version:
+
+  txt << header
+
   txt << "| File   | Authors  | Last Updated | Lines (Chars) | Sections |\n"
   txt << "| :----- | :------- | :----------- | ------------: | :------- |\n"
 
@@ -57,19 +93,15 @@ EOS
     ## get basename from source url
     url_path  = URI.parse( stat.source ).path
     basename  = File.basename( url_path, File.extname( url_path ) )  ## e.g. duit92.txt or duit92.html => duit92
-  
+
     txt << "| [#{basename}.txt](#{basename}.txt) "
     txt << "| #{stat.authors} "
     txt << "| #{stat.last_updated} "
     txt << "| #{stat.line_count} (#{stat.char_count}) "
-    txt << "| #{stat.sections.join(', ')} "
+    txt << "| **#{stat.title}** "
+    if stat.sections.size > 0
+       txt << "<br> "
+       txt <<  stat.sections.join( " <br> " )
+    end
     txt << "|\n"
   end
-
-  txt << "\n\n" 
-  txt
-end  # method build_summary
-
-end  ## class PageReport
-end  ## module Rsssf
-
