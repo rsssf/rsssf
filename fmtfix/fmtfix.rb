@@ -1,6 +1,6 @@
 ####
 #  to run use:
-#    $ ruby fmtfix/fmtfix.rb        
+#    $ ruby fmtfix/fmtfix.rb
 #
 #  e.g.
 #   ruby fmtfix\fmtfix.rb oost2026.txt oost00.txt oost2020.txt oost2021.txt oost2022.txt
@@ -41,6 +41,62 @@ require_relative 'fmtfix/outline'
 
 
 
+
+
+
+
+HTML_COMMENT_HEADER_RE = %r{  \A
+                            [ \n]*  ## trailing spaces and blank lines
+                       <!--
+                            [ \n]*
+                          (?<text> .+?)
+                            [ \n]*
+                        -->
+                   }imx
+
+
+###
+##   find meta data block (via html-style comment header )
+##    incl.   title, autor(s), url,  updated
+##  e.g.
+##    <!--
+##       title:   Austria 2024/25
+##       source:  https://rsssf.org/tableso/oost2025.html
+##       author:  Hans Schöggl
+##       updated: 7 Jul 2025
+##      -->
+##  -or-
+##      authors: Hans Schöggl and Karel Stokkermans
+
+def _parse_meta( txt )
+     meta = {}
+     m = HTML_COMMENT_HEADER_RE.match( txt )
+     if m
+        text = m[:text]
+        text.each_line do |line|
+            line = line.strip
+
+            ## note - allow "inline" blank lines and comment lines (starting w/ #)
+            next if line.empty?  || line.start_with?('#')
+
+            ## split line on first colon (:) (only)
+            ##   note - limit split to two pieces!!!
+            key, value = line.split( /[ ]*:[ ]*/, 2)
+            ## use a symbol (not string) as key - why? why not?
+            meta[ key.to_sym ] = value
+        end
+        meta
+     else
+        nil ## no meta data (comment header) found
+     end
+end
+
+
+
+
+
+
+
 def fmtfix( filename, outdir: )
         txt = read_text( filename )
 
@@ -50,12 +106,20 @@ def fmtfix( filename, outdir: )
 
         ## change outfile  - add .autofix
         outfile = File.join(  outdir, "#{basename}#{extname}" )
-      
+
         newtxt = autofix( txt )
 
-      
+
+        ## get title ??
+        ##  todo find someething better to get title?
+        meta = _parse_meta( newtxt )
+        title = meta[:title] || 'n/a'
+
+        newtxt = autofix_outline( newtxt, title: title )
+
+=begin
         ##
-        ## add (quick) outline 
+        ## add (quick) outline
         outline = build_outline( newtxt )
 
         ## add inside  <!-- source: ...  [auto-add here] -->
@@ -64,14 +128,14 @@ def fmtfix( filename, outdir: )
         ##      source: https://rsssf.org/tableso/oost98.html
         ##    -->
 
-        newtxt = newtxt.sub( %r{^[ ]*<!-- 
-                       [ \n]* 
-                         (source: .+?) 
+        newtxt = newtxt.sub( %r{^[ ]*<!--
+                       [ \n]*
+                         (source: .+?)
                         [ \n]*
                       -->
                    }ix,
                "<!--\n  \\1\n\n#{outline} -->" )
-        
+=end
 
         write_text( outfile, newtxt )
 end
@@ -81,18 +145,18 @@ end
 
 
 def main( args,
-             path: ['.'], 
+             path: ['.'],
              update: false
               )
- 
+
    args.each_with_index do |name,i|
 
-      if File.extname(name).downcase == '.txt'  
+      if File.extname(name).downcase == '.txt'
         puts "==> #{i+1}/#{args.size} #{name}..."
 
         filename = find_file( name, path: path )
 
-        outdir = './tmp-fmtfix' 
+        outdir = './tmp-fmtfix'
         fmtfix( filename, outdir: outdir )
       else
         ## use config
@@ -114,7 +178,7 @@ def main( args,
             inname = "#{dirname}/#{basename}.txt"
             filename = find_file( inname, path: path )
 
-            
+
             outdir = if update
                           ## check for dedicated repos
                           ##  otherwise use ../world/pages
@@ -134,16 +198,16 @@ def main( args,
                             '../clubs/mexico/pages'
                          elsif name == 'us'
                             '../clubs/usa/pages'
-                         elsif name == 'worldcup' || 
+                         elsif name == 'worldcup' ||
                                name == 'worldcup_full' ||
                                name == 'worldcup_quali'
                             '../worldcup/pages'
                          else
                             '../world/pages'
-                         end                            
+                         end
                      else
                         ## e.g. ./tmp-eng, ./temp-worldcup etc.
-                        "./tmp-#{name}" 
+                        "./tmp-#{name}"
                      end
 
             fmtfix( filename, outdir: outdir )
@@ -186,12 +250,11 @@ if __FILE__ == $0
 
 
 
-  main( args, 
+  main( args,
           path:   PATH,
           update: opts[:update] )
 
 
-  puts "bye" 
+  puts "bye"
 
 end
-

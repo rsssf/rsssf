@@ -1,11 +1,21 @@
 
 ## let's you check optional ref e.g. ‹§fin›
 OPT_REF = %q{
-            (?: [ ]*    
+            (?: [ ]*
               ‹ (?<ref> §[^›]+?) ›
             )?
          }
 
+
+
+=begin
+## let's you check optional ref e.g. ‹§fin›
+OPT_REF = %q{
+            (?: [ ]*
+              ‹§ (?<ref> [^›]+?) ›
+            )?
+         }
+=end
 
 
 ###
@@ -34,9 +44,9 @@ HEADER_ROUND_RE = %r{\A
 
 
 ## helper for inline regexes (with union) and escaped
-def date_( *re ) 
-      raise ArgumentError, "more than one date regex expected, got #{re}"  if re.size < 1      
-      
+def date_( *re )
+      raise ArgumentError, "more than one date regex expected, got #{re}"  if re.size < 1
+
       ## (auto-)wrap in non-capature group - why? why not?
       "(?: #{Regexp.union( *re ).source})"
 end
@@ -69,13 +79,13 @@ HEADER_DATE_RE = %r{\A
 
 HEADER_DATE_II_RE = %r{\A
       [ ]*
-         #{date_(DATE_I_RE, DATE_II_RE)} 
+         #{date_(DATE_I_RE, DATE_II_RE)}
       [ ]*
 \z}ix
 
 
 
-## 
+##
 ## [Sep 16, Berchtold 26, Glasner 54, Kuljic 60]
 ## --- note - exclude  numbers in follow-up text!!!
 ##
@@ -94,23 +104,23 @@ HEADER_DATE_II_RE = %r{\A
 ##    Wörthersee Stadion, Klagenfurt; att: 20,500
 ##    Hayward, Calif.; att: 5.528   -- note: dot (.) NOT comma (,)
 ##
-##  
+##
 ## Apr 30, 28 Black Arena, Klagenfurt; att: 30,000
 ###   Wörthersee Stadion, known as 28 Black Arena for sponsorship reasons
 ##
 ##   Ernst-Happel-Stadion, Wien; att: 20100; ref: Hofmann
 
-CITY_ = %q{   (?<city>  (?:   [^0-9:;\[\]]+? 
-                            | .+? 
+CITY_ = %q{   (?<city>  (?:   [^0-9:;\[\]]+?
+                            | .+?
                                 [ ] att: [ ] [0-9,.]+
-                                (?: [;,] [ ] ref: [ ] .+?  ## w/ optional ref: 
-                                )?  
-                         )        
-               )    
+                                (?: [;,] [ ] ref: [ ] .+?  ## w/ optional ref:
+                                )?
+                         )
+               )
           }
 
 
-##  [Jun 3, Ferrol] 
+##  [Jun 3, Ferrol]
 ##  [Apr 2, Wembley]
 ##  -or-
 ##  [Sat May 17 - at Millennium Stadium, Cardiff]
@@ -118,12 +128,12 @@ CITY_ = %q{   (?<city>  (?:   [^0-9:;\[\]]+?
 
 HEADER_DATE_N_CITY_RE = %r{\A
       [ ]*
-      \[  #{date_(DATE_I_RE, 
+      \[  #{date_(DATE_I_RE,
                   DATE_II_RE)}
            (?:       , [ ]*
                | [ ] - [ ] at [ ]
             )
-           #{CITY_} 
+           #{CITY_}
       \]
       [ ]*
 \z}ix
@@ -133,7 +143,7 @@ HEADER_DATE_N_CITY_RE = %r{\A
 ##  alternate date header with brackets (in oost02.txt)
 ##   [31-08]  change to _ 31/08 _
 ##   [07-09]
-##   [07-09]  
+##   [07-09]
 ##   [30-05, Thaur]
 
 HEADER_DATE_ALT_RE = %r{\A
@@ -142,9 +152,9 @@ HEADER_DATE_ALT_RE = %r{\A
              (?<day> \d{1,2}) - (?<month> \d{1,2})
           )
           (?:
-              , [ ]* 
+              , [ ]*
               #{CITY_}
-          )? 
+          )?
       \]
       [ ]*
 \z}ix
@@ -171,10 +181,10 @@ HEADER_ROUND_N_DATE_RE = %r{\A
         [ ]*
          (?<round> #{ROUND_PAT})
          [ ]+
-        \[ 
-           #{date_(DATE_I_RE, DATE_IB_RE, DATE_II_RE, 
+        \[
+           #{date_(DATE_I_RE, DATE_IB_RE, DATE_II_RE,
                    DATE_RANGE_RE,
-                   DATE_LIST_RE, DATE_LEGS_RE)}   
+                   DATE_LIST_RE, DATE_LEGS_RE)}
         \]
         #{OPT_REF}
         [ ]*
@@ -188,7 +198,7 @@ HEADER_ROUND_N_DATE_N_CITY_RE = %r{\A
          [ ]+
         \[  #{date_(DATE_I_RE, DATE_II_RE)}
              , [ ]*
-           #{CITY_}    
+           #{CITY_}
         \]
         [ ]*
 \z}ix
@@ -201,7 +211,7 @@ HEADER_ROUND_N_CITY_RE = %r{\A
         [ ]*
          (?<round> #{ROUND_PAT})
          [ ]+
-        \[in [ ]+ #{CITY_}    
+        \[in [ ]+ #{CITY_}
         \]
         [ ]*
 \z}ix
@@ -218,7 +228,7 @@ HEADER_ROUND_N_CITY_N_DATE_RE = %r{\A
          [ ]+
         \[ #{CITY_}
              , [ ]*
-            #{date_(DATE_I_RE, DATE_II_RE)}    
+            #{date_(DATE_I_RE, DATE_II_RE)}
         \]
         [ ]*
 \z}ix
@@ -233,11 +243,11 @@ def _norm_date( m, format: nil )
    m = m.named_captures.transform_keys(&:to_sym)  if m.is_a?(MatchData)
 
   if m[:date_list]
-    _fmt_date_list(_build_date_list( m ), format: format ) 
+    _fmt_date_list(_build_date_list( m ), format: format )
   elsif m[:date_legs]
-    _fmt_date_legs(_build_date_legs( m ), format: format ) 
+    _fmt_date_legs(_build_date_legs( m ), format: format )
   elsif m[:date_range]
-    _fmt_date_range(_build_date_range( m ), format: format ) 
+    _fmt_date_range(_build_date_range( m ), format: format )
   else   ## assume m[:date]
     _fmt_date(_build_date( m ), format: format )
   end
@@ -245,43 +255,43 @@ end
 
 
 def handle_header( line )
-      ## note - returns    newline (matched header line reformatted) 
+      ## note - returns    newline (matched header line reformatted)
       ##                    or nil (if no match!!)
       ##
        line = line.rstrip   ## expect chomp of newline "upstream" - why? why not?
 
 
       if m = HEADER_ROUND_RE.match(line.rstrip)
-                   "▪ #{m[:round]} ▪\n" 
+                   "▪ #{m[:round]} ▪\n"
       elsif m = HEADER_DATE_RE.match(line.rstrip)
                    ## e.g. [Nov 20]
-                   ## e.g. [April 1]   
+                   ## e.g. [April 1]
                    date = _norm_date( m )
-                   "_ #{date} _\n" 
+                   "_ #{date} _\n"
       elsif m = HEADER_DATE_N_CITY_RE.match(line.rstrip)
-                   ## e.g. [Jun 3, Ferrol] 
+                   ## e.g. [Jun 3, Ferrol]
                    ## e.g. [Apr 2, Wembley]
                    ##   [Sat May 17 - at Millennium Stadium, Cardiff]
                    ##   [Sun May 25 - at Millennium Stadium, Cardiff]
 
                    date = _norm_date( m )
-                   
+
                    ##  note - check for special case
                    ##     [Dec 10, replay]
-                   ##  change to  ▪ Replay ▪   _ Dec 10 _                   
+                   ##  change to  ▪ Replay ▪   _ Dec 10 _
                    if m[:city] == 'replay'
                       "▪ Replay ▪  _ #{date} _\n"
-                   else 
+                   else
                       "_ #{date} _ @ #{m[:city]}\n"
-                   end 
+                   end
       elsif m = HEADER_DATE_II_RE.match(line.rstrip)
                     ##  note - no enclosing brackets []!!!
                     ## e.g. Nov 20 1999  or Nov 20, 1999
                     ##      Apr 1 2000   or Apr 1, 2000
                      date = _norm_date( m )
-                   "_ #{date} _\n" 
+                   "_ #{date} _\n"
       elsif m = HEADER_DATE_ALT_RE.match(line.rstrip)
-                    ## e.g. [07-09]  
+                    ## e.g. [07-09]
                     ##      [30-05, Thaur]
                     ## date = _norm_date( m, format: 'numeric' )
                     date = _norm_date( m  )
@@ -292,19 +302,17 @@ def handle_header( line )
                     buf
       elsif m = HEADER_ROUND_N_DATE_RE.match(line.strip)
                      date = _norm_date( m )
-                   "▪ #{m[:round]} ▪  #{date}\n"                   
+                   "▪ #{m[:round]} ▪  #{date}\n"
       elsif m = HEADER_ROUND_N_DATE_N_CITY_RE.match(line.strip)
                      date = _norm_date( m )
-                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"  
+                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"
       elsif m = HEADER_ROUND_N_CITY_RE.match(line.strip)
-                   "▪ #{m[:round]} ▪  @ #{m[:city]}\n"  
+                   "▪ #{m[:round]} ▪  @ #{m[:city]}\n"
       elsif m = HEADER_ROUND_N_CITY_N_DATE_RE.match(line.strip)
                      date = _norm_date( m )
                     ## note - reverse (rotate) date & city
-                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"  
+                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"
        else
-         nil 
+         nil
        end
 end
-
-
