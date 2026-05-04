@@ -88,7 +88,7 @@ def _find_schedule( header:, strict: false )
 
     txt = _walk_sections( @txt, header: header,
                                 depth:  0,
-                                strict: false )
+                                strict: strict )
 
     if txt
         ## wrap in schedule class - why? why not?

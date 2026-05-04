@@ -1,10 +1,9 @@
+##
+## patching headings in de
+##     if year < 2010
+##  note: duit2010 (2009/10) starts a new format w/ heading 4 sections etc.
 
-## e.g. 2008/09
-##   note: also support 1999/2000
-## note: use single quotes - quotes do NOT get escaped (e.g. '\d' => "\\d")
 
-## SEASON  =   \d{4}/(?:\d{2}|\d{4})
-##  built-in for now
 
 ##  $$  =   \s+  ## eats-up newline too!!
 ###
@@ -101,3 +100,44 @@ __END__
    /^ Sixth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix,
    /^ Sixth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) [ ] \(Bezirksligen, [ ] partial\) $/ix,
    /^ Seventh [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) [ ] \(Bezirksklassen, [ ] partial\) $/ix]
+
+
+
+
+Germany 1998/99  2.Bundesliga
+Germany 1998/99 Third Level (Regionalliga)
+- Regionalliga Nord
+- Regionalliga Nordost
+- Regionalliga S&uuml;d
+- Regionalliga West/S&uuml;dwest
+
+
+
+
+Third Level 2008/09
+3.Bundesliga
+
+Third Level 2003/04
+- Regionalliga Nord
+- Regionalliga Süd
+
+Fourth Level (Oberligen) 2003/04
+ - Bayern
+ - Baden-Württemberg
+ - Hessen
+ - Südwest
+ - Nordrhein
+ - Westfalen
+ - Niedersachsen/Bremen
+ - Hamburg/Schleswig-Holstein
+ - Nordost Nord
+ - Nordost Süd
+
+
+Fourth Level 2008/09
+ - Regionalliga Nord
+ - Regionalliga West
+ - Regionalliga Süd
+
+1.Bundesliga
+2.Bundesliga

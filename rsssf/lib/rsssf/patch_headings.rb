@@ -1,6 +1,15 @@
 require 'cocos'
 
 
+
+## e.g. 2008/09
+##   note: also support 1999/2000
+## note: use single quotes - quotes do NOT get escaped (e.g. '\d' => "\\d")
+##
+## SEASON  =   \d{4}/(?:\d{2}|\d{4})
+##  built-in for now
+
+
 def mkheading_regex( str )
 
     str = str.strip
