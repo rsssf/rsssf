@@ -147,6 +147,10 @@ HX_RE = %r{          ## negative lookahead
 
 ##
 ## change to outline - why? why not?
+def _scan_headings()  txt.scan( HX_RE );   end
+
+
+
 def _build_toc( txt )
 
      hx =  txt.scan( HX_RE )

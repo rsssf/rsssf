@@ -50,6 +50,8 @@ require_relative 'rsssf/reports/page'
 require_relative 'rsssf/repo'
 
 
+require_relative 'rsssf/patch_headings'
+
 
 
 #############

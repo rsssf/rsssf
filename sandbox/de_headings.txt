@@ -1,0 +1,103 @@
+
+## e.g. 2008/09
+##   note: also support 1999/2000
+## note: use single quotes - quotes do NOT get escaped (e.g. '\d' => "\\d")
+
+## SEASON  =   \d{4}/(?:\d{2}|\d{4})
+##  built-in for now
+
+##  $$  =   \s+  ## eats-up newline too!!
+###
+###   space is shortcut for [ ]
+###   ~   is shortcut for optional space => [ ]?
+
+
+== 1. Bundesliga ==
+## e.g. 1.Bundesliga or
+##      1. Bundesliga
+  1.~Bundesliga
+
+
+== 2. Bundesliga ==
+  ## e.g. Second Level 2008/09   $$
+  ##      2.Bundesliga
+  Second Level $SEASON$  $$  2.~Bundesliga
+
+  ## e.g. Germany 1998/99  2.Bundesliga
+  Germany $SEASON$  $$  2.~Bundesliga
+
+  ## e.g. 2.Bundesliga or
+  ##      2. Bundesliga
+  2.~Bundesliga
+
+
+
+== DFB Pokal ==
+  ## e.g. Germany Cup (DFB Pokal) 1998/99
+  Germany Cup (DFB Pokal) $SEASON$
+
+  ## e.g. DFB Pokal 2008/09
+  ##    or DFB-Pokal 1996/97
+  DFB[ -]Pokal $SEASON$
+
+  ## e.g. DFB-Pokal or DFB Pokal
+  DFB[ -]Pokal
+  ## e.g. Cup 2006/07
+  Cup $SEASON$
+
+
+
+##############
+## generic  - keep match text as is
+##    add shortcut    ** or $*$  or __ or ?  ??? for rest  e.g. .+? or such??
+#############
+== * ==
+
+Third Level $SEASON$
+Regionalliga's (third level)
+
+
+Fourth Level $SEASON$
+Fourth Level $SEASON$ (Oberligen)
+OBERLIGA (Fourth Level)
+
+Fifth Level $SEASON$
+Fifth Level $SEASON$ (Verbandsligen/Landesligen)
+VERBANDESLIGA/LANDESLIGA (Fifth Level)
+
+Sixth Level $SEASON$
+Sixth Level $SEASON$ (Bezirksligen, partial)
+
+Seventh Level $SEASON$ (Bezirksklassen, partial)
+
+
+
+
+__END__
+
+ "1. Bundesliga"=>
+  [/^ 1\. [ ]? Bundesliga $/ix],
+
+ "2. Bundesliga"=>
+  [/^ Second [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) \s+ 2\. [ ]? Bundesliga $/ix,
+   /^ Germany [ ] \d{4}\/(?:\d{2}|\d{4}) \s+ 2\. [ ]? Bundesliga $/ix,
+   /^ 2\. [ ]? Bundesliga $/ix],
+
+ "DFB Pokal"=>
+  [/^ Germany [ ] Cup [ ] \(DFB [ ] Pokal\) [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix,
+   /^ DFB[ -]Pokal [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix,
+   /^ DFB[ -]Pokal $/ix,
+   /^ Cup [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix]
+
+ "*"=>
+  [/^ Third [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix,
+   /^ Regionalliga's [ ] \(third [ ] level\) $/ix,
+   /^ Fourth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix,
+   /^ Fourth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) [ ] \(Oberligen\) $/ix,
+   /^ OBERLIGA [ ] \(Fourth [ ] Level\) $/ix,
+   /^ Fifth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix,
+   /^ Fifth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) [ ] \(Verbandsligen\/Landesligen\) $/ix,
+   /^ VERBANDESLIGA\/LANDESLIGA [ ] \(Fifth [ ] Level\) $/ix,
+   /^ Sixth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) $/ix,
+   /^ Sixth [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) [ ] \(Bezirksligen, [ ] partial\) $/ix,
+   /^ Seventh [ ] Level [ ] \d{4}\/(?:\d{2}|\d{4}) [ ] \(Bezirksklassen, [ ] partial\) $/ix]
