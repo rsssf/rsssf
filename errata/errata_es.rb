@@ -1,8 +1,5 @@
-class PatchEs
-  def on_patch( txt, name, year )
-    puts "==> patch #{name} - #{year}"
 
-    if name == 'span2016'
+if name == 'span2016'
       # in Copa del Rey
 # CD Mirandés               1-2 CA Osasuna                [awarded to Mirandés, Osasuna
 # Córdoba CF                0-1 CD Lugo                    fielded suspended player]
@@ -12,7 +9,7 @@ class PatchEs
 # Valencia CF               2-0 Barakaldo CF               player in first leg]
    ## add NB:
      txt = txt.sub( '[Real Madrid disqualified',
-                    '[NB: Real Madrid disqualified' ) 
+                    '[NB: Real Madrid disqualified' )
      txt = txt.sub( /(for fielding suspended)/ , '⮑\1' )
      txt = txt.sub( /(player in first leg\])/, '⮑\1' )
 
@@ -24,13 +21,13 @@ class PatchEs
      #  in Primera División
 # [Walter Pandiani 72; Sergio González79]
   txt = txt.sub( 'González79',
-                 'González 79' ) 
+                 'González 79' )
 #  [Aritz Aduriz10, Vicente Rodríguez 90+; Igor Gabilondo 90+]
   txt = txt.sub( 'Aduriz10',
-                 'Aduriz 10' ) 
+                 'Aduriz 10' )
 #   ["Manu" Manuel del Moral Fernández70pen; Lionel Messi 22,
   txt = txt.sub( 'Fernández70pen',
-                 'Fernández 70pen' ) 
+                 'Fernández 70pen' )
 #  [Diego Ifran 71, Xabi Prieto 82pen; Thiago Alcántara 29
 #    mising closing ]
   txt = txt.sub( '[Diego Ifran 71, Xabi Prieto 82pen; Thiago Alcántara 29',
@@ -38,7 +35,7 @@ class PatchEs
                )
 
    # in Copa del Rey
-   ##   move to on_parse - why? why not?   
+   ##   move to on_parse - why? why not?
 note =<<TXT
   [Madrid: Iker Casillas; Alvaro Arbeloa, Sergio Ramos, Ricardo Carvalho
      (Ezequiel Garay 19), "Marcelo" Vieira da Silva, "Pepe" Kepler
@@ -60,14 +57,8 @@ TXT
    txt = txt.sub( note, '' )
 
   # ["Jonathan" Apesteguía Olagüe " 44; Luis Blanco 68, Joel Alvarez 75]
-  txt = txt.sub( %Q{Olagüe " 44}, 'Olagüe 44' ) 
+  txt = txt.sub( %Q{Olagüe " 44}, 'Olagüe 44' )
   # [Juan Jose Serrano "Juanjo 60"]
-  txt = txt.sub( %Q{"Juanjo 60"}, %Q{"Juanjo" 60} ) 
+  txt = txt.sub( %Q{"Juanjo 60"}, %Q{"Juanjo" 60} )
   # Benidorm                  0-0 Orihuela                  [aet. 3-5 pen]
-  txt = txt.sub( '[aet.' , '[aet,' ) 
-
-  
-   end
-    txt
-  end
-end
+  txt = txt.sub( '[aet.' , '[aet,' )

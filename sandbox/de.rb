@@ -5,76 +5,41 @@
 
 require_relative 'helper'
 
-require_relative 'de_patch'
+
+proj = Rsssf::Project.new( '../clubs/germany',
+                           title: 'Germany (Deutschland)',
+                           slug:  'duit' )
 
 
-## path = './tmp2/deutschland'
-path = '/sports/rsssf/deutschland' 
+patches = read_heading_patches( './sandbox/de_headings.txt' )
+pp patches
 
 
-code    = 'de'
-seasons = Season('1963/64')..Season('2023/24')
-title   = 'Germany (Deutschland)' 
-patch   =  PatchDe.new
-
-repo = RsssfRepo.new( path, title: title, 
-                            patch: patch )
-
-repo.prepare_pages( code, seasons )
+### todo/fix - move upstream to fmtfix!!! - why? why not?
+proj.apply_heading_patches( patches )
 
 
-
-repo.make_pages_summary
-
-
-## seasons = Season('1963/64')..Season('2023/24')
-# seasons = Season('1999/2000')..Season('2023/24')
-## seasons = Season('2020/21')..Season('2023/24')
-repo.each_page( code, seasons ) do |season,page|
-  puts "==> #{season}..."
-
-  kwargs = if season <= Season('1998/99')
-             {}  # no header; assume single league file; return empty hash
-           else
-             { header: '1\. Bundesliga' }
-           end
-  sched = page.find_schedule( **kwargs )
-  sched.save( "#{repo.root}/#{archive_dir_for_season(season)}/1-bundesliga.txt",
-              header: "= Deutsche Bundesliga #{season}\n\n" )
+proj.make_pages_summary
 
 
-  if season >= Season('1996/97')
-    sched = page.find_schedule( header: 'DFB Pokal', cup: true )
-    sched.save( "#{repo.root}/#{archive_dir_for_season(season)}/cup.txt",
-                header: "= DFB Pokal #{season}\n\n" )
-  end
-end 
-
-
-
-repo.make_schedules_summary
+proj.make_schedules_summary
 
 
 puts "bye"
 
 
+
+
 __END__
 
-cfg = RsssfScheduleConfig.new
-cfg.name = '1-bundesliga'
-cfg.opts_for_year = ->(year) {
-  if year <= 1999
-    {}  # no header; assume single league file; return empty hash
-  else
-    { header: '1\. Bundesliga' }
-  end
-}
-## for debugging - use filer (to process only some files)
-## cfg.includes = [1964, 1965, 1971, 1972, 2014, 2015]
 
 
-cfg.name = 'cup'
-cfg.opts_for_year =  { header: 'DFB Pokal', cup: true }
+################
+## collect pages & make page summary
+files = Dir.glob( "#{pages_dir}/**/*.txt" )
 
-## for debugging - use filer (to process only some files)
-cfg.includes = (1997..2015).to_a
+
+report = Rsssf::PageReport.build( files, title: title )    ## pass in title etc.
+
+### save report as README.md in tables/ folder in repo
+report.save( "#{pages_dir}/README.md" )

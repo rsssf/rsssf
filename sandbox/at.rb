@@ -7,33 +7,79 @@ require_relative 'helper'
 
 
 
-path = './tmp2/austria'
-## path = '/sports/rsssf/austria' 
 
-code    = 'at'
-seasons = Season('1974/75')..Season('2023/24')   ## start 1974/75 
-title   = 'Austria (Österreich)'
+proj = Rsssf::Project.new( '../clubs/austria',
+                           title: 'Austria (Österreich)',
+                           slug:  'oost' )
+
+proj.make_pages_summary
 
 
-repo = RsssfRepo.new( path, title: title )
-repo.prepare_pages( code, seasons )
 
-repo.make_pages_summary
 
-seasons = Season('2010/11')..Season('2015/16')
-repo.each_page( code, seasons ) do |season,page|
+seasons = Season('2010/11')..Season('2025/26')
+
+
+##
+##  mapper - use a text config e.g.
+
+#######
+##   header,    seasons,       slug, title
+##  Bundesliga,     ..,        1-bundesliga,  Austria | Bundesliga {season}
+##  ÖFB Cup,        ..,        cup,           Austria | ÖFB Cup {season}
+
+
+
+proj.each_page( seasons ) do |season, page|
   puts "==> #{season}..."
 
-  sched = page.find_schedule( header: 'Bundesliga' )
-  sched.save( "#{repo.root}/#{season.to_path}/1-bundesliga.txt",
-              header: "= Austria Bundesliga #{season}\n\n" )
- 
-  sched = page.find_schedule( header: 'ÖFB Cup', cup: true )
-  sched.save( "#{repo.root}/#{season.to_path}/cup.txt",
-              header: "= Austria ÖFB Cup #{season}\n\n" )
-end 
+  sched = page.find_schedule!( header: 'Bundesliga' )
+   sched.save( "#{proj.root_dir}/#{season.to_path}/1-bundesliga.txt",
+              header: "= Austria | Bundesliga #{season}\n\n" )
 
-repo.make_schedules_summary
+  sched = page.find_schedule!( header: 'ÖFB Cup' )
+  sched.save( "#{proj.root_dir}/#{season.to_path}/cup.txt",
+              header: "= Austria | ÖFB Cup #{season}\n\n" )
+
+end
+
+
+proj.make_schedules_summary
+
+
 
 
 puts "bye"
+
+
+
+
+
+__END__
+
+################
+## collect pages & make page summary
+files = Dir.glob( "#{pages_dir}/**/*.txt" )
+report = Rsssf::PageReport.build( files, title: title )    ## pass in title etc.
+
+### save report as README.md in tables/ folder in repo
+report.save( "#{pages_dir}/README.md" )
+
+
+seasons = Season('2010/11')..Season('2025/26')
+
+seasons.each do |season|
+  puts "==> #{season}..."
+
+  basename = "oost#{mkslug(season)}"
+  page = Rsssf::Page.read_txt( "#{pages_dir}/#{basename}.txt")
+
+  sched = page.find_schedule!( header: 'Bundesliga' )
+   sched.save( "#{root_dir}/#{season.to_path}/1-bundesliga.txt",
+              header: "= Austria | Bundesliga #{season}\n\n" )
+
+  sched = page.find_schedule!( header: 'ÖFB Cup' )
+  sched.save( "#{root_dir}/#{season.to_path}/cup.txt",
+              header: "= Austria | ÖFB Cup #{season}\n\n" )
+
+end

@@ -47,7 +47,9 @@ require_relative 'rsssf/schedule'
 require_relative 'rsssf/reports/schedule'
 require_relative 'rsssf/reports/page'
 
-require_relative 'rsssf/repo'
+require_relative 'rsssf/repo_v0'   ### replace with projct
+require_relative 'rsssf/project'   ### replace with projct
+
 
 
 require_relative 'rsssf/patch_headings'
