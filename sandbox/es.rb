@@ -5,41 +5,24 @@
 
 require_relative 'helper'
 
-require_relative 'es_patch'
 
 
-path = './tmp2/espana'
-## path = '/sports/rsssf/espana' 
-
-code    = 'es'
-seasons = Season('2010/11')..Season('2023/24')
-title   = 'España (Spain)'  
-patch   = PatchEs.new 
+proj = Rsssf::Project.new( '../clubs/spain',
+                           title: 'Spain (España)',
+                           slug:  'span' )
 
 
-repo = RsssfRepo.new( path, title: title,
-                            patch: patch )
+proj.make_pages_summary
 
-repo.prepare_pages( code, seasons )
+proj.make_schedules( <<TXT )
+header,       seasons,             basename,          title
+Primera División,              2016/17..2024/25,   1-liga,  Spain | Primera División {season}
+Primera División (Liga BBVA),  2010/11..2015/16,   1-liga,  Spain | Primera División {season}
 
+Copa del Rey,                  2010/11..2020/21,     cup,   Spain | Copa del Rey {season}
+TXT
 
-
-repo.make_pages_summary
-
-seasons = Season('2010/11')..Season('2015/16')
-repo.each_page( code, seasons ) do |season,page|
-  puts "==> #{season}..."
-
-  sched = page.find_schedule( header: 'Primera División' )
-  sched.save( "#{repo.root}/#{season.to_path}/1-liga.txt",
-              header: "= Spain Primera División #{season}\n\n" )
- 
-  sched = page.find_schedule( header: 'Copa del Rey', cup: true )
-  sched.save( "#{repo.root}/#{season.to_path}/cup.txt",
-              header: "= Spain Copa del Rey #{season}\n\n" )
-end 
-
-repo.make_schedules_summary
+proj.make_schedules_summary
 
 
 puts "bye"

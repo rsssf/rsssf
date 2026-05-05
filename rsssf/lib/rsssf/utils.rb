@@ -13,24 +13,22 @@ end
 
 
 def year_from_name( name )
-  if name =~ /(\d+)/
+  ## note - make sure it works for special case like:
+  ##             mex2-2010  !!!
+
+  if name =~ /( \d{4} | \d{2} )/x
     digits = $1.to_s
-    num    = digits.to_i
+    num    = digits.to_i(10)
 
     if digits.size == 4   ## e.g. 1980 or 2011 etc.
-      num
-    elsif digits.size == 2  ## e.g. 00, 20 or 99 etc.
-      ### !!fix!! breaking point!!!  is <= 9 or such really
-      if num <= 16  ## assume 20xx for now from 00..16
-        2000+num
-      else               ## assume 19xx for now
-        1900+num
-      end
-    else
-      fail( "no year found in name #{name}; expected two or four digits")
+         num
+    else ##  digits.size == 2  ## e.g. 00, 20 or 99 etc.
+        ## assume 20xx for now from 00..09
+        ## assume 19xx for 10..99
+        num <= 9 ?  2000+num : 1900+num
     end
   else
-    fail( "no year found in name #{name}")
+    fail( "no year found in name #{name}; expected two or four digits")
   end
 end  # method year_from_name
 
