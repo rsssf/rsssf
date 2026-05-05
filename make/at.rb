@@ -1,11 +1,13 @@
 ############
 #  to run use:
-#   $ ruby sandbox/at.rb
+#   $ ruby make/at.rb
 
 
 require_relative 'helper'
 
 
+###
+##  Season('1974/75')..Season('2023/24')   ## start 1974/75
 
 
 proj = Rsssf::Project.new( '../clubs/austria',

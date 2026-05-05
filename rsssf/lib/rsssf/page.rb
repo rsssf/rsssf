@@ -190,11 +190,13 @@ def build_stat
   last_updated = meta[:updated]
 
 
-  puts "*** !!! missing source"  if source.nil?
-  puts "*** !!! missing authors and last updated"   if authors.nil? || last_updated.nil?
+  puts "*** !!! missing source"        if source.nil?
+  puts "*** !!! missing author(s)"     if authors.nil?
+  pust "**  !!! missing last updated"  if last_updated.nil?
 
 
   ## get year from source (url)
+  ###   move (for reuse) to  year_from_url  in utils - why? why not?
   url_path  = URI.parse( source ).path
   basename  = File.basename( url_path, File.extname( url_path ) )  ## e.g. duit92.txt or duit92.html => duit92
   puts "   basename=>#{basename}<"
@@ -203,19 +205,16 @@ def build_stat
 
   sections = _build_toc( txt )
 
-  ## count lines
-  line_count = 0
-  @txt.each_line { |line| line_count +=1 }
 
 
   rec = PageStat.new
   rec.source       = source         # e.g. http://rsssf.org/tabled/duit89.html   -- use source_url - why?? why not??
-  rec.year         = year
+  rec.year         = year       ## note: in 2021/22  - year is always end_year, that is, 2022
   rec.title        = title
   rec.authors      = authors
   rec.last_updated = last_updated
-  rec.line_count   = line_count
-  rec.char_count   = @txt.size      ## fix: use "true" char count not byte count
+  rec.line_count   = @txt.lines.count    ### or @txt.each_line.count
+  rec.char_count   = @txt.size          ## note - size/length is true char count (@txt.bytesize is byte count!!)
   rec.sections     = sections
 
   rec

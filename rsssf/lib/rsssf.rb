@@ -6,16 +6,6 @@ require 'webget'           ## incl. webget, webcache, webclient, etc.
 require 'cocos'
 
 
-## (old) 3rd party libs
-##  require 'textutils'      ## used for File.read_utf8 etc.
-## require 'fetcher'        ## used for Fetcher::Worker.new.fetch etc.
-
-
-#######
-##   add RsssfParser too
-## require 'rsssf/parser'    ## from rsssf-parser gem
-
-
 
 
 ## our own code
@@ -47,7 +37,6 @@ require_relative 'rsssf/schedule'
 require_relative 'rsssf/reports/schedule'
 require_relative 'rsssf/reports/page'
 
-require_relative 'rsssf/repo_v0'   ### replace with projct
 require_relative 'rsssf/project'   ### replace with projct
 
 require_relative 'rsssf/parse_schedules'
@@ -67,7 +56,6 @@ RsssfSchedule       = Rsssf::Schedule
 RsssfScheduleStat   = Rsssf::ScheduleStat
 RsssfScheduleReport = Rsssf::ScheduleReport
 
-RsssfRepo           = Rsssf::Repo
 RsssfUtils          = Rsssf::Utils
 
 

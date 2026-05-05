@@ -1,6 +1,6 @@
 ############
 #  to run use:
-#   $ ruby sandbox/us.rb
+#   $ ruby make/us.rb
 
 
 require_relative 'helper'

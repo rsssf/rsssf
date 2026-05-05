@@ -1,6 +1,6 @@
 ############
 #  to run use:
-#   $ ruby sandbox/br.rb
+#   $ ruby make/br.rb
 
 require_relative  'helper'
 
@@ -8,6 +8,9 @@ require_relative  'helper'
 ##  note - special case for season 2000 => braz-joao00 !!!
 ## basename=>braz-joao00<
 ## basename=>braz01<
+##
+##   Season('1979')..Season('2024')
+
 
 proj = Rsssf::Project.new( '../clubs/brazil',
                            title: 'Brazil (Brasil)',

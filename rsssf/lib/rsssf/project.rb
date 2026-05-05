@@ -143,8 +143,6 @@ end
 
 
 
-
-### rename to season_to_slug or such - why? why not?
 def _mk_basename( season )
    slug =  @slug.is_a?(Proc) ? @slug.call( season ) : @slug
 

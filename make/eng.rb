@@ -1,9 +1,12 @@
 ############
 #  to run use:
-#   $ ruby sandbox/eng_pages.rb
+#   $ ruby make/eng.rb
 
 
 require_relative 'helper'
+
+##
+##  seasons = Season('1992/93')..Season('2023/24')
 
 
 
@@ -12,6 +15,9 @@ proj = Rsssf::Project.new( '../clubs/england',
                            slug:  'eng' )
 
 proj.make_pages_summary
+
+# note:  England 2010/11, 2011/12, 2012/13  uses
+#            Premiership  (not Premier League) for heading/section
 
 proj.make_schedules( <<TXT )
 header,       seasons,             basename,          title

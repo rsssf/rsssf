@@ -1,0 +1,75 @@
+##
+## patching headings in at
+##
+##  $$  =   \s+  ## eats-up newline too!!
+###
+###   space is shortcut for [ ]
+###   ~   is shortcut for optional space => [ ]?
+
+
+
+##############
+## generic  - keep match text as is
+##    add shortcut    ** or $*$  or __ or ?  ??? for rest  e.g. .+? or such??
+#############
+== * ==
+
+First Level (Bundesliga)
+Zehnerliga
+1.~Division
+Bundesliga
+
+
+
+Second Level (1. Liga)
+Second Level (Red Zac Erste Liga) $SEASON$
+Second Level (1. Division)
+Austria $SEASON$ Second Level (1.~Division)
+2. Bundesliga $SEASON$
+2.~Division
+
+
+Third Level $SEASON$
+Third Level (Regionalliga)
+Third Level (Regionalligen) $SEASON$
+Third Level (Regionalligen)
+Feeder Leagues for 2. Liga:
+
+## Feeder Leagues for 2. Liga:
+## --------------------------
+
+
+Fourth Level $SEASON$ (Landesligen)
+Fourth Level (Landesligen)
+Fourth Level
+
+
+Austria Cup (ÖFB Cup) $SEASON$
+ÖFB-Stiegl-Cup $SEASON$
+ÖFB Amateur Cup $SEASON$
+Austria "Snickers" Cup $SEASON$
+
+## Austria "Snickers" Cup 1994/95
+## ------------------------------
+###  todo/fix - eat-up (optional) --- or ==== !!!
+
+
+
+
+SFV (Salzburg) Cup $SEASON$
+Woche Steirer Cup $SEASON$
+
+Tiroler Cup (Anton-Nöhrer Cup) $SEASON$
+
+
+Fifth and Lower Levels (only Tirol)
+Lower Levels (only available for Tirol)
+Fifth and Lower Levels (partial)
+
+
+
+
+
+__END__
+
+## add regexes here

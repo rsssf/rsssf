@@ -1,6 +1,6 @@
 ############
 #  to run use:
-#   $ ruby sandbox/mx.rb
+#   $ ruby make/mx.rb
 
 
 require_relative 'helper'
