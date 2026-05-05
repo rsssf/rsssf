@@ -73,10 +73,16 @@ def autofix_outline( txt, title: )
              levels.shift            ## remove first level (inline op)!!!
 
              ### note - space in header must be replaces with [ ]!!!!
+             ##                    or \\   with Regex.escape!!!
+             ###  note - MUST escape string for regex e.g. [Bra..] or 1.
+             ###
+             ###   V COPA BRASIL - 1979 [Brazilian Championship]
+             ##    check if space works with escape??
+
              htop_re = %r{
                             ^
                            [ ]* #{htop_marker}
-                           [ ]* #{htop_header.sub( ' ', ' [ ] ')}
+                           [ ]* #{Regexp.escape(htop_header)}
                               .*?
                            $    ## or use \n - why? why not?
                          }x
