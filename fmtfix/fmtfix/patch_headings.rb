@@ -1,6 +1,3 @@
-require 'cocos'
-
-
 
 ## e.g. 2008/09
 ##   note: also support 1999/2000
@@ -94,6 +91,11 @@ def _patch_heading( txt, rxs, title )
 
                if title == '*'    ## use orginal title/ do NOT replace/normalize
                   ## note - keep going with replacements here
+                  ##
+                  ##  note - autoremove (optional) trailing colon (:)
+                  ##                                    or  dot (.)
+                  ##              use .chomp(':') instead - why? why not?
+                  match = match.sub( /[.:]$/, '').rstrip
                   "== #{match}\n"
                else
                   ## note - only short-circuit match if NOT generic replace
@@ -117,9 +119,12 @@ def patch_headings( txt, patches )
 end
 
 
+
+
+
 __END__
 
-patches = read_headings( "./sandbox/de_headings.txt" )
+patches = read_headings( "./make/de_headings.txt" )
 pp patches
 
 txt = read_text( "../clubs/germany/pages/duit09.txt" )

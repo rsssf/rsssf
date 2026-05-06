@@ -41,7 +41,6 @@ require_relative 'rsssf/project'   ### replace with projct
 
 require_relative 'rsssf/parse_schedules'
 
-require_relative 'rsssf/patch_headings'
 
 
 

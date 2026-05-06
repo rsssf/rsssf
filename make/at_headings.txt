@@ -8,6 +8,19 @@
 
 
 
+
+##
+# quick "multi-line" shortcut/hack  - remove Austria $SEASON$
+
+== 2.Bundesliga ==
+Austria $SEASON$  $$  2.~Bundesliga
+
+== Regionalliga (Third Level) ==
+Austria $SEASON$   $$   Regionalliga's (Third Level)
+
+
+
+
 ##############
 ## generic  - keep match text as is
 ##    add shortcut    ** or $*$  or __ or ?  ??? for rest  e.g. .+? or such??
@@ -18,6 +31,7 @@ First Level (Bundesliga)
 Zehnerliga
 1.~Division
 Bundesliga
+1.~Bundesliga
 
 
 
@@ -27,25 +41,34 @@ Second Level (1. Division)
 Austria $SEASON$ Second Level (1.~Division)
 2. Bundesliga $SEASON$
 2.~Division
+2.~Bundesliga
+Nationalliga
+1~.Division (Second Level)
+2.~Bundesliga:
 
 
+Austria $SEASON$ Third Level (Regionalligen)
 Third Level $SEASON$
 Third Level (Regionalliga)
 Third Level (Regionalligen) $SEASON$
 Third Level (Regionalligen)
+Third Level (Regionalliga's)
+
+
 Feeder Leagues for 2. Liga:
 
 ## Feeder Leagues for 2. Liga:
 ## --------------------------
 
 
-Fourth Level $SEASON$ (Landesligen)
-Fourth Level (Landesligen)
-Fourth Level
 
 
 Austria Cup (ÖFB Cup) $SEASON$
 ÖFB-Stiegl-Cup $SEASON$
+ÖFB Cup $SEASON$
+Austria ÖFB Cup $SEASON$
+Austria, ÖFB ("Magnofit") Cup $SEASON$
+Austria, OeFB ("Magnofit") Cup $SEASON$
 ÖFB Amateur Cup $SEASON$
 Austria "Snickers" Cup $SEASON$
 
@@ -55,16 +78,33 @@ Austria "Snickers" Cup $SEASON$
 
 
 
+##
+## check for these cups too - why? why not?
 
-SFV (Salzburg) Cup $SEASON$
-Woche Steirer Cup $SEASON$
+## SFV (Salzburg) Cup $SEASON$
+## Woche Steirer Cup $SEASON$
+## Tiroler Cup (Anton-Nöhrer Cup) $SEASON$
 
-Tiroler Cup (Anton-Nöhrer Cup) $SEASON$
 
 
+
+== Fourth Level (Landesligen) ==
+Fourth Level $SEASON$ (Landesligen)
+Fourth Level (Landesligen)
+Fourth Level (Landesliga's)
+Landesliga's (Fourth Level)
+Austria $SEASON$ Fourth Level (Landesligen; Feeder Leagues of Regionalligen)
+Fourth Level (Landesliga's) and below.
+Fourth Level
+
+
+
+== Fifth Level and Lower ==
 Fifth and Lower Levels (only Tirol)
-Lower Levels (only available for Tirol)
 Fifth and Lower Levels (partial)
+Fifth and Lower Levels
+Fifth Level and Lower.
+Lower Levels (only available for Tirol)
 
 
 

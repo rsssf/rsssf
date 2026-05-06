@@ -38,6 +38,7 @@ require_relative 'fmtfix/topscorers'
 require_relative 'fmtfix/tables'
 require_relative 'fmtfix/about'
 require_relative 'fmtfix/outline'
+require_relative 'fmtfix/patch_headings'  ## or use outline_patch or such - why? why not?
 
 
 
@@ -97,7 +98,7 @@ end
 
 
 
-def fmtfix( filename, outdir: )
+def fmtfix( filename, outdir:, heading_patches: nil )
         txt = read_text( filename )
 
         dirname  = File.dirname( filename )
@@ -107,15 +108,34 @@ def fmtfix( filename, outdir: )
         ## change outfile  - add .autofix
         outfile = File.join(  outdir, "#{basename}#{extname}" )
 
-        newtxt = autofix( txt )
+
+        ### note - step 1
+        ##      autofix-outline
+        ##  and patch headings/outline if empty
+        ##        with at_headings.txt, de_headings.txt etc.
 
 
         ## get title ??
         ##  todo find someething better to get title?
-        meta = _parse_meta( newtxt )
+        meta = _parse_meta( txt )
         title = meta[:title] || 'n/a'
 
-        newtxt = autofix_outline( newtxt, title: title )
+        newtxt = autofix_outline( txt, title: title )
+
+
+        if heading_patches
+            ##
+            ## check if any headings / outline
+             headings = _scan_outline( newtxt )
+             if headings.size == 0
+                newtxt = patch_headings( newtxt, heading_patches )
+             end
+        end
+
+
+        newtxt = autofix( newtxt )
+
+
 
 =begin
         ##
@@ -154,7 +174,7 @@ def main( args,
       if File.extname(name).downcase == '.txt'
         puts "==> #{i+1}/#{args.size} #{name}..."
 
-        filename = find_file( name, path: path )
+        filename = find_file!( name, path: path )
 
         outdir = './tmp-fmtfix'
         fmtfix( filename, outdir: outdir )
@@ -166,6 +186,21 @@ def main( args,
 
          datafile = "./config/#{name}.csv"
          rows = read_csv( datafile )
+
+         ##
+         ## (auto-)check for heading_patches  too!!!
+         ##    add
+         ##
+         ##  maybe add an option later -h/--headings or such - why? why not?
+         ##
+         ##    or move to  (or add search path for) /errata or /config dir - why? why not?
+         headings_path = "./make/#{name}_headings.txt"
+         heading_patches =  if File.file?( headings_path )
+                                read_heading_patches( headings_path )
+                            else
+                                nil
+                            end
+
          rows.each_with_index do |config,i|
 
             puts "==> #{i+1}/#{rows.size} #{config.pretty_inspect}..."
@@ -176,7 +211,7 @@ def main( args,
             extname  = File.extname( page )
 
             inname = "#{dirname}/#{basename}.txt"
-            filename = find_file( inname, path: path )
+            filename = find_file!( inname, path: path )
 
 
             outdir = if update
@@ -210,7 +245,8 @@ def main( args,
                         "./tmp-#{name}"
                      end
 
-            fmtfix( filename, outdir: outdir )
+            fmtfix( filename, outdir:          outdir,
+                              heading_patches: heading_patches )
          end
       end
    end

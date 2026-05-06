@@ -3,9 +3,46 @@
 
 
 ##
-## note - use File.file? instead of File.exist? 
+## note - use File.file? instead of File.exist?
 ##            (checks if file exists AND file is a file NOT a directory)
+##
+##   todo/fix - add an option to check if file found or not
+##                      return nil if not found or such
+##
+##  use find_file! and find_file or such - why? why not?
 
+
+=begin
+def find_file(name, path: [])
+  path.each do |dir|
+    full = File.join(dir, name)
+    return full if File.exist?(full)
+  end
+  nil
+end
+
+def find_file!(name, path: [])
+  find_file(name, path:) or
+    raise Errno::ENOENT, ""
+end
+
+plus add  option - raise_on_error: false  - why? why not?
+def find_file!  - find_file(  raise_on_error: false )
+
+=end
+
+
+
+
+def find_file!( name, path: )
+    filepath = find_file( name, path: path )
+    raise Errorno::ENOENT, "file <#{name}> not found; looking in path #{path.inspect}"   if filepath.nil?
+    filepath
+end
+
+##
+##  note - find_file will NOT find directories!!!
+##                          File.file? will only check if a file (not directory) exits!!
 
 def find_file( name, path: )
     return name    if File.file?( name )
@@ -15,11 +52,9 @@ def find_file( name, path: )
         return filepath   if File.file?(  filepath )
     end
 
-    ## fix/fix/fix - raise exception here
-    ##    check for std ruby filenotfound exception (or use argument/valueerror??) !!!!
-    puts "!! ERROR - file <#{name}> not found; looking in path: #{path.inspect}"
-    exit 1
+    nil   ## return nil if not found
 end
+
 
 
 
@@ -27,16 +62,16 @@ end
 #  parse/find_patterns
 
 ## use/rename to VARDEF_LINE or such - why? why not?
-VARDEF_RE = %r{\A 
-                [ ]* 
-              \$(?<key> [a-z][a-z0-9_]*) 
+VARDEF_RE = %r{\A
+                [ ]*
+              \$(?<key> [a-z][a-z0-9_]*)
                 [ ]*
               =
                 [ ]*
-              (?<value> .+?)   ## eat-up (non-greedy) the rest until end-of-line 
+              (?<value> .+?)   ## eat-up (non-greedy) the rest until end-of-line
                 [ ]*
-              \z 
-}ix 
+              \z
+}ix
 
 VAR_RE = %r{  \$(?<key> [a-z][a-z0-9_]*)
                   \b
@@ -45,15 +80,15 @@ VAR_RE = %r{  \$(?<key> [a-z][a-z0-9_]*)
 
 
 
-def read_patterns( path ) 
-    parse_patterns( read_text( path ))  
-end    
+def read_patterns( path )
+    parse_patterns( read_text( path ))
+end
 
 def parse_patterns( txt )
- 
+
      ## norm newline (windows cr/lf \r\n) to (lf - \n)
-     txt = txt.gsub( /\r\n/, "\n" )  
-     
+     txt = txt.gsub( /\r\n/, "\n" )
+
      ### check for line continuations with backslash (\)
      ##      note - allow spaces before newline
      txt = txt.gsub( /\\[ ]*$\n/, '' )
@@ -82,7 +117,7 @@ def parse_patterns( txt )
            vars[ m[:key].downcase ] = m[:value ]
            next
        end
-   
+
        line = line.gsub( VAR_RE ) do |_|
                   m = Regexp.last_match
                   key = m[:key].downcase
@@ -91,7 +126,7 @@ def parse_patterns( txt )
                   raise ArgumentError, "subvars - no vardef found for key >#{key}<"   if value.nil?
                   value
              end
-     
+
         ### use squish  - remove more than one inline space
          line = line.gsub( /[ ]{2,}/, ' ' )
 
@@ -108,7 +143,7 @@ def parse_patterns( txt )
          ## expand space shortcuts
          ##     replace  Middle Dot (·)  Unicode: U+00B7 or
          ##             White Square (□)  Unicode: U+25A1 or
-         ##   White Small Square     (▫)   Unicode: U+25AB 
+         ##   White Small Square     (▫)   Unicode: U+25AB
          ##               Open Box (␣)    Unicode: U+2423 or
          ##
          ##  add more - why? why not?
@@ -121,9 +156,3 @@ def parse_patterns( txt )
      end
      names
 end
-
-
-
-
-
-

@@ -166,6 +166,8 @@ end
 
 
 
+def _scan_outline( txt )   txt.scan( HX_RE );  end
+
 def build_outline( txt )
 
      hx =  txt.scan( HX_RE )

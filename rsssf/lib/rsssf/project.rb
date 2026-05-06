@@ -35,6 +35,7 @@ def _find_pages
 end
 
 
+
 def make_pages_summary
 
   files = _find_pages()
@@ -44,37 +45,6 @@ def make_pages_summary
   ### save report as README.md in pages/ dir in project root_dir
   report.save( "#{pages_dir}/README.md" )
 end  # method make_pages_summary
-
-
-
-def apply_heading_patches( patches )
-  ### patch headings
-  ##    if no headings found
-
-  files = _find_pages()
-
-  files.each do |file|
-
-    page = Rsssf::Page.read_txt( file )
-    headings = page._scan_headings()
-
-    if headings.size == 0
-       puts "==> #{File.basename(file,File.extname(file))}"
-       page.txt = patch_headings( page.txt, patches )
-
-       ## save only if headings added/found
-       headings = page._scan_headings()
-       if headings.size > 0
-
-         puts "headings:"
-         pp headings
-
-         write_text( file, page.txt )
-       end
-    end
-  end
-end
-
 
 
 

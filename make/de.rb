@@ -18,16 +18,7 @@ proj = Rsssf::Project.new( '../clubs/germany',
                            slug:  'duit' )
 
 
-patches = read_heading_patches( './make/de_headings.txt' )
-pp patches
-
-
-### todo/fix - move upstream to fmtfix!!! - why? why not?
-proj.apply_heading_patches( patches )
-
-
 proj.make_pages_summary
-
 
 
 proj.make_schedules( <<TXT, archive: true )
