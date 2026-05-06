@@ -93,7 +93,7 @@ def make_schedules_summary
 end
 
 
-def make_schedules( txt )
+def make_schedules( txt, archive: false )
    configs = parse_schedules( txt )
    ## pp configs
 
@@ -118,8 +118,15 @@ def make_schedules( txt )
         puts "  [#{i+1}/#{seasons.size}] #{season} => #{basename}, #{title}..."
 
        sched = page.find_schedule!( header: header_hiera )
-       sched.save( "#{root_dir}/#{season.to_path}/#{basename}.txt",
-                        header: "= #{title}\n\n" )
+
+
+        outpath =   if archive
+                       ## use archive/1990s and such if season <= 2009/10
+                       "#{root_dir}/#{archive_dir_for_season(season)}/#{basename}.txt"
+                    else
+                       "#{root_dir}/#{season.to_path}/#{basename}.txt"
+                    end
+       sched.save( outpath, header: "= #{title}\n\n" )
         i+=1
      end
   end
