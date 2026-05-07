@@ -110,33 +110,6 @@ end
 
 
 
-###
-##  remove trailing about document meta backmatter
-##  == About this document  ‹§about›
-##
-
-START_W_ABOUT_RE = %r{  \A
-                  [ \n]*   ## trailing spaces or blank lines
-                  ={2,} [ ]* About [ ]+ this [ ]+ document
-                   .*?
-              }ix
-
-
-##
-## todo - fix
-##
-##   remove all menu, ul,li, tags etc.
-##    before nav check
-##    see https://rsssf.github.io/tables/2014q.html
-##       as an example!!!
-
-START_W_NAV_RE = %r{  \A
-                [ \n]*    ## trailing spaces or blank lines
-                ‹.+?›    ##  link  (exlude named anchor - why? why not? §)
-             }ix
-
-
-
 
 ###
 #  note  - check for special cases (later) with no about this docu section!!
@@ -213,73 +186,6 @@ def collect_links( txt, basename:, dirname: )
                end
 
   links
-end
-
-def postproc_page( txt, basename:, dirname: )
-
-  ### record edits in its own txt file
-  edits = []
-  links = []
-  about = nil
-
-
-###
-##  step 1
-##   split by horizontal rules (hrs)
-##       and remove navigations sections
-##             starting with links e.g.
-## ‹Bundesliga, see §bund›
-
-   sects = txt.split( /^=-=-=-=-=-=-=-=-=-=-=-=-=-=-=$/ )
-
-
-   sects = sects.select do |sect|
-             if START_W_NAV_RE.match?( sect )
-                links += collect_links( sect, basename: basename,
-                                              dirname: dirname )
-
-              edit = String.new
-               edit += "-- removing nav(igation) section:"
-               edit += sect
-
-               puts edit
-
-               edits << edit   ## record edit
-
-               false           ## remove (nav) section
-             elsif START_W_ABOUT_RE.match?( sect )
-                ## note - do NOT collect links in about section!!!
-
-               about = sect
-               false           ## remove (about) section
-             else
-                links += collect_links( sect, basename: basename,
-                                              dirname: dirname )
-               true            ## keep section
-             end
-           end
-
-   ## sects.each_with_index do |sect,i|
-   ##  puts "==> #{i+1}/#{sects.size}"
-   ##  pp sect
-   ## end
-   ##  puts "  #{sects.size} sect(s)"
-
-
-   ## note - replace hr with blank line
-   txt = sects.join( "\n\n" )
-
-
-   ###
-   ## remove pre comments
-   txt = txt.gsub( "<!-- start pre -->\n", '' )
-   txt = txt.gsub( "<!-- end pre -->\n", '' )
-
-
-   ## note - return (new) txt AND recorded edits (& erratas)
-   ##        return edits as array or joined (single) string - why? why not?
-   ##   note - return empty array if no edits!!
-   [txt, edits, links, about]
 end
 
 

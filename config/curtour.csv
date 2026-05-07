@@ -1,16 +1,11 @@
-##   Current International Tournaments  
+##   Current International Tournaments
 ## see https://www.rsssf.org/curtour.html
 
 ##  note - if no encoding listed defaulting to windows-1252
 
 
-##
-## fix  - (auto-)check for bom  for  utf-16le encoding!!!  ÿþ
-###  "ÿþ<\u0000!\u0000D\u0000O\u0000C\u0000T\u0000Y
-##   \u0000P\u0000E\u0000 \u0000H\u0000T\u0000M\u0000L\u0000 \u0000P\u0000U\u0000B\u0000L\u0000I\u0000C\u0000 \u0000\"\u0000-\u0000/\u0000/\u0000W\u00003\u0000C\u0000/\u0000/\u0000D\u0000T\u0000D\u0000 \u0000H\u0000T\u0000M\u0000L\u0000 \u00003\u0000.\u00002\u0000 \u0000F\u0000i\u0000n\u0000a\u0000l\u0000/\u0000/\u0000E\u0000N\u0000\"\u0000>\u0000\r\u0000\n" +
 
-
-page, country, encoding
+page, title, encoding
 
 #####
 # Tournaments for Countries

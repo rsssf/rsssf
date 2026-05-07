@@ -1,3 +1,6 @@
+$LOAD_PATH.unshift( '/sports/rubycocos/webclient/webclient/lib' )
+$LOAD_PATH.unshift( '/sports/rubycocos/webclient/webget/lib' )
+
 
 ## 3rd party (our own)
 require 'season/formats'   ## add season support

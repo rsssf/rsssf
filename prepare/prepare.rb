@@ -11,7 +11,7 @@ $LOAD_PATH.unshift( './rsssf/lib' )
 require 'rsssf'
 
 
-Webcache.root = './cache' 
+Webcache.root = './cache'
 ## Webcache.root = '/sports/cache'   ## use "global" (shared) cache
 
 
@@ -27,7 +27,7 @@ include RsssfUtils   ## e.g. archive_dir_for_season
  args = ARGV
 
  opts = {
-   force:   false, 
+   force:   false,
    update:  false,
    online:  true,   ## online | offline/cached
 }
@@ -73,13 +73,15 @@ outdir =   if opts[:update]
 
 
 
-pages = read_csv( "./config/#{code}.csv" ) 
+pages = read_csv( "./config/#{code}.csv" )
 pp pages
 
 
 
 require_relative 'prepare/download'
 require_relative 'prepare/convert'
+require_relative 'prepare/convert-postproc'
+require_relative 'prepare/convert-navlines'
 
 
 ###########
@@ -96,5 +98,3 @@ convert_pages( pages, outdir: outdir )
 
 
 puts "bye"
-
-

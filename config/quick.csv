@@ -1,41 +1,8 @@
 
-#####
-##  add pages for quick testing here
-## 
-##     note - if no encoding listed defaulting to windows-1252
-
 page, title, encoding
 
-tablesa/alg2026.html, Algeria
-tablese/egy2025.html, Egypt
-tablesm/maro2025.html, Morocco
+tableso/oost2025.html, Austria 2024/25, windows-1252
+tableso/oost2026.html, Austria 2025/26, windows-1252
 
-
-
-tablesa/arg2026.html, Argentina
-tablesm/mex2026.html, Mexico
-tablesu/usa2025.html, United States
-tablesu/uru2026.html, Uruguay
-
-
-tablesa/aus2025.html, Australia
-tablesj/jpn2025.html, Japan, utf-16le  
-tabless/sau2025.html, Saudi Arabia
-tabless/skor2025.html, South Korea
-
-
-
-tablesb/belg2025.html, Belgium
-tablest/tsje2025.html, Czechia
-tablesg/grk2025.html, Greece
-tablesi/ier2025.html, Ireland
-tablesi/ital2025.html, Italy
-
-tablesn/ned2026.html, Netherlands
-tablesp/pol2025.html, Poland
-tablesp/port2025.html, Portugal
-tabless/scot2025.html, Scotland
-tablesz/zwit2026.html, Switzerland
-tablest/tur2025.html, Turkey
-tablesw/wal2025.html, Wales
-
+tables/2024e.html, European Championship 2024,
+tables/2014q.html, World Cup 2014 Qualifying
