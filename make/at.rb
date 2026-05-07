@@ -6,13 +6,25 @@
 require_relative 'helper'
 
 
-###
-##  Season('1974/75')..Season('2023/24')   ## start 1974/75
+pages = read_csv( './config/at.csv' )
+
+prep = Rsssf::Prep.new
+prep.convert_pages( pages, outdir: '../tables' )
+
+
+##
+## new step is fmtfix  ../tables => /austria/pages
 
 
 proj = Rsssf::Project.new( '../clubs/austria',
                            title: 'Austria (Österreich)',
                            slug:  'oost' )
+
+
+
+###
+##  Season('1974/75')..Season('2023/24')   ## start 1974/75
+
 
 proj.make_pages_summary
 
