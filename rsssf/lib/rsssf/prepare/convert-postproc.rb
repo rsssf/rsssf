@@ -1,3 +1,7 @@
+module Rsssf
+class  Prep    ## todo: find a better name e.g. BatchPrep or ??
+
+
 ###
 ##  remove trailing about document meta backmatter
 ##  == About this document  ‹§about›
@@ -131,3 +135,7 @@ def postproc_page( txt, basename:, dirname: )
    ##   note - return empty array if no edits!!
    [txt, edits, links, about]
 end
+
+
+end    ## class Prep
+end    ## module Rsssf

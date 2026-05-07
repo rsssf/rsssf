@@ -1,3 +1,27 @@
+module Rsssf
+class  Prep    ## todo: find a better name e.g. BatchPrep or ??
+
+
+
+=begin
+
+todo - remove all "trailing" nav links in section
+
+‹1974/75, see page oost75›.
+
+‹1976/77, see page oost77›.
+
+‹list of final tables, see page oosthist›.
+
+‹list of champions, see page oostchamp›.
+
+‹list of cup finals, see page oostcuphist›.
+
+‹list of super cup finals, see page oostsupcuphist›.
+
+‹list of foundation dates, see page oostfound›.
+=end
+
 
 
 
@@ -124,3 +148,7 @@ def proc_navlines_by_sections( txt )
 
     [newsections.join, edits]
 end
+
+
+end    ## class Prep
+end    ## module Rsssf

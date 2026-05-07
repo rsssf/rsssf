@@ -1,0 +1,138 @@
+##   Current Domestic Results   incl. only 2026
+## see https://www.rsssf.org/curdom.html
+
+
+##  note - if no encoding listed defaulting to windows-1252
+
+page, title, encoding
+
+
+#######
+## League Results Africa
+
+tablesa/alg2026.html, Algeria
+tablesa/ango2026.html, Angola
+tablesb/benin2026.html, Benin
+tablesb/bots2026.html, Botswana
+tablesb/burkf2026.html, Burkina Faso
+tablesb/buru2026.html, Burundi
+tablesk/kam2026.html, Cameroon
+tablesk/kaapv2026.html, Cape Verde
+tablesz/zaire2026.html, Congo-Kinshasa
+tabless/swaz2026.html, Eswatini
+tablese/ethi2026.html, Ethiopia
+tablesg/gab2026.html, Gabon
+tablesg/gamb2026.html, Gambia
+tablesg/gha2026.html, Ghana
+tablesg/guinea2026.html, Guinea
+tablesg/gbis2026.html, Guinea Bissau
+tablesi/ivo2026.html, Ivory Coast
+tablesk/kenya2026.html, Kenya
+tablesl/leso2026.html, Lesotho
+tablesl/liber2026.html, Liberia
+tablesm/madag2026.html, Madagascar
+tablesm/mali2026.html, Mali
+tablesm/maur2026.html, Mauritania
+tablesm/mauri2026.html, Mauritius
+tablesn/nami2026.html, Namibia
+tablesn/niger2026.html, Niger
+tablesn/nig2026.html, Nigeria
+tablesr/rwan2026.html, Rwanda
+tabless/saotome2026.html, São Tomé e Príncipe
+tabless/sene2026.html, Senegal
+tabless/sey2026.html, Seychelles
+tabless/sier2026.html, Sierra Leone
+tabless/soma2026.html, Somalia
+tablesz/zsoed2026.html, South Sudan
+tabless/soed2026.html, Sudan
+tablest/tanz2026.html, Tanzania
+tablest/togo2026.html, Togo
+tableso/oeg2026.html, Uganda
+tablesz/zamb2026.html, Zambia
+tablesz/zanz2026.html, Zanzibar
+tablesz/zimb2026.html, Zimbabwe
+
+
+###
+## League Results America (Central, North, and South)
+
+
+tablesa/antig2026.html, Antigua and Barbuda
+tablesa/arg2026.html, Argentina
+tablesa/aruba2026.html, Aruba
+tablesb/bahama2026.html, Bahamas
+tablesb/barb2026.html, Barbados
+tablesb/belize2026.html, Belize
+tablesb/berm2026.html, Bermuda
+tablesb/bonaire2026.html, Bonaire
+tablesb/brmaagd2026.html, British Virgin Islands
+tablesc/cayman2026.html, Cayman Islands
+tablesc/cos2026.html, Costa Rica
+tablesc/curacao2026.html, Curaçao
+tablese/elsal2026.html, El Salvador
+tablesg/guat2026.html, Guatemala
+tablesh/haiti2026.html, Haiti
+tablesh/hond2026.html, Honduras
+tablesj/jam2026.html, Jamaica
+tablesm/mex2026.html, Mexico
+tablesn/nica2026.html, Nicaragua
+tablesp/para2026.html, Paraguay
+tablesp/peru2026.html, Peru
+tablesp/p-rico2026a.html, Puerto Rico
+tabless/stkitts2026.html, Saint Kitts and Nevis
+tabless/suri2026.html, Surinam
+tablest/trin2026.html, Trinidad and Tobago
+tablest/turkscaicos2026.html, Turks and Caicos Islands
+tablesu/uru2026.html, Uruguay
+
+
+####
+#  League Results Asia and Oceania
+
+tablesb/bang2026.html, Bangladesh
+tablesb/brunei2026.html, Brunei
+tablesc/cambod2026.html, Cambodia
+tablesf/fiji2026.html, Fiji (districts)
+tablesh/hk2026.html, Hongkong
+tablesi/indo2026.html, Indonesia
+tablesk/kyrg2026.html, Kyrgyzstan, utf-16le
+tablesl/laos2026.html, Laos
+tablesm/macao2026.html, Macao
+tablesm/malay2026.html, Malaysia
+tablesm/maled2026.html, Maldives
+tablesm/mong2026.html, Mongolia
+tablest/tahiti2026.html, Mooréa
+tablesm/myan2026.html, Myanmar
+tablesn/newcal2026.html, New Caledonia
+tablesn/nmi2026.html, Northern Marianas
+tablesp/phil2026.html, Philippines
+tabless/sing2026.html, Singapore
+tablest/tahiti2026.html, Tahiti
+tablest/taiwan2026.html, Taiwan
+tablest/taji2026.html, Tajikistan, utf-16le
+tablest/thai2026.html, Thailand
+tableso/oez2026.html, Uzbekistan, utf-16le
+tablesv/vanuatu2026.html, Vanuatu (PVFL)
+tablesv/viet2026.html, Vietnam
+
+
+####
+## League Results Europe
+
+tablesa/abchaz2026.html, Abkhazia,   utf-8
+tablesa/arme2026.html, Armenia,   utf-16le
+tableso/oost2026.html, Austria
+tablesa/azer2026.html, Azerbaijan,   utf-16le
+tablesw/witr2026.html, Belarus,  utf-8
+tablesz/zooekr2026.html, Crimea,   utf-8
+tablesf/far2026.html, Faroe Islands
+tablesg/geor2026.html, Georgia,  utf-16le
+tablesk/kaz2026.html, Kazakhstan,  utf-16le
+tablesl/let2026.html, Latvia,  utf-16le
+tablesl/lito2026.html, Lithuania,  utf-16le
+tablesm/mold2026.html, Moldova,  utf-8
+tablesn/ned2026.html, Netherlands
+tablesr/rus2026.html, Russia,   utf-16le
+tablesz/zwed2026.html, Sweden
+tablesz/zwit2026.html, Switzerland
+tableso/oekr2026.html, Ukraine, utf-16le

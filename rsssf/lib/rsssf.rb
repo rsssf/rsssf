@@ -31,6 +31,14 @@ require_relative 'rsssf/convert/html_to_txt/beautify_anchors'
 require_relative 'rsssf/convert/html_to_txt/make_heading'
 
 
+require_relative 'rsssf/prepare/download'
+require_relative 'rsssf/prepare/convert'
+require_relative 'rsssf/prepare/convert-meta'
+require_relative 'rsssf/prepare/convert-links'
+require_relative 'rsssf/prepare/convert-postproc'
+require_relative 'rsssf/prepare/convert-navlines'
+
+
 
 require_relative 'rsssf/page'
 require_relative 'rsssf/page-find_schedule.rb'

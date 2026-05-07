@@ -1,11 +1,15 @@
 ## to run use
 ##   $ ruby prepare/test_nav.rb
 
-require_relative 'prepare/convert-navlines'
+
+$LOAD_PATH.unshift( './rsssf/lib' )
+require 'rsssf'
 
 
+prep = Rsssf::Prep.new
 
-txt, edits = proc_navlines_by_sections( <<TXT )
+
+txt, edits = prep.proc_navlines_by_sections( <<TXT )
 
 xxx
 

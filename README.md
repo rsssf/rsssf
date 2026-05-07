@@ -53,6 +53,14 @@ note - the web pages get (by default) cached in `./cache`
 
 **prepare**
 
+```
+Usage: prepare/prepare.rb [options] <config slug>
+    -u, --update                     turn on update; write to production repo (default: false)
+        --force                      force download; do NOT use cached version if available (default: false)
+        --offline, --cached          no downloads; always use cached version (default: false)
+```
+
+
 use `prepare` to download (if not cached or forced)
 and convert tables (in .html to .txt)
 
@@ -75,6 +83,8 @@ to the default outdir  `../tables`
 
 tip: see <https://github.com/rsssf/tables> for a public online copy / mirror of converted
 tables in .txt (preserving the original format).
+
+
 
 
 

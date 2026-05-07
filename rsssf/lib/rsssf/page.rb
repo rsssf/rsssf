@@ -114,6 +114,9 @@ end
 
 
 ## let's you check optional ref e.g. ‹§fin›
+###  todo/fix - change to OPT_REF_RE   - make it regex
+##     regex embedded in regex will use  regex.source automatic (no need to escape)!!
+## let's you check optional ref e.g. ‹§fin›
 OPT_REF = %q{
             (?: [ ]*
               ‹§ (?<ref> [^›]+?) ›

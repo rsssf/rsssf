@@ -1,4 +1,13 @@
 
+module Rsssf
+class  Prep   ## todo: find a better name e.g. BatchPrep or ??
+
+
+## convenience helper
+def self.download_pages( pages, force: )
+   @@prep ||= new   ## use a "shared" built-in prep
+   @@prep.download_pages( pages, force: force )
+end
 
 
 def download_pages( pages, force: )
@@ -25,3 +34,7 @@ def download_pages( pages, force: )
     end
   end
 end
+
+
+end    ## class Prep
+end    ## module Rsssf

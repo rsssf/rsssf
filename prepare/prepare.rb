@@ -15,9 +15,6 @@ Webcache.root = './cache'
 ## Webcache.root = '/sports/cache'   ## use "global" (shared) cache
 
 
-include RsssfUtils   ## e.g. archive_dir_for_season
-
-
 
 
 ##
@@ -78,23 +75,18 @@ pp pages
 
 
 
-require_relative 'prepare/download'
-require_relative 'prepare/convert'
-require_relative 'prepare/convert-postproc'
-require_relative 'prepare/convert-navlines'
-
 
 ###########
 ## pass 1 - download
 
 if opts[:online]
-  download_pages( pages, force: opts[:force]  )
+  Rsssf::Prep.download_pages( pages, force: opts[:force]  )
 end
 
 ##################
 ## pass 2 - convert
 
-convert_pages( pages, outdir: outdir )
+Rsssf::Prep.convert_pages( pages, outdir: outdir )
 
 
 puts "bye"

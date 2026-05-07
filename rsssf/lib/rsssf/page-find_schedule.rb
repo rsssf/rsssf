@@ -11,15 +11,6 @@ class Page
 ## for now simply split
 ##    on headings
 
-## let's you check optional ref e.g. ‹§fin›
-###  todo/fix - change to OPT_REF_RE   - make it regex
-##     regex embedded in regex will use  regex.source automatic (no need to escape)!!
-OPT_REF = %q{
-            (?: [ ]*
-              ‹§ (?<ref> [^›]+?) ›
-            )?
-         }
-
 
 ###  fix - support match with trailing ==== too!!!
 
