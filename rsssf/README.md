@@ -213,7 +213,7 @@ for public sample pages with format autofixes applied. Including:
 
 - [`/england`](https://github.com/rsssf/clubs/tree/master/england)    - rsssf archive data for England - Premier League, Championship, FA Cup etc.
 - [`/germany`](https://github.com/rsssf/clubs/tree/master/germany) - rsssf archive data for Germany (Deutschland) - Deutsche Bundesliga, 2. Bundesliga, 3. Liga, DFB Pokal etc.
-- [`/spain`](https://github.com/rsssf/clubs/tree/master/spain)      - rsssf archive data for España (Spain) - Primera División / La Liga, Copa de Rey, etc.
+- [`/spain`](https://github.com/rsssf/clubs/tree/master/spain)      - rsssf archive data for Spain (España) - Primera División / La Liga, Copa de Rey, etc.
 - [`/austria`](https://github.com/rsssf/clubs/tree/master/austria)     - rsssf archive data for Austria (Österreich) - Österr. Bundesliga, Erste Liga, ÖFB Pokal etc.
 - [`/brazil`](https://github.com/rsssf/clubs/tree/master/brazil)      - rsssf archive data for Brazil (Brasil) - Campeonato Brasileiro Série A / Brasileirão etc.
 - and more
