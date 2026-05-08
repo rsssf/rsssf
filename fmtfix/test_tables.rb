@@ -7,7 +7,8 @@
 require 'minitest/autorun'
 
 ## our own code
-require_relative  'fmtfix'
+$LOAD_PATH.unshift( './rsssf/lib' )
+require 'rsssf'
 
 
 
@@ -33,7 +34,7 @@ def test_tables
 
     tables.each do |table|
 
-        m = TABLE_RE.match( table )
+        m = Rsssf::Fmtfix::TABLE_RE.match( table )
         if m && m.offset(0)[0] == 0
 
             ## check if leftover after table

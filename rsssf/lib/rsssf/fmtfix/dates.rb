@@ -1,6 +1,9 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
+
 
 ##
-#  note - (re)use the same date regex style & capture names 
+#  note - (re)use the same date regex style & capture names
 #                        from football.txt tokenizer
 
 MONTH_LINES = parse_names( <<TXT )
@@ -78,7 +81,7 @@ DAY_MAP   = build_map( DAY_LINES, downcase: true )
 ##           Aug 9, 2024
 ##   note - eat-up optional comma after DAY_NAMES!!
 ##
-## add around for date not known perfectly 
+## add around for date not known perfectly
 ##  around Mar 29
 ##  ca. Nov 1
 ##
@@ -105,10 +108,10 @@ DATE_I_RE = %r{
           \b
      ## optional year
      (   (?:      ,? [ ]       ## note - comma optional with single space required for now
-                (?<year>\d{4})        ## optional year 2025 (yyyy)    
-            |     / 
+                (?<year>\d{4})        ## optional year 2025 (yyyy)
+            |     /
                 (?<yy>\d{2})
-          )  
+          )
             \b
      )?
 )}ix
@@ -135,13 +138,13 @@ DATE_IB_RE = %r{
 
 
 ###
-## e.g. 3 June  
+## e.g. 3 June
 ##     10 June
 ##   note - allow more spaces between  DAY_NAMES and DAY e.g.
-##    Sun  1 Mar        
-##    Wed  4 Mar        
-##    Sat 14 Mar   
-##    Sat 11 Apr 
+##    Sun  1 Mar
+##    Wed  4 Mar
+##    Sat 14 Mar
+##    Sat 11 Apr
 ##    Sat 11 Apr 2021
 ##
 ##    Sat, 11 Apr
@@ -162,7 +165,7 @@ DATE_II_RE = %r{
      ## optional year
      (?:  [ ]
         (?<year>\d{4})        ## optional year 2025 (yyyy)
-        \b   
+        \b
      )?
 )}ix
 
@@ -178,7 +181,7 @@ DATE_II_RE = %r{
 ##  -or-
 ## Nov 24 and 27  - use in br
 ## Nov 24 and 28
-## - or - 
+## - or -
 ## Feb 27 and Mar 7
 ## Feb 28 and Mar 7
 ##  - or -
@@ -197,21 +200,21 @@ DATE_LEGS_RE = %r{
 (?<date_legs>
  \b
      (?<month_name1>#{MONTH_NAMES})
-          [ ] 
+          [ ]
      (?<day1>\d{1,2})
        (?:
-             , [ ]{0,5} 
+             , [ ]{0,5}
            | [ ]{1,5} and [ ]{1,5}
            | [ ]{0,5} & [ ]{0,5}
         )
     (?:     ## note - make 2nd month_name optiona
         (?<month_name2>#{MONTH_NAMES})
-          [ ] 
+          [ ]
       )?
      (?<day2>\d{1,2})
       \b
     ## optional two-digit year
-     (?:    / 
+     (?:    /
           (?<yy2>\d{2})
             \b
      )?
@@ -230,14 +233,14 @@ DATE_LIST_RE = %r{
 (?<date_list>
  \b
      (?<month_name1>#{MONTH_NAMES})
-          [ ] 
+          [ ]
      (?<day1>\d{1,2})
      (?:  [,;] [ ]{0,5}  )
 
 
       (?:  ## note - make 2nd month_name optiona
         (?<month_name2>#{MONTH_NAMES})
-          [ ] 
+          [ ]
       )?
      (?<day2>\d{1,2})
        (?: [,;] [ ]{0,5}  )
@@ -245,7 +248,7 @@ DATE_LIST_RE = %r{
 
       (?:     ## note - make 3rd month_name optiona
         (?<month_name3>#{MONTH_NAMES})
-          [ ] 
+          [ ]
       )?
      (?<day3>\d{1,2})
      \b
@@ -256,7 +259,7 @@ DATE_LIST_RE = %r{
          [,;] [ ]{0,5}
          (?:   ## note - make 4th month_name optiona
             (?<month_name4>#{MONTH_NAMES})
-            [ ] 
+            [ ]
          )?
        (?<day4>\d{1,2})
          \b
@@ -282,13 +285,13 @@ DATE_RANGE_RE = %r{
 (?<date_range>
  \b
      (?<month_name1>#{MONTH_NAMES})
-          [ ] 
+          [ ]
      (?<day1>\d{1,2})
             [ ]? - [ ]?
     (?:   ## optional month
-       (?<month_name2>#{MONTH_NAMES}) 
-           [ ] 
-    )?       
+       (?<month_name2>#{MONTH_NAMES})
+           [ ]
+    )?
       (?<day2>\d{1,2})
      \b
 )}ix
@@ -328,17 +331,17 @@ def _build_date_legs( m )
             ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
             date = {}
             date[:m] = MONTH_MAP[ m[:month_name1].downcase ]
-            date[:d]  = m[:day1].to_i(10)   
+            date[:d]  = m[:day1].to_i(10)
             legs[:date1] = date
-     
+
             date = {}
             date[:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            date[:d]  = m[:day2].to_i(10)   
+            date[:d]  = m[:day2].to_i(10)
             date[:yy] = m[:yy2].to_i(10)    if m[:yy2]    ## two digit year (e.g. 25 or 78 etc.)
             legs[:date2] = date
 
             legs
-end 
+end
 
 
 
@@ -351,28 +354,28 @@ def _build_date_list( m )
             ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
             date = {}
             date[:m] = MONTH_MAP[ m[:month_name1].downcase ]
-            date[:d]  = m[:day1].to_i(10)   
+            date[:d]  = m[:day1].to_i(10)
             list[:date1] = date
-     
+
             date = {}
             date[:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            date[:d]  = m[:day2].to_i(10)   
+            date[:d]  = m[:day2].to_i(10)
             list[:date2] = date
 
             date = {}
             date[:m] = MONTH_MAP[ m[:month_name3].downcase ]   if m[:month_name3]
-            date[:d]  = m[:day3].to_i(10)   
+            date[:d]  = m[:day3].to_i(10)
             list[:date3] = date
 
-            if m[:day4] 
+            if m[:day4]
                date = {}
                date[:m] = MONTH_MAP[ m[:month_name4].downcase ]   if m[:month_name4]
-               date[:d]  = m[:day4].to_i(10)   
+               date[:d]  = m[:day4].to_i(10)
                list[:date4] = date
             end
 
             list
-end 
+end
 
 
 def _build_date_range( m )
@@ -384,23 +387,23 @@ def _build_date_range( m )
             ## note - allow any/upcase JULY/JUL etc. thus ALWAYS downcase for lookup
             date = {}
             date[:m] = MONTH_MAP[ m[:month_name1].downcase ]
-            date[:d]  = m[:day1].to_i(10)   
+            date[:d]  = m[:day1].to_i(10)
             range[:date1] = date
-     
+
             date = {}
             date[:m] = MONTH_MAP[ m[:month_name2].downcase ]   if m[:month_name2]
-            date[:d]  = m[:day2].to_i(10)   
+            date[:d]  = m[:day2].to_i(10)
             range[:date2] = date
 
             range
-end 
+end
 
 
 FMT_DAY_NAMES = [
     nil,   ##  or use '!ERROR!' - why? why not?
     'Mon',  # 1
     'Tue',  # 2
-    'Wed',  # 3 
+    'Wed',  # 3
     'Thu',  # 4
     'Fri',  # 5
     'Sat',  # 6
@@ -410,7 +413,7 @@ FMT_MONTH_NAMES = [
     nil,    ## or use '!ERROR!' - why? why not?
     'Jan',  # 1
     'Feb',  # 2
-    'Mar',  # 3 
+    'Mar',  # 3
     'Apr',  # 4
     'May',  # 5
     'Jun',  # 6
@@ -429,73 +432,73 @@ def _fmt_date( date, format: nil )   ### use format: 'numeric' for  23/7 or 23/7
 
     if format && format.downcase == 'numeric'
       buf << "#{date[:d]}/#{date[:m]}"
-  
+
       if date[:y]       ## (optional) four-digit year e.g. 2010
-        buf << "/#{date[:y]}"   
+        buf << "/#{date[:y]}"
       elsif date[:yy]   ## (optional) two-digit year  e.g. 98
-        buf << ("/%02d" % date[:yy])    ## note - make sure 0,1,2 become 00, 01, 02      
+        buf << ("/%02d" % date[:yy])    ## note - make sure 0,1,2 become 00, 01, 02
       end
-  
+
       buf
     else    ## use Fri Feb 7 2025
       ## check for "canonical" convention for around/ca. date or such
-      buf << "c. "   if date[:around]    
-    
+      buf << "c. "   if date[:around]
+
       buf << "#{FMT_DAY_NAMES[date[:wday]]} "  if date[:wday]
       buf << "#{FMT_MONTH_NAMES[date[:m]]} "
       buf << "#{date[:d]}"
-   
-  
+
+
       if date[:y]
-         buf << " #{date[:y]}"  
-      elsif date[:yy] 
+         buf << " #{date[:y]}"
+      elsif date[:yy]
          ## note - expand two-digit year to four-digit year
          buf << if date[:yy] < 30
                    ## note - make sure 0,1,2 become 00, 01, 02
-                  " 20%02d" % date[:yy]   ## 2000, 2001, .. 2029 
+                  " 20%02d" % date[:yy]   ## 2000, 2001, .. 2029
                 else
                  " 19%02d" % date[:yy]   ## 1930, 1931 .. 1999
                 end
       end
-      
+
       buf
     end
 
-    buf 
+    buf
 end
 
 def _fmt_date_legs( legs, format: nil )   ### use format: 'numeric' for  23/7 or 23/7/2010 etc.
     buf = String.new
-    
+
     buf << "#{FMT_MONTH_NAMES[legs[:date1][:m]]} "
     buf << "#{legs[:date1][:d]}"
     buf << " & "
-    buf << "#{FMT_MONTH_NAMES[legs[:date2][:m]]} "  if legs[:date2][:m] 
+    buf << "#{FMT_MONTH_NAMES[legs[:date2][:m]]} "  if legs[:date2][:m]
     buf << "#{legs[:date2][:d]}"
- 
-    if legs[:date2][:yy] 
+
+    if legs[:date2][:yy]
          ## note - expand two-digit year to four-digit year
          buf << if legs[:date2][:yy] < 30
                    ## note - make sure 0,1,2 become 00, 01, 02
-                  " 20%02d" % legs[:date2][:yy]   ## 2000, 2001, .. 2029 
+                  " 20%02d" % legs[:date2][:yy]   ## 2000, 2001, .. 2029
                 else
                  " 19%02d" % legs[:date2][:yy]   ## 1930, 1931 .. 1999
                 end
     end
-   
-    buf 
+
+    buf
 end
 
 
 def _fmt_date_list( list, format: nil )   ### use format: 'numeric' for  23/7 or 23/7/2010 etc.
     buf = String.new
-    
+
     buf << "#{FMT_MONTH_NAMES[list[:date1][:m]]} "
     buf << "#{list[:date1][:d]}"
-    
+
     if list[:date2][:m]  ## add extra space if month present
-      buf << "; #{FMT_MONTH_NAMES[list[:date2][:m]]} "  
-    else    
+      buf << "; #{FMT_MONTH_NAMES[list[:date2][:m]]} "
+    else
       buf << ","
     end
     buf << "#{list[:date2][:d]}"
@@ -504,31 +507,35 @@ def _fmt_date_list( list, format: nil )   ### use format: 'numeric' for  23/7 or
       buf << "; #{FMT_MONTH_NAMES[list[:date3][:m]]} "
     else
       buf << ","
-    end    
+    end
     buf << "#{list[:date3][:d]}"
 
-    if list[:date4]  
+    if list[:date4]
       if list[:date4][:m]   ## add extra space if month present
          buf << "; #{FMT_MONTH_NAMES[list[:date4][:m]]} "
       else
          buf << ","
-      end    
+      end
       buf << "#{list[:date4][:d]}"
     end
 
 
-    buf 
+    buf
 end
 
 
 def _fmt_date_range( range, format: nil )   ### use format: 'numeric' for  23/7 or 23/7/2010 etc.
     buf = String.new
-    
+
     buf << "#{FMT_MONTH_NAMES[range[:date1][:m]]} "
     buf << "#{range[:date1][:d]}"
     buf << "-"
-    buf << "#{FMT_MONTH_NAMES[range[:date2][:m]]} "  if range[:date2][:m] 
+    buf << "#{FMT_MONTH_NAMES[range[:date2][:m]]} "  if range[:date2][:m]
     buf << "#{range[:date2][:d]}"
- 
-    buf 
+
+    buf
 end
+
+
+end    ## class Fmtfix
+end    ## module Rsssf

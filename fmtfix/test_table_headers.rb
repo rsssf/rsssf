@@ -7,7 +7,8 @@
 require 'minitest/autorun'
 
 ## our own code
-require_relative  'fmtfix'
+$LOAD_PATH.unshift( './rsssf/lib' )
+require 'rsssf'
 
 
 
@@ -15,6 +16,7 @@ class TestTableHeaders< Minitest::Test
 
 
 def test_headers
+
 
   ## norm text
    txt = read_text( "./fmtfix/test_table_headers.txt" )
@@ -27,7 +29,7 @@ def test_headers
       line = line.strip
       next if line.empty? || line.start_with?('#')
 
-        m = TABLE_HEADER_RE.match( line )
+        m = Rsssf::Fmtfix::TABLE_HEADER_RE.match( line )
         if m && m.offset(0)[0] == 0
             puts "  OK  table header >#{m[0]}<  -  >#{line}<"
 

@@ -18,4 +18,8 @@ module Rsssf
      File.expand_path( File.dirname(File.dirname(File.dirname(__FILE__))) )
   end
 
+  def self.config_dir
+    "#{root}/config"
+  end
+
 end # module Rsssf

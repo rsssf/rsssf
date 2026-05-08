@@ -1,3 +1,7 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
+
+
 
 ## let's you check optional ref e.g. ‹§fin›
 OPT_REF = %q{
@@ -44,7 +48,7 @@ HEADER_ROUND_RE = %r{\A
 
 
 ## helper for inline regexes (with union) and escaped
-def date_( *re )
+def self.date_( *re )
       raise ArgumentError, "more than one date regex expected, got #{re}"  if re.size < 1
 
       ## (auto-)wrap in non-capature group - why? why not?
@@ -316,3 +320,7 @@ def handle_header( line )
          nil
        end
 end
+
+
+end    ## class Fmtfix
+end    ## module Rsssf

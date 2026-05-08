@@ -50,67 +50,16 @@ end
 
 ### use text alias too (for txt) - why? why not?
 attr_accessor :txt
-
-## quick hack? used for auto-patch machinery
-attr_accessor :patch
 attr_accessor :url  ### source url
 
 
 def initialize( txt )
-  @txt = txt
-
-  @patch = nil
+  @txt   = txt
   @url   = nil
 end
 
 
 
-
-HTML_COMMENT_HEADER_RE = %r{  \A
-                            [ \n]*  ## trailing spaces and blank lines
-                       <!--
-                            [ \n]*
-                          (?<text> .+?)
-                            [ \n]*
-                        -->
-                   }imx
-
-
-###
-##   find meta data block (via html-style comment header )
-##    incl.   title, autor(s), url,  updated
-##  e.g.
-##    <!--
-##       title:   Austria 2024/25
-##       source:  https://rsssf.org/tableso/oost2025.html
-##       author:  Hans Schöggl
-##       updated: 7 Jul 2025
-##      -->
-##  -or-
-##      authors: Hans Schöggl and Karel Stokkermans
-
-def _parse_meta( txt )
-     meta = {}
-     m = HTML_COMMENT_HEADER_RE.match( txt )
-     if m
-        text = m[:text]
-        text.each_line do |line|
-            line = line.strip
-
-            ## note - allow "inline" blank lines and comment lines (starting w/ #)
-            next if line.empty?  || line.start_with?('#')
-
-            ## split line on first colon (:) (only)
-            ##   note - limit split to two pieces!!!
-            key, value = line.split( /[ ]*:[ ]*/, 2)
-            ## use a symbol (not string) as key - why? why not?
-            meta[ key.to_sym ] = value
-        end
-        meta
-     else
-        nil ## no meta data (comment header) found
-     end
-end
 
 
 ## let's you check optional ref e.g. ‹§fin›
@@ -179,13 +128,14 @@ end
 
 =end
 
+
 def build_stat
   title        = nil
   source       = nil
   authors      = nil
   last_updated = nil
 
-  meta = _parse_meta( @txt ) || {}
+  meta = parse_meta( @txt ) || {}
 
   title        = meta[:title]
   source       = meta[:source]

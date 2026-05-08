@@ -1,7 +1,9 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 
 
-def table_heading_( line )
+def self.table_heading_( line )
   ## M   W  T  L  GF  GA  PTS  AVGE
   ##  =>
   ## (?:
@@ -308,3 +310,7 @@ def handle_tables( txt, tables: [] )
                   end
    txt
 end
+
+
+end    ## class Fmtfix
+end    ## module Rsssf

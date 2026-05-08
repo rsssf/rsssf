@@ -1,11 +1,13 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 
 def handle_score( txt )
 
     ## fix typos - move to errata
     txt = txt.gsub( 'paet, 3-4 pen]', '[aet, 3-4 pen]' )
-   
-  
+
+
 
 
     ###  [aet]   => (aet)         -- after extra time
@@ -13,7 +15,7 @@ def handle_score( txt )
     txt = txt.gsub( '[aet]',   '(aet)' )
     txt = txt.gsub( '[asdet]', '(asdet)' )
 
-  
+
 
 
    ## [aet, 2-3 pen] => (aet, 2-3 pen)
@@ -23,11 +25,11 @@ def handle_score( txt )
 
    txt = txt.gsub( %r{
                          \[
-                            aet[,;.] [ ]? 
-                             (\d{1,2}-\d{1,2}) [ ]? pen 
+                            aet[,;.] [ ]?
+                             (\d{1,2}-\d{1,2}) [ ]? pen
                          \]
-                    }ix, 
-                    '(aet, \1 pen)') 
+                    }ix,
+                    '(aet, \1 pen)')
 
 
 ###  [aet, pen 4-3]
@@ -36,11 +38,11 @@ def handle_score( txt )
 ##      (aet, 2-4 pen)
    txt = txt.gsub( %r{
                          \[
-                            aet[,;.] [ ]? 
+                            aet[,;.] [ ]?
                              pen [ ] (\d{1,2}-\d{1,2})
                          \]
-                    }ix, 
-                    '(aet, \1 pen)') 
+                    }ix,
+                    '(aet, \1 pen)')
 
  ##   [5-4 pen]
  ##   [3-4 pen]
@@ -49,26 +51,26 @@ def handle_score( txt )
                          \[
                            (\d{1,2}-\d{1,2}) [ ]? pen
                          \]
-                    }ix, 
-                    '(\1 pen)') 
+                    }ix,
+                    '(\1 pen)')
 
-                    
+
 ##   [Pen 4-1], [Pen 4-5], [Pen 1-3]
-##      => 
+##      =>
 ##    (4-1 pen)
    txt = txt.gsub( %r{
                          \[
                            pen [ ] (\d{1,2}-\d{1,2})
                          \]
-                    }ix, 
-                    '(\1 pen)') 
-                  
+                    }ix,
+                    '(\1 pen)')
 
-##  [5-3 PK], [6-5 PK]    
+
+##  [5-3 PK], [6-5 PK]
 ##      =>
 ##   (6-5 pen)
       txt = txt.gsub( %r{
-                           \[ 
+                           \[
                               (\d{1,2}-\d{1,2}) [ ] PK
                          \]
                         }ix,
@@ -82,5 +84,9 @@ def handle_score( txt )
  ##    [Pen 2-4 (1-3?)]
 
 
-   txt                 
+   txt
 end
+
+
+end    ## class Fmtfix
+end    ## module Rsssf

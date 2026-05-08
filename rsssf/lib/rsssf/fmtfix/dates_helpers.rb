@@ -1,11 +1,12 @@
+module Rsssf
+class  Fmtfix
 
 
 ### todo/fix
 ##    make more (re)usable instead of copy-n-paste here
 
 
-
-def parse_names( txt )
+def self.parse_names( txt )
   lines = [] # array of lines (with words)
 
   txt.each_line do |line|
@@ -32,14 +33,14 @@ def parse_names( txt )
 end # method parse
 
 
-def build_names( lines )
+def self.build_names( lines )
   ## join all words together into a single string e.g.
   ##   January|Jan|February|Feb|March|Mar|April|Apr|May|June|Jun|...
   lines.map { |line| line.join('|') }.join('|')
 end
 
 
-def build_map( lines, 
+def self.build_map( lines,
                downcase: false )
    ## note: downcase name!!!
   ## build a lookup map that maps the word to the index (line no) plus 1 e.g.
@@ -58,4 +59,5 @@ def build_map( lines,
 end
 
 
-
+end    ## class Fmtfix
+end    ## module Rsssf

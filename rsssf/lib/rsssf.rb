@@ -7,7 +7,7 @@ require 'season/formats'   ## add season support
 require 'webget'           ## incl. webget, webcache, webclient, etc.
 
 require 'cocos'
-
+require_relative '_cocos_'    ## move/add to upstream!!!
 
 
 
@@ -41,6 +41,7 @@ require_relative 'rsssf/prepare/convert-navlines'
 
 
 require_relative 'rsssf/page'
+require_relative 'rsssf/page-meta'                  # e.g. Page.parse_meta( txt )
 require_relative 'rsssf/page-find_schedule.rb'
 
 require_relative 'rsssf/schedule'
@@ -51,6 +52,28 @@ require_relative 'rsssf/reports/page'
 require_relative 'rsssf/project'   ### replace with projct
 
 require_relative 'rsssf/parse_schedules'
+
+
+
+###
+# fmtfix machinery
+
+
+require_relative 'rsssf/fmtfix/rounds'
+require_relative 'rsssf/fmtfix/dates_helpers'
+require_relative 'rsssf/fmtfix/dates'
+require_relative 'rsssf/fmtfix/headers'
+
+require_relative 'rsssf/fmtfix/fmtfix-base'
+require_relative 'rsssf/fmtfix/fmtfix'
+require_relative 'rsssf/fmtfix/errata'
+require_relative 'rsssf/fmtfix/score'
+require_relative 'rsssf/fmtfix/goals'
+require_relative 'rsssf/fmtfix/topscorers'
+require_relative 'rsssf/fmtfix/tables'
+require_relative 'rsssf/fmtfix/outline'
+require_relative 'rsssf/fmtfix/patch_headings'  ## or use outline_patch or such - why? why not?
+
 
 
 

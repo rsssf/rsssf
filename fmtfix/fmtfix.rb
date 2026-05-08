@@ -10,156 +10,10 @@
 ##     to match the football.txt format
 
 
-require 'cocos'
-
-require_relative 'fmtfix/_cocos_'
 
 
-def config_dir
-   root_dir = File.expand_path( File.dirname(__FILE__))
-   "#{root_dir}/config"
-end
-
-
-
-
-
-require_relative 'fmtfix/rounds'
-require_relative 'fmtfix/dates_helpers'
-require_relative 'fmtfix/dates'
-require_relative 'fmtfix/headers'
-
-
-require_relative 'fmtfix/base'
-require_relative 'fmtfix/errata'
-require_relative 'fmtfix/score'
-require_relative 'fmtfix/goals'
-require_relative 'fmtfix/topscorers'
-require_relative 'fmtfix/tables'
-require_relative 'fmtfix/about'
-require_relative 'fmtfix/outline'
-require_relative 'fmtfix/patch_headings'  ## or use outline_patch or such - why? why not?
-
-
-
-
-
-
-
-HTML_COMMENT_HEADER_RE = %r{  \A
-                            [ \n]*  ## trailing spaces and blank lines
-                       <!--
-                            [ \n]*
-                          (?<text> .+?)
-                            [ \n]*
-                        -->
-                   }imx
-
-
-###
-##   find meta data block (via html-style comment header )
-##    incl.   title, autor(s), url,  updated
-##  e.g.
-##    <!--
-##       title:   Austria 2024/25
-##       source:  https://rsssf.org/tableso/oost2025.html
-##       author:  Hans Schöggl
-##       updated: 7 Jul 2025
-##      -->
-##  -or-
-##      authors: Hans Schöggl and Karel Stokkermans
-
-def _parse_meta( txt )
-     meta = {}
-     m = HTML_COMMENT_HEADER_RE.match( txt )
-     if m
-        text = m[:text]
-        text.each_line do |line|
-            line = line.strip
-
-            ## note - allow "inline" blank lines and comment lines (starting w/ #)
-            next if line.empty?  || line.start_with?('#')
-
-            ## split line on first colon (:) (only)
-            ##   note - limit split to two pieces!!!
-            key, value = line.split( /[ ]*:[ ]*/, 2)
-            ## use a symbol (not string) as key - why? why not?
-            meta[ key.to_sym ] = value
-        end
-        meta
-     else
-        nil ## no meta data (comment header) found
-     end
-end
-
-
-
-
-
-
-
-def fmtfix( filename, outdir:, heading_patches: nil )
-        txt = read_text( filename )
-
-        dirname  = File.dirname( filename )
-        basename = File.basename( filename, File.extname( filename ) )
-        extname  = File.extname( filename )
-
-        ## change outfile  - add .autofix
-        outfile = File.join(  outdir, "#{basename}#{extname}" )
-
-
-        ### note - step 1
-        ##      autofix-outline
-        ##  and patch headings/outline if empty
-        ##        with at_headings.txt, de_headings.txt etc.
-
-
-        ## get title ??
-        ##  todo find someething better to get title?
-        meta = _parse_meta( txt )
-        title = meta[:title] || 'n/a'
-
-        newtxt = autofix_outline( txt, title: title )
-
-
-        if heading_patches
-            ##
-            ## check if any headings / outline
-             headings = _scan_outline( newtxt )
-             if headings.size == 0
-                newtxt = patch_headings( newtxt, heading_patches )
-             end
-        end
-
-
-        newtxt = autofix( newtxt )
-
-
-
-=begin
-        ##
-        ## add (quick) outline
-        outline = build_outline( newtxt )
-
-        ## add inside  <!-- source: ...  [auto-add here] -->
-        ## e.g.
-        ##   <!--
-        ##      source: https://rsssf.org/tableso/oost98.html
-        ##    -->
-
-        newtxt = newtxt.sub( %r{^[ ]*<!--
-                       [ \n]*
-                         (source: .+?)
-                        [ \n]*
-                      -->
-                   }ix,
-               "<!--\n  \\1\n\n#{outline} -->" )
-=end
-
-        write_text( outfile, newtxt )
-end
-
+$LOAD_PATH.unshift( './rsssf/lib' )
+require 'rsssf'
 
 
 
@@ -177,7 +31,7 @@ def main( args,
         filename = find_file!( name, path: path )
 
         outdir = './tmp-fmtfix'
-        fmtfix( filename, outdir: outdir )
+        Rsssf::Fmtfix.fmtfix( filename, outdir: outdir )
       else
         ## use config
         ##  todo/fix - add a switch -c/--config or such
@@ -196,7 +50,7 @@ def main( args,
          ##    or move to  (or add search path for) /errata or /config dir - why? why not?
          headings_path = "./make/#{name}_headings.txt"
          heading_patches =  if File.file?( headings_path )
-                                read_heading_patches( headings_path )
+                                Rsssf::Fmtfix.read_heading_patches( headings_path )
                             else
                                 nil
                             end
@@ -245,8 +99,8 @@ def main( args,
                         "./tmp-#{name}"
                      end
 
-            fmtfix( filename, outdir:          outdir,
-                              heading_patches: heading_patches )
+            Rsssf::Fmtfix.fmtfix( filename, outdir:          outdir,
+                                            heading_patches: heading_patches )
          end
       end
    end
@@ -254,9 +108,6 @@ end
 
 
 
-
-
-if __FILE__ == $0
 
 
   PATH = [
@@ -292,5 +143,3 @@ if __FILE__ == $0
 
 
   puts "bye"
-
-end

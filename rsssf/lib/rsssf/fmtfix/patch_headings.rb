@@ -1,3 +1,5 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 ## e.g. 2008/09
 ##   note: also support 1999/2000
@@ -7,7 +9,7 @@
 ##  built-in for now
 
 
-def mkheading_regex( str )
+def self.mkheading_regex( str )
 
     str = str.strip
     ##
@@ -45,7 +47,7 @@ end
 
 
 
-def parse_heading_patches( txt )
+def self.parse_heading_patches( txt )
    patches = {}
 
    header = nil
@@ -78,7 +80,8 @@ def parse_heading_patches( txt )
 end
 
 
-def read_heading_patches( path )  parse_heading_patches( read_text( path)); end
+def self.read_heading_patches( path )  parse_heading_patches( read_text( path)); end
+
 
 
 
@@ -117,6 +120,10 @@ def patch_headings( txt, patches )
      end
      txt
 end
+
+
+end    ## class Fmtfix
+end    ## module Rsssf
 
 
 

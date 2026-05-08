@@ -1,3 +1,5 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 ##
 ## process/handle Topscoreres: ... to first blank line (\n\n)
@@ -8,10 +10,10 @@
 ##  top scorer, top scorers
 ##  scorer, scorers
 
-TOPSCORERS_RE = %r{^     [ ]* 
-                        (?<header> 
+TOPSCORERS_RE = %r{^     [ ]*
+                        (?<header>
                            (?: top [ ]?)?  ## note - optional top
-                              scorers?      ## singular or plural 
+                              scorers?      ## singular or plural
                          )
                           (?: [ ]* :)?    ## note - optional colon
                            [ ]*
@@ -23,24 +25,26 @@ TOPSCORERS_RE = %r{^     [ ]*
                       )
                     }ixm
 
-                    
+
 def handle_topscorers( txt, topscorers: [], opts: {} )
    txt = txt.gsub( TOPSCORERS_RE ) do |match|
                  if opts[:topscorers]
                    puts "  proc topscorers block:"
                    puts match
                  end
-                 
+
                     ## remove everyting
-                    ##  or put in comment block later with command line option/switch!! 
+                    ##  or put in comment block later with command line option/switch!!
                     ##    ''
-                    
+
                     ## replace with "collapsed" marker
                       topscorers << match
-                    topscorers_id = topscorers.size 
-                    "<!-- $topscorers#{topscorers_id}$ -->\n\n"   
+                    topscorers_id = topscorers.size
+                    "<!-- $topscorers#{topscorers_id}$ -->\n\n"
                   end
    txt
 end
 
 
+end    ## class Fmtfix
+end    ## module Rsssf

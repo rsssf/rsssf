@@ -7,7 +7,8 @@
 require 'minitest/autorun'
 
 ## our own code
-require_relative  'fmtfix'
+$LOAD_PATH.unshift( './rsssf/lib' )
+require 'rsssf'
 
 
 
@@ -32,8 +33,8 @@ def test_scorers
 
 
     sects.each do |sect|
-      
-        m = TOPSCORERS_RE.match( sect )
+
+        m = Rsssf::Fmtfix::TOPSCORERS_RE.match( sect )
         if m && m.offset(0)[0] == 0
 
             ## check if leftover after table
@@ -48,13 +49,13 @@ def test_scorers
               pp sect
               assert false
             end
-        elsif m 
-            puts "!! ERROR - match NOT anchored to begin-of-line; starting at #{m.offset(0)[0]}" 
+        elsif m
+            puts "!! ERROR - match NOT anchored to begin-of-line; starting at #{m.offset(0)[0]}"
             pp sect
             assert false
-        else 
+        else
             puts "!! ERROR - no match"
-            pp sect               
+            pp sect
             assert false
         end
   end
@@ -64,4 +65,3 @@ end  # class TestScorers
 
 
 puts "bye"
-

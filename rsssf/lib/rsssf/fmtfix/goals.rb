@@ -1,3 +1,7 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
+
+
 
 ###############
 ## todo - fix/fix/fix/fix
@@ -23,11 +27,11 @@
 
 
 GOALS_ = %q{
-                 [^:\[\]\n]*? 
-                    \b 
-                    \d{1,3}  '?  ## incl. minute 
+                 [^:\[\]\n]*?
+                    \b
+                    \d{1,3}  '?  ## incl. minute
                  [^\[\]\n]*?
-           }              
+           }
 
 
 
@@ -35,7 +39,7 @@ def handle_goals( txt, opts: {} )
 
 
 ##
-##  quick fix - change [pen] to (pen) and 
+##  quick fix - change [pen] to (pen) and
 ##                     [og] to (og)
 ##   e.g. [Parkin 57 [og] - Nogan 47]
 ##        [McIndoe 11 [pen] Green 20, Blundell 90 - Robinson 74]
@@ -61,13 +65,13 @@ def handle_goals( txt, opts: {} )
                          )
                      ([ ]*)
                        \[
-                        ( .*? 
-                           \b\d{1,3}'  ## incl. minute 
+                        ( .*?
+                           \b\d{1,3}'  ## incl. minute
                           .*?
                         )
                       \]
                      [ ]*
-                    $}ix, 
+                    $}ix,
                     '\1\2(\3)' )
 =end
 
@@ -84,7 +88,7 @@ def handle_goals( txt, opts: {} )
   ##  [Rubén Suárez 10; Abdoulay Konko 12, 63, Alvaro Negredo 27,
   ##   "Renato" Dirnei Florencio 87]
 
-  
+
 ##  ["Edmilson" Gomes de Moraes 40, Marco Perez 68,
 ##   Ander Herrera 82; Fernando Fernandez 1, 27,
 ##   Juan Miguel Jimenez "Juanmi" 6, 28, Quincy Owusu-abeyie 35]
@@ -92,7 +96,7 @@ def handle_goals( txt, opts: {} )
 ##  [Jose Manuel Casado 16,Emiliano Armenteros 20,
 ##   Jorge Andujar Moreno "Coke" 60; Jose Javier Barkero 14pen,
 ##   Jose Antonio Culebras 90+].
-##    note - remove optional 
+##    note - remove optional
 
    txt = txt.gsub( %r{^
                      ([ ]*)
@@ -106,7 +110,7 @@ def handle_goals( txt, opts: {} )
                       \]
                       \.?  ## optional trailing dot
                       [ ]*
-                    $}ix, 
+                    $}ix,
                     '\1(\2)' )
 
 
@@ -131,7 +135,7 @@ def handle_goals( txt, opts: {} )
                                 \d{1,2}-\d{1,2}
                                 .*?
                          )
-                          \n 
+                          \n
                      (?<indent1>  [ ]*)
                        \[
                         (?<goals1> #{GOALS_})
@@ -151,15 +155,19 @@ def handle_goals( txt, opts: {} )
                      if opts[:goals]
                         puts "  match:"
                         puts match
-                     end                    
-                   
+                     end
+
                       m = Regexp.last_match
                       buf = String.new
                       buf += "#{m[:match]}\n"
                       buf += "#{m[:indent1]}(#{m[:goals1]})"
                       buf += "\n#{m[:indent2]}(#{m[:goals2]})"   if m[:indent2] && m[:goals2]
-                      buf 
-                    end 
-                    
-   txt 
+                      buf
+                    end
+
+   txt
 end
+
+
+end    ## class Fmtfix
+end    ## module Rsssf

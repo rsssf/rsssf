@@ -1,3 +1,5 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 
      ##
@@ -220,3 +222,7 @@ def build_outline( txt )
 
         buf
 end
+
+
+end    ## class Fmtfix
+end    ## module Rsssf

@@ -1,3 +1,5 @@
+module Rsssf
+class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 
 
@@ -12,7 +14,7 @@ ERRATAS = {
 
 
 
-## "classic" typos 
+## "classic" typos
     ## month
     '[Niv 8]' => '[Nov 8]',
     '[Mov 7]'  => '[Nov 7]',
@@ -22,7 +24,7 @@ ERRATAS = {
     "[[36' Hansen, 58' Glasner]"  => "[36' Hansen, 58' Glasner]",
     ### more
     '  att; '  => ' att: '   ##  e.g. Wembley; att; 11,689
-    
+
 }
 
 
@@ -35,3 +37,8 @@ def handle_errata_txt( txt )
 
    txt
 end
+
+
+
+end    ## class Fmtfix
+end    ## module Rsssf
