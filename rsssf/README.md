@@ -209,7 +209,7 @@ schedule.save( './2014-15/facup.txt' )
 
 
 Tip: See [`/clubs` source repo](https://github.com/rsssf/clubs)
-for rsssf archive pages with format autofixes applied. Samples include:
+for public sample pages with format autofixes applied. Including:
 
 - [`/england`](https://github.com/rsssf/clubs/tree/master/england)    - rsssf archive data for England - Premier League, Championship, FA Cup etc.
 - [`/germany`](https://github.com/rsssf/clubs/tree/master/germany) - rsssf archive data for Germany (Deutschland) - Deutsche Bundesliga, 2. Bundesliga, 3. Liga, DFB Pokal etc.
