@@ -8,3 +8,7 @@ Webcache.root = './cache'
 
 
 include RsssfUtils   ## e.g. archive_dir_for_season
+
+
+TABLES_DIR = '../tables'
+CLUBS_DIR  = '../clubs'

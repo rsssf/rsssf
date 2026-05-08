@@ -13,7 +13,25 @@ require_relative 'helper'
 
 
 
-proj = Rsssf::Project.new( '../clubs/germany',
+pages = read_csv( './config/de.csv' )
+
+prep = Rsssf::Prep.new
+prep.convert_pages( pages, outdir: TABLES_DIR )
+
+##
+## new step is fmtfix  ../tables => /germany/pages
+
+heading_patches =  Rsssf::Fmtfix.read_heading_patches( './make/de_headings.txt' )
+
+fmtfix = Rsssf::Fmtfix.new
+fmtfix.fmtfix_pages( pages, path: [ TABLES_DIR ],
+                            heading_patches: heading_patches,
+                            outdir: "#{CLUBS_DIR}/germany/pages")
+
+
+
+
+proj = Rsssf::Project.new( "#{CLUBS_DIR}/germany",
                            title: 'Germany (Deutschland)',
                            slug:  'duit' )
 

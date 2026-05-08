@@ -6,17 +6,27 @@
 require_relative 'helper'
 
 
+
+
 pages = read_csv( './config/at.csv' )
 
 prep = Rsssf::Prep.new
-prep.convert_pages( pages, outdir: '../tables' )
+prep.convert_pages( pages, outdir: TABLES_DIR )
 
 
 ##
 ## new step is fmtfix  ../tables => /austria/pages
 
+heading_patches =  Rsssf::Fmtfix.read_heading_patches( './make/at_headings.txt' )
 
-proj = Rsssf::Project.new( '../clubs/austria',
+fmtfix = Rsssf::Fmtfix.new
+fmtfix.fmtfix_pages( pages, path: [ TABLES_DIR ],
+                            heading_patches: heading_patches,
+                            outdir: "#{CLUBS_DIR}/austria/pages")
+
+
+
+proj = Rsssf::Project.new( "#{CLUBS_DIR}/austria",
                            title: 'Austria (Österreich)',
                            slug:  'oost' )
 

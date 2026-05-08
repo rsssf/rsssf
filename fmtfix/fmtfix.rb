@@ -29,17 +29,22 @@ def main( args,
         puts "==> #{i+1}/#{args.size} #{name}..."
 
         filename = find_file!( name, path: path )
+        txt = read_text( filename )
+
+        newtxt = Rsssf::Fmtfix.fmtfix( txt )
 
         outdir = './tmp-fmtfix'
-        Rsssf::Fmtfix.fmtfix( filename, outdir: outdir )
+        basename = File.basename( filename, File.extname( filename ) )
+        extname  = File.extname( filename )
+        outfile = File.join(  outdir, "#{basename}#{extname}" )
+        write_text( outfile, newtxt )
       else
         ## use config
         ##  todo/fix - add a switch -c/--config or such
         ##     or better -f/--filename - why? why not?
         ##    and pass in    at.csv !!
 
-         datafile = "./config/#{name}.csv"
-         rows = read_csv( datafile )
+         pages = read_csv( "./config/#{name}.csv" )
 
          ##
          ## (auto-)check for heading_patches  too!!!
@@ -55,20 +60,7 @@ def main( args,
                                 nil
                             end
 
-         rows.each_with_index do |config,i|
-
-            puts "==> #{i+1}/#{rows.size} #{config.pretty_inspect}..."
-
-            page = config['page']
-            dirname  = File.dirname( page )
-            basename = File.basename( page, File.extname( page ) )
-            extname  = File.extname( page )
-
-            inname = "#{dirname}/#{basename}.txt"
-            filename = find_file!( inname, path: path )
-
-
-            outdir = if update
+           outdir = if update
                           ## check for dedicated repos
                           ##  otherwise use ../world/pages
                          if name == 'de'
@@ -99,9 +91,13 @@ def main( args,
                         "./tmp-#{name}"
                      end
 
-            Rsssf::Fmtfix.fmtfix( filename, outdir:          outdir,
+         ## todo/check - use only path: ['../tables'] for pages via config - why? why not?
+         Rsssf::Fmtfix.fmtfix_pages( pages, path: path,
+                                            outdir: outdir,
                                             heading_patches: heading_patches )
-         end
+
+
+
       end
    end
 end

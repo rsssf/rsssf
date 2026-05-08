@@ -118,6 +118,11 @@ the outname defaults to `<slug>-stats.csv`, that is, `eng`  becomes `eng-stats.c
 
 **fmtfix**
 
+```
+Usage: fmtfix/fmtfix.rb [options] <.txt files> or <config slugs>
+    -u, --update                     turn on update; write to production repo (default: false)
+```
+
 use `fmtfix` to convert .txt tables (original format only in .txt)
 to .txt pages (applied "autofixes" for football.txt parsing)
 
