@@ -145,7 +145,7 @@ def build_stat
 
   puts "*** !!! missing source"        if source.nil?
   puts "*** !!! missing author(s)"     if authors.nil?
-  pust "**  !!! missing last updated"  if last_updated.nil?
+  puts "**  !!! missing last updated"  if last_updated.nil?
 
 
   ## get year from source (url)

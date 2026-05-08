@@ -1,0 +1,5 @@
+header,       seasons,             basename,          title
+Primera División,              2016/17..2024/25,   1-liga,  Spain | Primera División {season}
+Primera División (Liga BBVA),  2010/11..2015/16,   1-liga,  Spain | Primera División {season}
+
+Copa del Rey,                  2010/11..2020/21,     cup,   Spain | Copa del Rey {season}

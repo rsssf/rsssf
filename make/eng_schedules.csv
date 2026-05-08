@@ -1,0 +1,10 @@
+header,       seasons,             basename,          title
+
+# note:  England 2010/11, 2011/12, 2012/13  uses
+#            Premiership  (not Premier League) for heading/section
+
+Premiership,      2010/11..2012/13,  1-premierleague,  England | Premier League {season}
+Premier League,   2013/14..2023/24,  1-premierleague,  England | Premier League {season}
+
+Cup Tournaments › FA Cup,     2010/11..2014/15,   facup,     England | FA Cup {season}
+Cup Tournaments › League Cup, 2010/11..2014/15,   leaguecup, England | League Cup {season}

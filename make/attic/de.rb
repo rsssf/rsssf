@@ -40,9 +40,6 @@ proj.make_pages_summary
 
 
 proj.make_schedules( <<TXT, archive: true )
-header,          seasons,             basename,          title
-1. Bundesliga,    1999/2000..2024/25,  1-bundesliga,     Germany | Bundesliga {season}
-DFB Pokal,        1996/97..2020/21,    cup,              Germany | DFB Pokal {season}
 TXT
 
 

@@ -15,14 +15,21 @@ class TestUtils < Minitest::Test
 
     ###########
     ## year_from_name
-    ##    note: num <= 16   - assume 20xx for now from 00..16
-    ##                      -  else  19xx
+    ##    note: num <= 9   - assume 20xx  from 00..09
+    ##                      -  else  19xx from 10..99
     assert_equal 2000, year_from_name( 'duit00' )
-    assert_equal 2016, year_from_name( 'duit16' )
+    assert_equal 2000, year_from_name( 'duit2-00' )
+    assert_equal 2001, year_from_name( 'duit01' )
+    assert_equal 2008, year_from_name( 'duit08' )
+    assert_equal 2009, year_from_name( 'duit09' )
 
+    assert_equal 1910, year_from_name( 'duit10' )
+    assert_equal 1916, year_from_name( 'duit16' )
     assert_equal 1999, year_from_name( 'duit99' )
+    assert_equal 1999, year_from_name( 'duit2-99' )
 
     assert_equal 2001, year_from_name( 'duit2001' )
+    assert_equal 2010, year_from_name( 'duit2010' )
 
     assert_equal 1964, year_from_name( 'duit64' )
     assert_equal 1965, year_from_name( 'duit1965' )
@@ -37,8 +44,8 @@ class TestUtils < Minitest::Test
     assert_equal 2000, year_from_file( './duit00.txt' )
     assert_equal 2000, year_from_file( 'xxx/1998/xxx/duit00.txt' )
 
-    assert_equal 2016, year_from_file( 'duit16.txt' )
-    assert_equal 2016, year_from_file( 'duit16.html' )
+    assert_equal 1916, year_from_file( 'duit16.txt' )
+    assert_equal 1916, year_from_file( 'duit16.html' )
 
     assert_equal 2001, year_from_file( 'duit2001.txt' )
     assert_equal 2001, year_from_file( 'duit2001.html' )
@@ -61,7 +68,7 @@ class TestUtils < Minitest::Test
     ## archive_dir_for_year
     ##  note:  year <= 2010  use season 2009-10
 
-  
+
     assert_equal '2014-15',               archive_dir_for_season( '2014/15' )
     assert_equal '2010-11',               archive_dir_for_season( '2010/11' )
     assert_equal '2011',               archive_dir_for_season( '2011' )
@@ -71,7 +78,7 @@ class TestUtils < Minitest::Test
     assert_equal 'archive/2000s/2000-01', archive_dir_for_season( '2000/01' )
     assert_equal 'archive/2000s/2009', archive_dir_for_season( '2009' )
     assert_equal 'archive/2000s/2000', archive_dir_for_season( '2000' )
-  
+
     assert_equal 'archive/1990s/1999-00', archive_dir_for_season( '1999/2000' )
     assert_equal 'archive/1990s/1999-00', archive_dir_for_season( '1999/00' )
     assert_equal 'archive/1990s/1998-99', archive_dir_for_season( '1998/99' )
@@ -80,4 +87,3 @@ class TestUtils < Minitest::Test
   end
 
 end # class TestUtils
-
