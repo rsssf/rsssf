@@ -1,8 +1,8 @@
 # rsssf - tools 'n' scripts for RSSSF (Rec.Sport.Soccer Statistics Foundation) archive data
 
 
-* home  :: [github.com/sportdb/sport.db.sources](https://github.com/sportdb/sport.db.sources)
-* bugs  :: [github.com/sportdb/sport.db.sources/issues](https://github.com/sportdb/sport.db.sources/issues)
+* home  :: [github.com/rsssf/scripts](https://github.com/rsssf/scripts)
+* bugs  :: [github.com/rsssf/scripts/issues](https://github.com/rsssf/scripts/issues)
 * gem   :: [rubygems.org/gems/rsssf](https://rubygems.org/gems/rsssf)
 * rdoc  :: [rubydoc.info/gems/rsssf](http://rubydoc.info/gems/rsssf)
 
@@ -46,7 +46,7 @@ Coritiba        2-1 Atlético/MG
 ## Usage
 
 
-### Download (and Cache ) Pages
+### Download (and Cache)  Pages
 
 To download (and cache) pages from the world wide web use:
 
@@ -59,9 +59,10 @@ Rsssf.download_page( 'https://rsssf.org/tablesb/braz2024.html',
 ```
 
 Note:  Most pages on rsssf.org use the Windows-1252 (character) encoding.
-To "auto-magically" convert to unicode (utf-8) 
-add the encoding option (default is `UTF-8`). 
+To "auto-magically" convert to unicode (utf-8)
+add the encoding option (default is `UTF-8`).
 
+<!--
 Or as a convenience shortcut download (pre-configured table) pages by country code (e.g `eng` - England, `es` - Spain (España), `de` - Germany (Deutschland), `br` - Brazil (Brasil) etc.)
 and season (e.g. `2023/24` or `2024` etc.)
 
@@ -70,17 +71,18 @@ Rsssf.download_table( 'eng', season: '2023/24' )
 
 Rsssf.download_table( 'br', season: '2024' )
 ```
+-->
 
 
-Note: The rsssf machinery uses a built-in web cache.  All downloads get "auto-magically" cached (in `./cache/rsssf.org`).
+Note: The rsssf machinery uses a built-in (local) web cache.  All downloads get "auto-magically" cached (in `./cache/rsssf.org`).
 
 
 
-### Working with Pages
+### Working with Pages  (from .HTML to .TXT)
 
 
-Note: The `RsssfPage` machinery will convert the rsssf archive page
-from hypertext (HTML) to plain text e.g.
+Note: The `RsssfPage` machinery lets you convert rsssf archive pages
+from hypertext (.html) to plain text (.txt) e.g.
 
 ```
 <hr>
@@ -113,7 +115,7 @@ will become
 ‹Conference›
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-#### Premier League
+==== Premier League
 
 
 Final Table:
@@ -125,97 +127,100 @@ Final Table:
 ```
 
 
-### Working with Repos
 
-To fetch pages from the world wide web for many seasons in batch setup and use a repo.
+Tip - See <https://github.com/rsssf/tables>
+for a public online copy / mirror of converted
+tables in .txt (preserving the original "ad-hoc" formats).
+
+
+
+
+To fetch pages from the world wide web for many seasons in batch use
+a (tabular) datafile in the comma-separted values (.csv) format.
 
 Step 1: List all archive pages
 
-In the `tables/config.yml` list all archive pages to fetch. Example:
+In `eng.csv` list all archive pages to fetch. Example:
 
-``` yaml
-2010-11: tablese/eng2011.html
-2011-12: tablese/eng2012.html
-2012-13: tablese/eng2013.html
-2013-14: tablese/eng2014.html
-2014-15: tablese/eng2015.html
+
+``` csv
+season,  page,                 encoding
+2020/21, tablese/eng2021.html, windows-1252
+2021/22, tablese/eng2022.html, windows-1252
+2022/23, tablese/eng2023.html, windows-1252
+2023/24, tablese/eng2024.html, windows-1252
+2024/25, tablese/eng2025.html, windows-1252
 ```
 
-Step 2: Fetch all archive pages
+Step 2: Download all archive pages
 
 Use:
 
 ``` ruby
-repo = RsssfRepo.new( './england', title: 'England (and Wales)' )
-repo.fetch_pages
+pages = read_csv( './eng.csv')
+
+Rsssf::Prep.download_pages( pages )
+
+## convert from .html to .txt
+
+Rsssf::Prep.convert_pages( pages, outdir: './tables' )
 ```
 
-Bonus: To create a summary of all pages fetched (e.g. authors, last_updated, sections, etc.).
-Use:
-
-``` ruby
-repo.make_pages_report
-```
-
-Example - `tables/README.md`:
 
 
-football.db RSSSF Archive Data Summary for England (and Wales)
 
-_Last Update: 2015-11-26 18:22:22 +0200_
-
-| Season  | File   | Authors  | Last Updated | Lines (Chars) | Sections |
-| :------ | :------ | :------- | :----------- | ------------: | :------- |
-| 2014-15 | [eng2015.txt](https://github.com/rsssf/eng-england/blob/master/tables/eng2015.txt) | Ian King and Karel Stokkermans | 4 Jun 2015 | 1249 (34138) | Premier League, Cup Tournaments, Championship, Division 1, Division 2, Conference |
-| 2013-14 | [eng2014.txt](https://github.com/rsssf/eng-england/blob/master/tables/eng2014.txt) | Ian King and Karel Stokkermans | 5 Feb 2015 | 1254 (34294) | Premier League, Cup Tournaments, Championship, Division 1, Division 2, Conference |
-| 2012-13 | [eng2013.txt](https://github.com/rsssf/eng-england/blob/master/tables/eng2013.txt) | Karel Stokkermans | 5 Feb 2015 | 1269 (34531) | Premiership, Cup Tournaments, Championship, Division 1, Division 2, Conference |
-| 2011-12 | [eng2012.txt](https://github.com/rsssf/eng-england/blob/master/tables/eng2012.txt) | Karel Stokkermans | 5 Feb 2015 | 691 (21925) | Premiership, Cup Tournaments, Championship, Division 1, Division 2, Conference |
-| 2010-11 | [eng2011.txt](https://github.com/rsssf/eng-england/blob/master/tables/eng2011.txt) | Ian King, Karel Stokkermans and Jan Schoenmakers | 5 Feb 2015 | 959 (37393) | Premiership, Cup Tournaments, Championship, Division 1, Division 2, Conference |
+For more and the latest news 'n' updates
+incl. how to mirror the rsssf.org website (all 40000+ pages),
+see the [`/scripts` source repo »](https://github.com/rsssf/scripts)
 
 
 That's it.
 
 
-### Preparing Archive Pages for SQL Database Imports (e.g. football.db)
 
-To import match schedules (fixtures and results) and more using the football.db machinery
-prepare "simple" single league (or cup) pages with standings tables etc. stripped out.
-For example, to break-out the Premier League and FA Cup from the `eng2015.txt`
-archive page use:
+
+
+### Preparing Archive Pages for SQL Database Imports
+
+Note:  The rsssf machinery includes helpers
+that try the best to convert the "ad-hoc" rsssf formats into
+the structured Football.TXT format but expect no miracles
+and fix any remaining errors "by hand"
+or with your own little search & replace scripts
+or why not with
+the help of the latest and greatest large language models (LLMs)?
+
+
+To split-up the all-in-one page and break-out sections
+such as the  Premier League or FA Cup from the `eng2015.txt`, for example,
+use:
 
 ``` ruby
-page = RsssfPage.from_url( 'http://www.rsssf.com/tablese/eng2015.html')
+page = RsssfPage.read_txt( './pages/eng2015.txt')
 
 schedule = page.find_schedule( header: 'Premier League')   ## returns RsssfSchedule obj
-schedule.save( './1-premierleague.txt' )
+schedule.save( './2014-15/1-premierleague.txt' )
 
-schedule = page.find_schedule( header: 'FA Cup', cup: true )
-schedule.save( './facup.txt' )
+schedule = page.find_schedule( header: 'FA Cup' )
+schedule.save( './2014-15/facup.txt' )
 ```
 
 
 
-## RSSSF Datasets
 
-See the rsssf github org for pre-processed ready-to-import datasets. Prepared repos include:
+Tip: See the rsssf github org for sample pages
+with format autofixes applied including:
 
-- [`england`](https://github.com/rsssf/england)    - rsssf archive data for England - Premier League, Championship, FA Cup etc.
-- [`deutschland`](https://github.com/rsssf/deutschland) - rsssf archive data for Germany (Deutschland) - Deutsche Bundesliga, 2. Bundesliga, 3. Liga, DFB Pokal etc.
-- [`espana`](https://github.com/rsssf/espana)      - rsssf archive data for España (Spain) - Primera División / La Liga, Copa de Rey, etc.
-- [`austria`](https://github.com/rsssf/austria)     - rsssf archive data for Austria (Österreich) - Österr. Bundesliga, Erste Liga, ÖFB Pokal etc.
-- [`brazil`](https://github.com/rsssf/brazil)      - rsssf archive data for Brazil (Brasil) - Campeonato Brasileiro Série A / Brasileirão etc.
+- [`/england`](https://github.com/rsssf/clubs/tree/master/england)    - rsssf archive data for England - Premier League, Championship, FA Cup etc.
+- [`/germany`](https://github.com/rsssf/clubs/tree/master/germany) - rsssf archive data for Germany (Deutschland) - Deutsche Bundesliga, 2. Bundesliga, 3. Liga, DFB Pokal etc.
+- [`/spain`](https://github.com/rsssf/clubs/tree/master/spain)      - rsssf archive data for España (Spain) - Primera División / La Liga, Copa de Rey, etc.
+- [`/austria`](https://github.com/rsssf/clubs/tree/master/austria)     - rsssf archive data for Austria (Österreich) - Österr. Bundesliga, Erste Liga, ÖFB Pokal etc.
+- [`/brazil`](https://github.com/rsssf/clubs/tree/master/brazil)      - rsssf archive data for Brazil (Brasil) - Campeonato Brasileiro Série A / Brasileirão etc.
 - and more
+
 
 
 ## License
 
 The `rsssf` scripts are dedicated to the public domain.
 Use it as you please with no restrictions whatsoever.
-
-
-## Questions? Comments?
-
-Send them along to the
-[Open Sports & Friends Forum/Mailing List](http://groups.google.com/group/opensport).
-Thanks!
-

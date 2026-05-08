@@ -8,7 +8,7 @@ Hoe.spec 'rsssf' do
   self.summary = "rsssf - tools 'n' scripts for RSSSF (Rec.Sport.Soccer Statistics Foundation) archive data"
   self.description = summary
 
-  self.urls    = { home: 'https://github.com/sportdb/sport.db.sources' }
+  self.urls    = { home: 'https://github.com/rsssf/scripts' }
 
   self.author  = 'Gerald Bauer'
   self.email   = 'gerald.bauer@gmail.com'
@@ -20,7 +20,7 @@ Hoe.spec 'rsssf' do
   self.extra_deps = [
     ['cocos'],
     ['season-formats'],
-    ['rsssf-parser'],   ## add rsssf parser machinery & tool
+    ['webget'],
   ]
 
 
