@@ -128,7 +128,7 @@ Final Table:
 
 
 
-Tip - See <https://github.com/rsssf/tables>
+Tip - See the [`/tables` source repo](https://github.com/rsssf/tables)
 for a public online copy / mirror of converted
 tables in .txt (preserving the original "ad-hoc" formats).
 
@@ -208,8 +208,8 @@ schedule.save( './2014-15/facup.txt' )
 
 
 
-Tip: See the rsssf github org for sample pages
-with format autofixes applied including:
+Tip: See [`/clubs` source repo](https://github.com/rsssf/clubs)
+for rsssf archive pages with format autofixes applied. Samples include:
 
 - [`/england`](https://github.com/rsssf/clubs/tree/master/england)    - rsssf archive data for England - Premier League, Championship, FA Cup etc.
 - [`/germany`](https://github.com/rsssf/clubs/tree/master/germany) - rsssf archive data for Germany (Deutschland) - Deutsche Bundesliga, 2. Bundesliga, 3. Liga, DFB Pokal etc.
