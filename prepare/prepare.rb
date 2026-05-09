@@ -23,7 +23,10 @@ Webcache.root = './cache'
    force:   false,
    update:  false,
    online:  true,   ## online | offline/cached
+   year:    [],
 }
+
+
 
 
   parser = OptionParser.new do |parser|
@@ -41,7 +44,14 @@ Webcache.root = './cache'
                  "no downloads; always use cached version (default: #{!opts[:online]})" ) do |offline|
        opts[:online] = false
      end
+     parser.on( "--year YEAR,YEAR,YEAR", Array,
+                  "turn on filter; include only years specified (default: #{opts[:year]})") do |list|
+       ## better use Season() - why? why not?
+       opts[:year] += list
+     end
   end
+
+
 
   parser.parse!( args )
 
@@ -68,6 +78,18 @@ outdir =   if opts[:update]
 
 pages = read_csv( "./config/#{code}.csv" )
 pp pages
+puts "  #{pages.size} page(s)"
+
+
+
+year = opts[:year]
+if year.size > 0     ## check and apply filter by year
+
+  puts "  apply year filter #{year.inspect}"
+  pages = Rsssf::Prep.filter_pages( pages, year: year )
+  puts "  #{pages.size} page(s)"
+end
+
 
 
 
@@ -84,5 +106,7 @@ end
 
 Rsssf::Prep.convert_pages( pages, outdir: outdir )
 
+
+puts "  #{pages.size} page(s)"
 
 puts "bye"

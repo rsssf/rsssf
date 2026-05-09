@@ -1,6 +1,7 @@
 
 module Rsssf
 module Utils
+    extend self    ## note - make available via Utils.year_from_name  etc.
 
 
 ## move to Page - why? why not?
@@ -24,7 +25,13 @@ YEAR_FROM_NAME_RE = %r{ (?<! \d)       ## note - no digit before allowed
                       (?! \d)        ## no digit after allowed
                     }x
 
-def year_from_name( name )
+
+###
+## todo/check:
+##  change to year_from_name & year_from_name! - why? why not?
+#    for now use fail_on_error: true|false
+
+def year_from_name( name, fail_on_error: true )
   ## note - make sure it works for special case like:
   ##             mex2-2010  !!!
   ##   only match  two digits (YY) or four digits (YYYY)
@@ -41,7 +48,11 @@ def year_from_name( name )
         num <= 9 ?  2000+num : 1900+num
     end
   else
-    fail( "no year found in name #{name}; expected two or four digits")
+     if fail_on_error
+       fail( "no year found in name #{name}; expected two or four digits")
+     else
+       nil
+     end
   end
 end  # method year_from_name
 

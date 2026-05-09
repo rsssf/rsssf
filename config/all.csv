@@ -291,6 +291,19 @@ season,page,title,encoding
 ,tablesu/usa2023.html,,
 ,tablesu/usa2024.html,,
 ,tablesu/usa2025.html,United States,
+,tablesm/mauri2014.html,,
+,tablesm/mauri2015.html,Mauritius 2014/15,
+,tablesm/mauri2016.html,,
+,tablesm/mauri2017.html,,
+,tablesm/mauri2018.html,,
+,tablesm/mauri2019.html,,
+,tablesm/mauri2020.html,,
+,tablesm/mauri2021.html,,
+,tablesr/rodri2023.html,,
+,tablesm/mauri2023.html,,
+,tablesm/mauri2024.html,,
+,tablesm/mauri2025.html,,
+,tablesm/mauri2026.html,|Mauritius,
 ,tables/30full.html,,iso-8859-2
 ,tables/34full.html,,iso-8859-2
 ,tables/38full.html,,iso-8859-2
@@ -407,7 +420,6 @@ season,page,title,encoding
 ,tablesm/malaw2025.html,Malawi,
 ,tablesm/mali2026.html,Mali,
 ,tablesm/maur2026.html,Mauritania,
-,tablesm/mauri2026.html,Mauritius,
 ,tablesm/mayo2025.html,Mayotte,
 ,tablesm/maro2025.html,Morocco,
 ,tablesm/moz2025.html,Mozambique,

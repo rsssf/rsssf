@@ -24,6 +24,7 @@ names = [
     'it',
     'mx',
     'us',
+    'more',
 
     ## worldcup
     'worldcup_full',

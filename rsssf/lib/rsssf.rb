@@ -37,6 +37,7 @@ require_relative 'rsssf/prepare/convert-meta'
 require_relative 'rsssf/prepare/convert-links'
 require_relative 'rsssf/prepare/convert-postproc'
 require_relative 'rsssf/prepare/convert-navlines'
+require_relative 'rsssf/prepare/filter_pages'
 
 
 
