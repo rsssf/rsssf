@@ -42,7 +42,9 @@ def expand_pageref( pageref, dirname: )
                    pageref = pageref.sub(  '#', '§' )
 
 
-                 if /^[a-z0-9][a-z0-9§-]*$/.match?( pageref )
+                 ## note - allow dot (.) too here
+                 ##   e.g. grk-amateurclubs.xlsx
+                 if /^[a-z0-9][a-z0-9§.-]*$/.match?( pageref )
                     ## assume relative page in "local" dir
                     "#{dirname}/#{pageref}"
                  elsif pageref.start_with?( '../')

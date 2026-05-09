@@ -21,7 +21,7 @@ def html_to_txt( html, url: )
 
 
   ## cut off everything before body
-  ##   
+  ##
   ## note - might incl. attributes e.g.
   ## <body bgcolor="yellow">
 
@@ -32,31 +32,31 @@ def html_to_txt( html, url: )
   html = html.sub( /.+?
                       <BODY [^>]*? >
                       \s*
-                   /xim, 
+                   /xim,
                    '' )
-                  
+
   ## special case i)   no <body> - cut-off head if present
   ## cut off everything before <head/>
   ##   used in braz93.html, braz98.html
   html = html.sub( /.+?
                      <\/HEAD>
                        \s*
-                   /xim, '' )    
+                   /xim, '' )
 
-  ## special case ii) no <body>, no </head> 
+  ## special case ii) no <body>, no </head>
   ## cut off everything before <head/>
   ##   used in braz93.html, braz98.html
   html = html.sub( /.+?
                      <HEAD\/>
                        \s*
-                   /xim, '' )    
+                   /xim, '' )
 
 
 
 
   ## cut off everything after body (closing)
   html = html.sub( /<\/BODY>.*/im, '' )
-  
+
   ## special case
   ## cut off everything after </html> (closing)
   ##   used in braz93.html, braz98.html
@@ -68,7 +68,7 @@ def html_to_txt( html, url: )
   ## quick fix
   ## <title>World Cup 1950 qualifications</title>
   ## <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
-  
+
   ## remove title and meta
   html = html.sub( /<TITLE>.*?<\/TITLE>/i, '' )
   html = html.sub( /<META .*?>/i, '' )
@@ -84,7 +84,7 @@ def html_to_txt( html, url: )
   ##   change ^<b><a name ...></a></b>$  or    <hb>  - heading "bold" - might be h5
   ##          ^<u><a name ...></a></u>$    to  <hu>  - heading "underscore" - might be h6
   html, more_edits = make_heading( html )
-  edits += more_edits 
+  edits += more_edits
 
 
 
@@ -113,7 +113,7 @@ def html_to_txt( html, url: )
 
 
 
-  
+
   html = replace_a_name( html )
 
   html = replace_a_href( html )
@@ -133,7 +133,7 @@ def html_to_txt( html, url: )
 
 
 
- 
+
   html = replace_heading( html )
 
 
@@ -149,19 +149,23 @@ def html_to_txt( html, url: )
     puts " remove underline (u) >#{$1}<"
     "#{$1}"
   end
+  ##  quick fix -- remove any remaing trailing </u>
+  ###   <u><b>U-20</b></u></u>  in argentina2026.html
+  html = html.gsub( /<\/U>/i, '' )
+
 
   ## remove b   - note: might include anchors (thus, call after anchors)
   ###   use non-greedy match as default? e.g. .*? - why? why not?
   ## was - "**#{$1}**"
   html = html.gsub( /<B>(.*?)<\/B>/im ) do |_|
     puts " remove bold (b) >#{$1}<"
-    "#{$1}"  
+    "#{$1}"
   end
 
   ## <strong></strong>
   html = html.gsub( /<STRONG>(.*?)<\/STRONG>/im ) do |_|
     puts " remove strong (strong) >#{$1}<"
-    "#{$1}"  
+    "#{$1}"
   end
 
 
@@ -171,10 +175,10 @@ def html_to_txt( html, url: )
     puts " replace preformatted (pre)"
 
       ## note - replace preformatted blocks
-      ##           with comments 
+      ##           with comments
       ##  was:
       ##  ''  # replace w/ nothing for now (keep surrounding newlines)
-      
+
      if match.downcase == '<pre>'
          '<!-- start pre -->'
      else
@@ -201,21 +205,21 @@ def html_to_txt( html, url: )
 
   ## check for html tags
   ##  left
-  ##  use scan instead of 
+  ##  use scan instead of
   html.gsub( /<
                 \/?
                 [A-Z]+ [^>]*
-              > 
+              >
              /xim ) do |match|
 
           if ['<menu>', '<ul>', '<li>',
-               '</menu>', '</ul>', '</li>'].include?(match.downcase) 
+               '</menu>', '</ul>', '</li>'].include?(match.downcase)
                ## do nothing
-          else 
+          else
                   msg = "found unprocessed html tag #{match} in >#{url}<"
                   puts "*** WARN - #{msg}"
                   log( msg )  ## log too (see log.txt)
-          end 
+          end
           match
     end
 
