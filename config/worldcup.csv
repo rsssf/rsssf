@@ -3,6 +3,11 @@
 ##    use chrome browser and console
 ##    and  $ document.characterSet
 ##    resulting in => 'ISO-8859-2', for example
+##
+##
+##  note - do NOT use "fold" tables; use  --no-table
+##         do NOT use "fold" top scorerers; use --no-topscorers
+
 
 page, encoding
 
@@ -21,13 +26,11 @@ tables/78f.html,   windows-1252
 tables/82f.html,   windows-1252
 tables/86f.html,   windows-1252
 tables/90f.html,   windows-1252
-tables/94f.html,   windows-1252 
+tables/94f.html,   windows-1252
 tables/98f.html,   windows-1252
 tables/2002f.html,  windows-1252
 tables/2006f.html,  windows-1252
 tables/2010f.html,  windows-1252
 tables/2014f.html,  windows-1252
-tables/2018f.html,  windows-1252  
+tables/2018f.html,  windows-1252
 tables/2022f.html,  windows-1252
-
-

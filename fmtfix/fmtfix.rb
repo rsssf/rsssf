@@ -20,7 +20,9 @@ require 'rsssf'
 
 def main( args,
              path: ['.'],
-             update: false
+             update: false,
+             tables: true,
+             topscorers: true
               )
 
    args.each_with_index do |name,i|
@@ -31,7 +33,9 @@ def main( args,
         filename = find_file!( name, path: path )
         txt = read_text( filename )
 
-        newtxt = Rsssf::Fmtfix.fmtfix( txt )
+        newtxt = Rsssf::Fmtfix.fmtfix( txt,
+                                       tables:     tables,
+                                       topscorers: topscorers )
 
         outdir = './tmp-fmtfix'
         basename = File.basename( filename, File.extname( filename ) )
@@ -94,7 +98,9 @@ def main( args,
          ## todo/check - use only path: ['../tables'] for pages via config - why? why not?
          Rsssf::Fmtfix.fmtfix_pages( pages, path: path,
                                             outdir: outdir,
-                                            heading_patches: heading_patches )
+                                            heading_patches: heading_patches,
+                                            tables:     tables,
+                                            topscorers: topscorers )
 
 
 
@@ -116,7 +122,9 @@ end
 
   args = ARGV
 
-  opts = { update:  false,
+  opts = { update:     false,
+           tables:     true,
+           topscorers: true,
          }
 
   parser = OptionParser.new do |parser|
@@ -126,6 +134,19 @@ end
                  "turn on update; write to production repo (default: #{opts[:update]})" ) do |update|
        opts[:update] = true
      end
+
+     ## add short flags?
+     ##  -t sets to true, -T sets to false
+     ##  check if  ("-t", "-T", "--[no-]tables"...  works for true, false ??
+     parser.on( "--[no-]tables",
+                 "turn on/off folding of tables (default: #{opts[:tables]})") do |tables|
+       opts[:tables] = tables
+     end
+     parser.on( "--[no-]topscorers",
+                 "turn on/off folding of topscorers (default: #{opts[:topscorers]})") do |topscorers|
+       opts[:topscorers] = topscorers
+     end
+
   end
 
 
@@ -135,7 +156,9 @@ end
 
   main( args,
           path:   PATH,
-          update: opts[:update] )
+          update: opts[:update],
+          tables: opts[:tables],
+          topscorers: opts[:topscorers] )
 
 
   puts "bye"

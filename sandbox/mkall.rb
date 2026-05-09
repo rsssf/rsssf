@@ -24,7 +24,8 @@ names = [
     'it',
     'mx',
     'us',
-    'more',
+    'world',
+    'more',       ## mauritius from league starter
 
     ## worldcup
     'worldcup_full',
@@ -37,8 +38,6 @@ names = [
     'curtour',
 
     ##'quick',
-    ## 'quickii',
-    ## 'quickiii',
 ]
 
 pp names

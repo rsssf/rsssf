@@ -6,7 +6,8 @@ class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 
 
-def autofix( txt )
+def autofix( txt,  tables: true,
+                   topscorers: true )
 
  ##
  ## make sure no tabs (expand to two spaces)
@@ -18,9 +19,11 @@ def autofix( txt )
 
 
 
+    ## e.g. final/halfway table (aka standings)
+    txt = handle_tables( txt )       if tables
 
-    txt = handle_tables( txt )     ## e.g. final/halfway table (aka standings)
-    txt = handle_topscorers( txt )
+    txt = handle_topscorers( txt )   if topscorers
+
 
 
     txt = handle_errata_txt( txt )

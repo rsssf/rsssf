@@ -1,0 +1,92 @@
+
+#####
+##
+##   pages for /world
+##
+##  to update use
+##   (i)
+##   $ ruby prepare/prepare.rb world  -u    (--update)
+##    -- force download (do NOT use cached version)
+##   $ ruby prepare/prepare.rb world  -u -f (--update --force)
+##    -- only year 2026 --
+##   $ ruby prepare/prepare.rb world  -u -f --year 2026
+##
+##   (ii)
+##   $ ruby fmtfix/fmtfix.rb world  -u  (--update)
+
+
+
+page, title, encoding
+
+######
+#  africa
+tablesa/alg2026.html, Algeria
+tablesa/alg2025.html, Algeria
+tablese/egy2025.html, Egypt
+tablesm/maro2025.html, Morocco
+tablesz/zaf2025.html, South Africa
+
+
+
+#######
+#  americas (north, central & caribbean, south)
+
+tablesu/usa2025.html, United States
+tablesm/mex2026.html, Mexico
+tablesm/mex2025.html, Mexico
+
+tablesa/arg2026.html, Argentina
+tablesa/arg2025.html, Argentina
+
+tablesb/braz2025.html, Brazil
+
+tablesu/uru2026.html, Uruguay
+tablesu/uru2025.html, Uruguay
+
+tablesc/col2025.html, Colombia
+
+
+
+#########
+#  asia & australia
+tablesa/aus2025.html, Australia
+tablesj/jpn2025.html, Japan, utf-16le
+tabless/skor2025.html, South Korea
+tablesc/china2025.html, China
+
+
+####
+#  middle east
+tabless/sau2025.html, Saudi Arabia
+tablesi/isra2025.html, Israel
+
+
+
+
+###
+# europe - top 5
+#
+tablese/eng2025.html,  England
+tabless/span2025.html, Spain
+tablesd/duit2025.html, Germany
+tablesi/ital2025.html, Italy
+tablesf/fran2025.html, France
+
+
+# europe - more
+tablesp/port2025.html, Portugal
+
+tablesb/belg2025.html, Belgium
+tablesn/ned2026.html, Netherlands
+tablesn/ned2025.html, Netherlands
+
+tabless/scot2025.html, Scotland
+tablesi/ier2025.html, Ireland
+tablesw/wal2025.html, Wales
+
+tablest/tsje2025.html, Czechia
+tablesp/pol2025.html, Poland
+tablesz/zwit2025.html, Switzerland
+tablesz/zwit2026.html, Switzerland
+tablesg/grk2025.html, Greece
+tablest/tur2025.html, Turkey

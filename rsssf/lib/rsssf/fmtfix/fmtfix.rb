@@ -5,16 +5,22 @@ class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 
 ## convenience helper
-def self.fmtfix_pages( pages, outdir:, path:, heading_patches: nil )
+def self.fmtfix_pages( pages, outdir:, path:, heading_patches: nil,
+                                              tables:     true,
+                                              topscorers: true )
       @@fmtfix ||= new   ## use a "shared" built-in fmtfix
       @@fmtfix.fmtfix_pages( pages, outdir: outdir,
                                     path: path,
-                                    heading_patches: heading_patches )
+                                    heading_patches: heading_patches,
+                                    tables: tables,
+                                    topscorers: topscorers )
 end
 
 def fmtfix_pages( pages, outdir:,
                          path:,         ## (lookup search) path (array expected!!!)
-                         heading_patches: nil )
+                         heading_patches: nil,
+                         tables:     true,
+                         topscorers: true )
 
      pages.each_with_index do |config,i|
 
@@ -29,7 +35,9 @@ def fmtfix_pages( pages, outdir:,
             filename = find_file!( inname, path: path )
 
             txt = read_text( filename )
-            newtxt = fmtfix( txt, heading_patches: heading_patches )
+            newtxt = fmtfix( txt, heading_patches: heading_patches,
+                                  tables:     tables,
+                                  topscorers: topscorers )
 
             outfile = File.join(  outdir, "#{basename}.txt" )
             write_text( outfile, newtxt )
@@ -39,14 +47,21 @@ end
 
 
 ## convenience helper
-def self.fmtfix( txt, heading_patches: nil )
+def self.fmtfix( txt, heading_patches: nil,
+                      tables:     true,
+                      topscorers: true )
       @@fmtfix ||= new   ## use a "shared" built-in fmtfix
-      @@fmtfix.fmtfix( txt, heading_patches: heading_patches )
+      @@fmtfix.fmtfix( txt,
+                       heading_patches: heading_patches,
+                       tables:          tables,
+                       topscorers:      topscorers )
 end
 
 
 
-def fmtfix( txt,  heading_patches: nil )
+def fmtfix( txt,  heading_patches: nil,
+                  tables:     true,
+                  topscorers: true)
 
         ### note - step 1
         ##      autofix-outline
@@ -70,7 +85,8 @@ def fmtfix( txt,  heading_patches: nil )
         end
 
 
-        newtxt = autofix( newtxt )
+        newtxt = autofix( newtxt, tables:     tables,
+                                  topscorers: topscorers )
 
 
 
@@ -95,6 +111,21 @@ def fmtfix( txt,  heading_patches: nil )
 =end
          newtxt
 end
+
+
+
+###################
+# more helpers
+def self.log( msg )
+  ## append msg to ./logs.txt
+  ##     use ./errors.txt - why? why not?
+  File.open( './logs.txt', 'a:utf-8' ) do |f|
+    f.write( msg )
+    f.write( "\n" )
+  end
+end
+def log( msg ) self.class.log( msg ); end
+
 
 
 end    ## class Fmtfix
