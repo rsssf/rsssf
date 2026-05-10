@@ -3,27 +3,6 @@ class  Prep    ## todo: find a better name e.g. BatchPrep or ??
 
 
 
-=begin
-
-todo - remove all "trailing" nav links in section
-
-‹1974/75, see page oost75›.
-
-‹1976/77, see page oost77›.
-
-‹list of final tables, see page oosthist›.
-
-‹list of champions, see page oostchamp›.
-
-‹list of cup finals, see page oostcuphist›.
-
-‹list of super cup finals, see page oostsupcuphist›.
-
-‹list of foundation dates, see page oostfound›.
-=end
-
-
-
 
 def strip_navlines( lines, heading: true )
 ## note - expects an array of lines (e.g. txt.lines!!!)
@@ -35,7 +14,15 @@ def strip_navlines( lines, heading: true )
               ## check for optional leading heading line
               ## note - first line is heading
               ##  (only optional for first section)
-              if heading && lineno == 0 && line.lstrip.start_with?( '==' )
+              ##   note - allow heading 1 too e.g.
+              ##      = World Cup 1930
+              ##   note - exclude matching (rulers) "====== or =-=-=-= or such"
+              if  heading && lineno == 0 &&
+                 (line.lstrip.start_with?( '=' ) &&
+                  !line.strip.match?(  %r{\A
+                                           [=-]+
+                                          \z}x )
+                 )
                     newlines << line
                     next
               end
@@ -102,8 +89,15 @@ def proc_navlines_by_sections( txt )
       end
 
 
+    ##   note - allow heading 1 too e.g.
+    ##      = World Cup 1930
+
+    ##
+    ##   todo/check - find a better section splitter - why? why not?
+    ##         and make reuseable as a method/function
+
     sections = txt.split( %r{^
-                               (?= [ ]* ={2,} [ ]*
+                               (?= [ ]* ={1,} [ ]*
                                     [\p{L}0-9]  ## one letter or digit required
                                )
                             }ix
@@ -122,6 +116,12 @@ def proc_navlines_by_sections( txt )
 
              edits << edit
           end
+
+          ### todo/fix
+          ###   always remove trailing links too - why? why not?
+          ##
+          ##  only edge case is
+          ##    note block (NB: ) ending with a link only
 
 
           ## special check for last section
@@ -152,3 +152,24 @@ end
 
 end    ## class Prep
 end    ## module Rsssf
+
+
+__END__
+
+
+
+todo - remove all "trailing" nav links in section
+
+‹1974/75, see page oost75›.
+
+‹1976/77, see page oost77›.
+
+‹list of final tables, see page oosthist›.
+
+‹list of champions, see page oostchamp›.
+
+‹list of cup finals, see page oostcuphist›.
+
+‹list of super cup finals, see page oostsupcuphist›.
+
+‹list of foundation dates, see page oostfound›.

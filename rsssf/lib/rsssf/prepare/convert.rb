@@ -45,26 +45,31 @@ def convert_pages( pages, outdir: )
     authors, updated = about ? find_author_n_date( about ) : [nil,nil]
 
  header_props = <<EOS
-     title:   #{title}
-     source:  #{url}
+   title:   #{title}
+   source:  #{url}
 EOS
 
    if authors && updated
       ##  assume plural if and or command (,)
       header_props +=  if /\band\b|,/i.match( authors )
-                         "     authors: #{authors}\n"
+                         "   authors: #{authors}\n"
                        else
-                         "     author:  #{authors}\n"
+                         "   author:  #{authors}\n"
                        end
-      header_props +=    "     updated: #{updated}"
+      header_props +=    "   updated: #{updated}\n"
    end
 
 
   header = <<EOS
-  <!--
-#{header_props}
-    -->
+<!--
+#{header_props}  -->
 EOS
+
+
+    ## add table of contents
+    ##
+
+
 
 
      ## note - (auto-) add (comment) header to written out txt!!!

@@ -170,7 +170,8 @@ end
 
 def _scan_outline( txt )   txt.scan( HX_RE );  end
 
-def build_outline( txt )
+
+def build_outline_v0( txt )
 
      hx =  txt.scan( HX_RE )
 
@@ -222,6 +223,48 @@ def build_outline( txt )
 
         buf
 end
+
+
+def build_toc( txt, min: 2 )
+
+     hx =  txt.scan( HX_RE )
+
+##
+##  note - toc (table-of-contents)
+##           is its own pre block
+
+     ## require a min of 2 headings
+     if hx.size >= 2
+
+       buf = String.new
+       buf += "<!--\n"
+       buf += "                     Contents:\n\n"
+
+       hx.each do |marker,text,ref|
+          ## indent text by marker size (multiply by 2 - e.g. use 2x??)
+          ## buf << "    %-6s %s" % [marker, ' '*marker.size]
+
+          one = String.new
+          one << "   %s" % [' '*(marker.size*2)]
+          one <<  "  "
+          one << text
+          buf << "%-42s" % one
+
+          ## align see references (kind-of like page numbers)
+          ### note ref already include § in capture !!!
+          ##    fix/fix/fix - change to NOT include § in capture!!
+          buf << "  (see #{ref})"    if ref
+          buf << "\n"
+       end
+
+       buf += "  -->\n"
+       buf
+     else
+       nil   # no table-of-contents; no min required headings hit/found
+     end
+end
+
+
 
 
 end    ## class Fmtfix

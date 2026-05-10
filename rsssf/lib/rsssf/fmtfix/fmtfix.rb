@@ -90,25 +90,18 @@ def fmtfix( txt,  heading_patches: nil,
 
 
 
-=begin
-        ##
-        ## add (quick) outline
-        outline = build_outline( newtxt )
+         outline = build_toc( newtxt, min: 2 )
 
-        ## add inside  <!-- source: ...  [auto-add here] -->
-        ## e.g.
-        ##   <!--
-        ##      source: https://rsssf.org/tableso/oost98.html
-        ##    -->
+         ### append after first comment
+         ###  quick hack
+         if outline
+            newtxt = newtxt.sub( %r{ -->
+                                      [ ]*\n
+                                   }x,
+                                  "-->\n\n" + outline + "\n"
+                               )
+         end
 
-        newtxt = newtxt.sub( %r{^[ ]*<!--
-                       [ \n]*
-                         (source: .+?)
-                        [ \n]*
-                      -->
-                   }ix,
-               "<!--\n  \\1\n\n#{outline} -->" )
-=end
          newtxt
 end
 

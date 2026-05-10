@@ -130,6 +130,29 @@ def postproc_page( txt, basename:, dirname: )
     txt, more_edits = proc_navlines_by_sections( txt )
     edits += more_edits
 
+
+   ###
+   ##  move to  handle_blanklines such - why? why not?
+   ##
+   ##  collapse blank lines to three max
+   txt = txt.gsub( %r{
+                        \n
+                        (?: [ ]*\n){2,}
+                      }x,  "\n\n\n"  )
+
+   ##  collapse blank lines between headinds to zero
+   ##      ## one letter or digit required
+   txt = txt.gsub( %r{ ^ ([ ]* ={1,} [ ]*  [\p{L}0-9] .*? \n)
+                         ( (?:[ ]*\n)+ )
+                       ^ ([ ]* ={1,} [ ]*  [\p{L}0-9] .*? \n)
+                        }ix, '\1\3' )
+
+   ## other collapse blank lines following header two max!!
+   txt = txt.gsub( %r{ ^ ([ ]* ={1,} [ ]*  [\p{L}0-9] .*? \n)
+                         ( (?:[ ]*\n)+ )
+                        }ix, "\\1\n" )
+
+
    ## note - return (new) txt AND recorded edits (& erratas)
    ##        return edits as array or joined (single) string - why? why not?
    ##   note - return empty array if no edits!!
