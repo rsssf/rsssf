@@ -3,7 +3,7 @@
 #
 #
 #  note:  limited support for regex syntax supported
-#        use ? 
+#        use ?
 #        use () for groups
 #    and use |
 
@@ -14,26 +14,26 @@
 ##  note - inline spaces get translated to [] e.g.
 ###        UNLESS (IF NOT) [] present in line!!!
 ##   1/16 finals   =>  1/16 [ ] finals
-##   1/8 finals?   =>  1/8 [ ] finals? 
+##   1/8 finals?   =>  1/8 [ ] finals?
 
 
 ##
 ##   note - to processing modes
 ##    if regex metachars found - line is regex!!
 ##    if no regex metachars found - line is plain and get preprocesed
-   
+
 
 ##
 ##  check how to support here
 ##               Round [ ]{1,2} \d{1,2}     ## e.g. round 1, round 2, etc.
-     
+
 
 ##
 ##  note - always remove leading & trailing spaces
-##              and squish inline spaces 
+##              and squish inline spaces
 ##
 ##  note -  group (...) gets changed to
-##                       non-capturing group (?: ...) 
+##                       non-capturing group (?: ...)
 ##
 ##   use  \ for line-continuation!!!
 #
@@ -45,12 +45,12 @@
 
 
 $ordinal    =  (    First | Second | Third | Fourth | Fifth     \
-                  | 1st   | 2nd    | 3rd   | 4th    | 5th   )   
+                  | 1st   | 2nd    | 3rd   | 4th    | 5th   )
 
 $opt_replay =  ( [ ] replays? )?
 
 
-## e.g. Playoff, Playoffs, Play-off, Play-offs 
+## e.g. Playoff, Playoffs, Play-off, Play-offs
 $playoff    =   play-?offs?
 
 ## e.g. Match, Matches
@@ -63,7 +63,7 @@ Preliminary·round
 
 ## e.g. First round, Second round, ...
 $ordinal [ ] (   round   $opt_replay   \
-               | phase ) 
+               | phase )
 
 
 Round·one
@@ -72,7 +72,7 @@ Round·one
 
 ## e.g. 1/8 finals, 8th finals...
 (   1/32            \
-  | 1/16 | 16th     \       
+  | 1/16 | 16th     \
   | 1/8  |  8th     \
   | 1/4             \
   | 1/2 ) [ ] finals?   $opt_replay
@@ -82,32 +82,32 @@ Round·one
 (   Eight    \
   | Quarter  \
   | Semi ) [ -]? finals?   $opt_replay
-   
+
 ## short-forms
-Semis 
+Semis
 Quarters
 
 
 ## e.g. Round of 16, Last 16, ...
-(Round·of | Last ) [ ] ( 4 | 8 | 16 | 32)  
+(Round·of | Last ) [ ] ( 4 | 8 | 16 | 32)
 
 
 
-  
+
 ## e.g. fifth place, fifth-place, 5th place
 $fifthplace  =  ( fifth | 5th ) [ -] place
 
 $fifthplace [ ]  ( match | final | play[ -]?off )
-Match·for [ ] $fifthplace 
+Match·for [ ] $fifthplace
 
 
 ## e.g. third place, third-place, 3rd place
-$thirdplace   =   ( third | 3rd ) [ -] place 
+$thirdplace   =   ( third | 3rd ) [ -] place
 
-$thirdplace [ ]  ( match | final | play[ -]?off ) 
-Match·for [ ] $thirdplace 
+$thirdplace [ ]  ( match | final | play[ -]?off )
+Match·for [ ] $thirdplace
 
-          
+
 Finals?  $opt_replay
 
 
@@ -115,7 +115,7 @@ Finals?  $opt_replay
 # more
 
 Final [ ] (round | group | pool)
- 
+
 
 
 
@@ -124,36 +124,15 @@ Final [ ] (round | group | pool)
 (Minor | Major) [ ] Semi [ -]? finals?
 
 Preliminary·final
-Final·series        
-Grand·final           
+Final·series
+Grand·final
 
 
 
 
-Conference·wild·card·round
-Wild·card·games
-
-(Eastern | Western) [ ] conference [ ] quarter [ -]? finals  
-(Eastern | Western) [ ] semi [ -]? finals
-(Eastern | Western) [ ] conference·final
-
-Conference·quarterfinals
-Conference·semifinals
-Conference·finals
-
-Divisional·finals
-Championship·final
-
-## used in msl/usa for "grand final"
-##  e.g. MLS cup, MLS cup final, MLS cup 2010, ...
-MLS·cup ([ ] final)? ([ ] \d{4})?           
-
-###   move to stage?  
-##     use/replace w/ generic Qualifaction <name> - why? why not?
-Qualification·MLS
 
 
-Super [ ] semi [ -]? final 
+Super [ ] semi [ -]? final
 
 Super [ ]? cup [ ] final
 
@@ -165,14 +144,14 @@ Decider
 
 ## in jp
 $playoff [ ] round
-Prime [ ] round 
+Prime [ ] round
 
 
 ## in it (cup)
-##    with (no extra time) flag/note 
+##    with (no extra time) flag/note
 ## e.g.  Round 1 (no extra time)
 
-Round [ ] (1|2|3)       [ ] \( no [ ] extra [ ] time \)  
+Round [ ] (1|2|3)       [ ] \( no [ ] extra [ ] time \)
 Quarter [ -]? finals?   [ ] \( no [ ] extra [ ] time \)
 
 
@@ -183,21 +162,21 @@ Quarter [ -]? finals?   [ ] \( no [ ] extra [ ] time \)
 #  moved matches  - find a better name?
 #   nachtragspiele (de) in en ??
 
-## e.g. Moved matches, 
+## e.g. Moved matches,
 ##     Moved match, ..
 Moved·$match
 
 ## e.g. Match from round 26,
 ##      Matches from round 26
 $match·from   [ ] round [ ] \d{1,2}
-   
+
 
 ## standalone replay
 Replays?
 
-## e.g. Replayed match, 
+## e.g. Replayed match,
 ##      Replayed matches
-Replayed·$match 
+Replayed·$match
 
 
 
@@ -206,11 +185,11 @@ Replayed·$match
 #############
 ## add stages
 
-## e.g. First stage, Second stage, ... 
-$ordinal [ ] stage       
+## e.g. First stage, Second stage, ...
+$ordinal [ ] stage
 
 (   Regular       \
-  | Group         \ 
+  | Group         \
   | League        \
   | Playoff ) [ ] stage
 
@@ -226,7 +205,7 @@ Tournament·proper
 ## play-offs & play-ins
 
 Championship       [ ] $playoff
-Europa·league      [ ] $playoff 
+Europa·league      [ ] $playoff
 Conference·league  [ ] $playoff
 
 Promotion [ ]             ($playoff | $match)
@@ -257,27 +236,12 @@ $playoff [ ] (1 | 2)?
 
 
 
-#############     
+#############
 ## standalone legs
 
 ## e.g. First legs
 ##      Second leg replay
-$ordinal  [ ] legs?     $opt_replay   
+$ordinal  [ ] legs?     $opt_replay
 
 
-Third·leg·minigame            # in us          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Third·leg·minigame            # in us

@@ -6,7 +6,8 @@ class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 
 
-def autofix( txt,  tables: true,
+def autofix( txt,  round_patterns: nil,
+                   tables: true,
                    topscorers: true )
 
  ##
@@ -39,7 +40,14 @@ def autofix( txt,  tables: true,
 
          ## note - handle_header returns nil if no match
          ##            otherwise the reformatted (new) line !!!
-         newline = handle_header( line.rstrip )
+
+         newline = if round_patterns  ### any custom pattern
+                     handle_header( line.rstrip,
+                                      header_round_re:        round_patterns[:header_round],
+                                      header_round_n_date_re: round_patterns[:header_round_n_date] )
+                   else
+                     handle_header( line.rstrip )
+                   end
 
          newtxt <<   (newline ? newline : line)
    end

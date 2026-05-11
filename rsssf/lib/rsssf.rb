@@ -59,11 +59,11 @@ require_relative 'rsssf/parse_schedules'
 ###
 # fmtfix machinery
 
-
 require_relative 'rsssf/fmtfix/rounds'
 require_relative 'rsssf/fmtfix/dates_helpers'
 require_relative 'rsssf/fmtfix/dates'
 require_relative 'rsssf/fmtfix/headers'
+require_relative 'rsssf/fmtfix/headers-handler'
 
 require_relative 'rsssf/fmtfix/fmtfix-base'
 require_relative 'rsssf/fmtfix/fmtfix'

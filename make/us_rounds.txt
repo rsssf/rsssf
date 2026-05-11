@@ -1,0 +1,23 @@
+
+
+Conference·wild·card·round
+Wild·card·games
+
+(Eastern | Western) [ ] conference [ ] quarter [ -]? finals
+(Eastern | Western) [ ] semi [ -]? finals
+(Eastern | Western) [ ] conference·final
+
+Conference·quarterfinals
+Conference·semifinals
+Conference·finals
+
+Divisional·finals
+Championship·final
+
+## used in msl/usa for "grand final"
+##  e.g. MLS cup, MLS cup final, MLS cup 2010, ...
+MLS·cup ([ ] final)? ([ ] \d{4})?
+
+###   move to stage?
+##     use/replace w/ generic Qualifaction <name> - why? why not?
+Qualification·MLS

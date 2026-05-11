@@ -6,12 +6,14 @@ class  Fmtfix    ## todo: find a better name e.g. Format or Fixer or ??
 
 ## convenience helper
 def self.fmtfix_pages( pages, outdir:, path:, heading_patches: nil,
+                                              round_patterns: nil,
                                               tables:     true,
                                               topscorers: true )
       @@fmtfix ||= new   ## use a "shared" built-in fmtfix
       @@fmtfix.fmtfix_pages( pages, outdir: outdir,
                                     path: path,
                                     heading_patches: heading_patches,
+                                    round_patterns: round_patterns,
                                     tables: tables,
                                     topscorers: topscorers )
 end
@@ -19,6 +21,7 @@ end
 def fmtfix_pages( pages, outdir:,
                          path:,         ## (lookup search) path (array expected!!!)
                          heading_patches: nil,
+                         round_patterns: nil,
                          tables:     true,
                          topscorers: true )
 
@@ -36,6 +39,7 @@ def fmtfix_pages( pages, outdir:,
 
             txt = read_text( filename )
             newtxt = fmtfix( txt, heading_patches: heading_patches,
+                                  round_patterns:  round_patterns,
                                   tables:     tables,
                                   topscorers: topscorers )
 
@@ -48,11 +52,13 @@ end
 
 ## convenience helper
 def self.fmtfix( txt, heading_patches: nil,
+                      round_patterns: nil,
                       tables:     true,
                       topscorers: true )
       @@fmtfix ||= new   ## use a "shared" built-in fmtfix
       @@fmtfix.fmtfix( txt,
                        heading_patches: heading_patches,
+                       round_patterns:  round_patterns,
                        tables:          tables,
                        topscorers:      topscorers )
 end
@@ -60,6 +66,7 @@ end
 
 
 def fmtfix( txt,  heading_patches: nil,
+                  round_patterns: nil,
                   tables:     true,
                   topscorers: true)
 
@@ -85,8 +92,9 @@ def fmtfix( txt,  heading_patches: nil,
         end
 
 
-        newtxt = autofix( newtxt, tables:     tables,
-                                  topscorers: topscorers )
+        newtxt = autofix( newtxt, round_patterns: round_patterns,
+                                  tables:         tables,
+                                  topscorers:     topscorers )
 
 
 

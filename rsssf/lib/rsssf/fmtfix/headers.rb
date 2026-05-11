@@ -22,18 +22,26 @@ OPT_REF = %q{
 =end
 
 
-###
-### note - allow optional colon e.g.
-##     Playoff:
-##     Round 21:
 
-HEADER_ROUND_RE = %r{\A
+def self._build_header_round_re( round_pat )
+  ###
+  ### note - allow optional colon e.g.
+  ##     Playoff:
+  ##     Round 21:
+
+  %r{\A
         [ ]*
-         (?<round> #{ROUND_PAT})
+         (?<round> #{round_pat})
               :?   ## note - allow optional colon (:)  e.g. Playoff:
             #{OPT_REF}
          [ ]*
-\z}ix
+     \z}ix
+end
+
+
+HEADER_ROUND_RE = _build_header_round_re( ROUND_PAT )
+
+
 
 
 
@@ -181,9 +189,10 @@ HEADER_DATE_ALT_RE = %r{\A
 ## Preliminary Round [Nov 20]  ‹§inplay›
 
 
-HEADER_ROUND_N_DATE_RE = %r{\A
+def self._build_header_round_n_date_re( round_pat )
+  %r{\A
         [ ]*
-         (?<round> #{ROUND_PAT})
+         (?<round> #{round_pat})
          [ ]+
         \[
            #{date_(DATE_I_RE, DATE_IB_RE, DATE_II_RE,
@@ -193,6 +202,12 @@ HEADER_ROUND_N_DATE_RE = %r{\A
         #{OPT_REF}
         [ ]*
 \z}ix
+end
+
+HEADER_ROUND_N_DATE_RE = _build_header_round_n_date_re( ROUND_PAT )
+
+
+
 
 
 ## Final [May 1, Klagenfurt]
@@ -237,89 +252,6 @@ HEADER_ROUND_N_CITY_N_DATE_RE = %r{\A
         [ ]*
 \z}ix
 
-
-
-
-#####
-## note - line-by-line processing / matching
-def _norm_date( m, format: nil )
-   ## quick fix for undefined group name reference
-   m = m.named_captures.transform_keys(&:to_sym)  if m.is_a?(MatchData)
-
-  if m[:date_list]
-    _fmt_date_list(_build_date_list( m ), format: format )
-  elsif m[:date_legs]
-    _fmt_date_legs(_build_date_legs( m ), format: format )
-  elsif m[:date_range]
-    _fmt_date_range(_build_date_range( m ), format: format )
-  else   ## assume m[:date]
-    _fmt_date(_build_date( m ), format: format )
-  end
-end
-
-
-def handle_header( line )
-      ## note - returns    newline (matched header line reformatted)
-      ##                    or nil (if no match!!)
-      ##
-       line = line.rstrip   ## expect chomp of newline "upstream" - why? why not?
-
-
-      if m = HEADER_ROUND_RE.match(line.rstrip)
-                   "▪ #{m[:round]} ▪\n"
-      elsif m = HEADER_DATE_RE.match(line.rstrip)
-                   ## e.g. [Nov 20]
-                   ## e.g. [April 1]
-                   date = _norm_date( m )
-                   "_ #{date} _\n"
-      elsif m = HEADER_DATE_N_CITY_RE.match(line.rstrip)
-                   ## e.g. [Jun 3, Ferrol]
-                   ## e.g. [Apr 2, Wembley]
-                   ##   [Sat May 17 - at Millennium Stadium, Cardiff]
-                   ##   [Sun May 25 - at Millennium Stadium, Cardiff]
-
-                   date = _norm_date( m )
-
-                   ##  note - check for special case
-                   ##     [Dec 10, replay]
-                   ##  change to  ▪ Replay ▪   _ Dec 10 _
-                   if m[:city] == 'replay'
-                      "▪ Replay ▪  _ #{date} _\n"
-                   else
-                      "_ #{date} _ @ #{m[:city]}\n"
-                   end
-      elsif m = HEADER_DATE_II_RE.match(line.rstrip)
-                    ##  note - no enclosing brackets []!!!
-                    ## e.g. Nov 20 1999  or Nov 20, 1999
-                    ##      Apr 1 2000   or Apr 1, 2000
-                     date = _norm_date( m )
-                   "_ #{date} _\n"
-      elsif m = HEADER_DATE_ALT_RE.match(line.rstrip)
-                    ## e.g. [07-09]
-                    ##      [30-05, Thaur]
-                    ## date = _norm_date( m, format: 'numeric' )
-                    date = _norm_date( m  )
-                    buf = String.new
-                    buf += "_ #{date} _"
-                    buf += " @ #{m[:city]}"    if m[:city]
-                    buf += "\n"
-                    buf
-      elsif m = HEADER_ROUND_N_DATE_RE.match(line.strip)
-                     date = _norm_date( m )
-                   "▪ #{m[:round]} ▪  #{date}\n"
-      elsif m = HEADER_ROUND_N_DATE_N_CITY_RE.match(line.strip)
-                     date = _norm_date( m )
-                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"
-      elsif m = HEADER_ROUND_N_CITY_RE.match(line.strip)
-                   "▪ #{m[:round]} ▪  @ #{m[:city]}\n"
-      elsif m = HEADER_ROUND_N_CITY_N_DATE_RE.match(line.strip)
-                     date = _norm_date( m )
-                    ## note - reverse (rotate) date & city
-                   "▪ #{m[:round]} ▪  #{date} @ #{m[:city]}\n"
-       else
-         nil
-       end
-end
 
 
 end    ## class Fmtfix

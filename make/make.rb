@@ -88,9 +88,30 @@ heading_patches =   if File.file?( heading_patches_file )
                          nil
                     end
 
+
 fmtfix = Rsssf::Fmtfix.new
+
+
+round_patterns_file = "./make/#{code}_rounds.txt"
+round_patterns  =   if File.file?( round_patterns_file )
+                        ###
+                        ## build (custom) patterns
+                        ##
+                          patterns = read_patterns( round_patterns_file )
+
+
+                          {
+                             header_round:        Rsssf::Fmtfix._build_header_round_re( patterns ),
+                             header_round_n_date: Rsssf::Fmtfix._build_header_round_n_date_re( patterns ),
+                          }
+                    else
+                         nil
+                    end
+
+
 fmtfix.fmtfix_pages( pages, path: [ TABLES_DIR ],
                             heading_patches: heading_patches,
+                            round_patterns:  round_patterns,
                             outdir: "#{config[:dir]}/pages")
 
 
