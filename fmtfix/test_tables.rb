@@ -32,7 +32,10 @@ def test_tables
                          }x )
 
 
-    tables.each do |table|
+    tables.each_with_index do |table,i|
+
+        ## puts "==> #{i+1}/#{tables.size}:"
+        ## pp table
 
         m = Rsssf::Fmtfix::TABLE_RE.match( table )
         if m && m.offset(0)[0] == 0

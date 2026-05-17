@@ -36,7 +36,7 @@
 ## -- month day year
 [Aug 18, 2004]
 [Aug 18 2004]
-[Sep 4, 2004]  
+[Sep 4, 2004]
 [Sep 4 2004]
 
 
@@ -71,7 +71,7 @@
 
 
 ## -- weekday day month
-[Thur 30 Aug] 
+[Thur 30 Aug]
 [Wed 6 Feb]
 [Sat 16 Feb]
 [Tue 26 Feb]
@@ -125,7 +125,7 @@
 ##   HEADER_DATE_N_CITY_RE
 ## bracket date headers w/ city
 
-[Jun 3, Ferrol] 
+[Jun 3, Ferrol]
 [Apr 2, Wembley]
 [Feb 16, 2020, Brasília]
 [Apr 11, 2021, Brasília]
@@ -134,7 +134,7 @@
 [Sun May 25 - at Millennium Stadium, Cardiff]
 
 
-##  HEADER_ROUND_N_DATE_RE 
+##  HEADER_ROUND_N_DATE_RE
 ##  note - might be date range or date list
 
 Round 24 [Mar 21]
@@ -146,13 +146,13 @@ Round 1 [Aug 13-16]
 Round 2 [Aug 20-23]
 
 
-##  HEADER_ROUND_N_DATE_N_CITY_RE 
+##  HEADER_ROUND_N_DATE_N_CITY_RE
 
 Final [May 1, Klagenfurt]
 
 
 
-##   HEADER_ROUND_N_CITY_N_DATE_RE 
+##   HEADER_ROUND_N_CITY_N_DATE_RE
 ## reverse
 
 Final [Graz, May 12]
@@ -163,12 +163,12 @@ Final [London, Feb 27]
 
 ###
 ##   HEADER_DATE_ALT_RE
-[07-09]  
+[07-09]
 [30-05, Thaur]
 
 
 
-### 
+###
 ## alternate date header (no brackets incl. year)
 ##  HEADER_DATE_II_RE
 ##  note - no enclosing brackets []!!!
@@ -271,7 +271,7 @@ Matchday 1 of 2
 Matchday 1 of 38
 
 ## keep week/matchweek too - why? why not?
-##   
+##
 Week 1
 Matchweek 1 of 38
 
@@ -297,8 +297,8 @@ Group stage
 Minor Semifinal
 Major Semifinal
 Preliminary Final
-Final Series         
-Grand Final          
+Final Series
+Grand Final
 
 Regular Season
 Promotion/Relegation Matches
@@ -308,17 +308,17 @@ Promotion Matches
 Promotion/Relegation Playoffs
 Promotion/Relegation Playoff 2nd/3rd level
 
-Playoff 1        
-Playoff 2        
-Relegation Playoff   
+Playoff 1
+Playoff 2
+Relegation Playoff
 
 Playoffs (Liguilla)
 Play-In Round A
 Play-In Round B
-Play-In Round A-B 
+Play-In Round A-B
 
 
-Round 1 (no extra time)    
+Round 1 (no extra time)
 Round 2 (no extra time)
 Round 3 (no extra time)
 Quarterfinals (no extra time)
@@ -332,17 +332,17 @@ Match from Round 26
 
 
 # in cz
-Play-off o umístění    
+Play-off o umístění
 Skupina o záchranu
 
 
 # in mls/usa
 Third Legs
-Conference Wild Card Round
-Eastern Conference Quarterfinals  
-Conference Semifinals
-Conference Finals
-MLS Cup    
+## Conference Wild Card Round
+## Eastern Conference Quarterfinals
+## Conference Semifinals
+## Conference Finals
+## MLS Cup
 
 # in argentina
 Round of 16 - Octavos de Final:
@@ -357,23 +357,22 @@ Primera fase de zonas - Phase of groups
 
 Preliminary Round [Nov 20]
 Preliminary Round [Nov 20]  ‹§inplay›
-Third Leg Minigame [Oct 6]     
-Eastern Conference Final [Nov 14]
-Eastern Conference Final
-Western Conference Final [Nov 15]
-Western Conference Final
-Wild Card Games
-Eastern Semifinals
-Western Semifinals
+Third Leg Minigame [Oct 6]
+
+## Eastern Conference Final [Nov 14]
+## Eastern Conference Final
+## Western Conference Final [Nov 15]
+## Western Conference Final
+## Wild Card Games
+## Eastern Semifinals
+## Western Semifinals
 Super Semifinal [Sep 23]
-Championship Final
-Divisional Finals
-Conference Quarterfinals
+## Championship Final
+## Divisional Finals
+## Conference Quarterfinals
 Final [Sep 26, Hayward, Calif.; att: 5.528]
-MLS Cup Final [Oct 21, Columbus, Ohio]  
+## MLS Cup Final [Oct 21, Columbus, Ohio]
 
 Knock-Out Stage
-Qualification MLS
+## Qualification MLS
 Tournament Proper
-
-

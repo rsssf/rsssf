@@ -1,4 +1,11 @@
 
+##
+## samples
+##   for a tokenizer to find names (separated by single space or dash(-) etc.)
+##     work-in-progess
+##
+##    use   num & alpha plus connectors (such as -&. etc.)
+
 Spring 1995 Final Table
 2.Division
 2.Landesliga Ost
@@ -14,8 +21,6 @@ K.-H.
 Karl-Heinz
 
 
-## trailing colon
-1. Klasse West A:
 
 ## quirks
 1.2.3a
