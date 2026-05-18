@@ -15,6 +15,8 @@ class PageConverter
   ##  add anchor: options or such
   ##    lets you toggle adding anchors (§premier etc.) - why? why not?
 
+
+
   def convert( html, url: )
     ### todo/fix: first check if html is all ascii-7bit e.g.
     ## includes only chars from 64 to 127!!!
@@ -24,12 +26,43 @@ class PageConverter
     ##         just use \n (new line a.k.a. line feed)
     html = html.gsub( "\r\n", "\n" )
 
-    ##  convert tabs to two spaces (or use four??)
-    html = html.gsub( "\t", '   ' )
+
+    ## note - expand tabs inside pre blocks only - why? why not?
+    ##            otherwise if any left replace tabs with space
+
+    if html.include?( "\t" )
+      html =  html.gsub( %r{
+                              (<PRE \b [^>]*>)
+                                (.*?)    ## note - non-greedy match
+                              (<\/PRE>)
+                          }ixm) do
+
+                            ### note - tabstops usage not a "legacy"
+                            ##          still used in latest pages!!!
+                            ### log( "found tabs in pre blocks in <#{url}>; expand w/ tabstop length 8")
+
+                            m = Regexp.last_match
+                            open_tag  = m[1]
+                            content   = m[2]
+                            close_tag = m[3]
+
+                            expanded = _expand_tabs( content, tabsize:8 )
+                            open_tag + expanded + close_tag
+                     end
+
+       if html.include?( "\t" )
+         ##  todo -  report/log tabs outside of pre blocks!!!
+         ## convert tabs to two spaces (or use four??)
+         log( "found tabs in non-pre blocks in <#{url}>; replace w/ two spaces")
+         html = html.gsub( "\t", '  ' )
+       end
+    end
+
 
 
 
     html = convert_html_entities( html, url: url )
+
 
  ###################################
  ### smart quotes quick fixes
@@ -50,6 +83,27 @@ class PageConverter
     txt
   end  ## method convert
 
+
+
+  def _expand_tabs(txt, tabsize:)
+    col = 0
+
+    buf = String.new
+    txt.each_char do |ch|
+      if ch == "\n"
+        col = 0
+        buf << ch
+      elsif ch == "\t"
+        spaces = tabsize - (col % tabsize)
+        col += spaces
+        buf <<  " " * spaces
+      else
+        col += 1
+        buf << ch
+      end
+    end
+    buf
+  end
 
 
 
