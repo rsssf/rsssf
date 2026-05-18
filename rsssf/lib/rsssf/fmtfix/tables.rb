@@ -72,6 +72,10 @@ TABLE_RE = %r{
         | #{table_heading_( 'Team   M  W  T  L  GF-GA  PTS EP  TP')}
         ## eng
         | #{table_heading_( 'Pos Team   P   W   D   L   F   A  GD Pts')}
+        | #{table_heading_( 'P  W  D  L   F-A  Pts')}
+        ## br
+        | #{table_heading_( 'TEAM   Pts   P   W   D   L   GF   GA   DIF')}
+
         )
        ## note - allow optional blank line - why? why not?
           (?: \n ^[ ]* )?

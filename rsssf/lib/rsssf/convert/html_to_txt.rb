@@ -29,6 +29,16 @@ def html_to_txt( html, url: )
   edits = []
 
 
+  ## special errata
+  ###   fix body in tablesp/panama2025.html
+  ###   </BODY>              <BODY>
+  ##       <H2>  =>            <H2>
+  html = html.sub( "</BODY>\n<H2>", "<BODY>\n<H2>" )
+
+
+
+
+
   html = html.sub( /.+?
                       <BODY [^>]*? >
                       \s*
